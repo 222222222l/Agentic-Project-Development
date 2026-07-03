@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agentic Project Development"
+  short_description: "Multi-mode project development workflow suite"
+  default_prompt: "Use $agentic-project-development to choose an appropriate development workflow for this project."
