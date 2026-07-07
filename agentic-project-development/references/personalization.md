@@ -10,6 +10,9 @@ Create `docs/agents/project-development-profile.md` when a repo needs stable loc
 ## Default Mode Preferences
 
 - Default lifecycle:
+- Auto loop default:
+- Max auto loop rounds:
+- Minimum loop passing score:
 - Prefer SDD when:
 - Prefer BDD when:
 - Prefer TDD when:
@@ -35,6 +38,8 @@ Create `docs/agents/project-development-profile.md` when a repo needs stable loc
 - Required before PR:
 - Required before release:
 - Manual checks:
+- Loop verifiers:
+- Loop state path:
 
 ## Local Conventions
 
@@ -67,6 +72,9 @@ Do not add large details to `SKILL.md`. Keep the entry point navigational.
 
 Good defaults for solo project development:
 
+- Use auto loop mode only when the user asks for loop/auto/run-until-done behavior and the target can be reliably quantified.
+- Refuse loop execution when the verifier is subjective, unavailable, or not repeatable; continue as an ordinary task.
+- Default to 3 loop rounds and require every loop criterion to score at least 8.
 - Use SDD for any feature touching more than one module.
 - Use BDD for user journeys and business rules.
 - Use TDD for deterministic logic and regressions.

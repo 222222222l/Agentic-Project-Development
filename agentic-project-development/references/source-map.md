@@ -51,6 +51,15 @@ These skills remain useful, but they are domain, artifact, discovery, or meta-sk
 | `robotlearning123/behavior-driven-testing@behavior-driven-testing` | Branch matrix, behavior-first test coverage, real-environment validation |
 | `promptfoo/promptfoo@promptfoo-evals` | Promptfoo eval suites, rubrics, datasets, CI eval gates |
 | `github/awesome-copilot@eval-driven-dev` | Python LLM app eval pipeline, instrumentation, golden datasets, result analysis |
+| `cobusgreyling/loop-engineering` | Loop readiness audit, loop-init/audit/cost/context patterns, budget gates, state and verifier discipline |
+| `GaosCode/PlanWeave` | File-backed task blocks, claimable work, recoverable loop state, review feedback, and Codex executor patterns |
+| `baidu-baige/LoongFlow` | Plan-Execute-Summary loop and structured experiential memory for long-running tasks |
+| `doodledood/manifest-dev` | Define-done-first manifest discipline and independent criterion verification |
+| `indiekitai/codex-orchestrator` | Codex App worktree sessions, heartbeat, ledger, and evidence-label loop patterns |
+| `StGarca/consensus-mcp` | Multi-model maker/checker review and consensus gate pattern |
+| `SWE-Skills-Bench` | Skill adoption must be evaluated because many skills fail to improve outcomes or add token overhead |
+| `SWE-Doctor` | Runtime diagnosis and reproduction-first verification for bug-fix loops |
+| `RAMP` | Runtime, tool-use, failure-recovery, dependency, and cost signals for judging agent loops |
 
 ## Design Difference
 
@@ -61,3 +70,4 @@ The original skills are usable independently. This suite adds:
 - Progressive disclosure by project risk and output type.
 - Repo-level personalization.
 - Explainable decision traces.
+- A quantification-first auto loop gate for loop/auto requests.

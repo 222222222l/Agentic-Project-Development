@@ -15,6 +15,20 @@ def recommend(args: argparse.Namespace) -> dict:
     modes: list[str] = []
     overlays: list[str] = []
     reasons: list[str] = []
+    loop_decision = "not-requested"
+
+    if yes(args.loop_request):
+        if args.quantifiable == "no":
+            loop_decision = "refuse-loop-fallback-ordinary-task"
+            reasons.append("loop requested but reliable quantified verification is not available")
+        elif args.quantifiable == "partial":
+            loop_decision = "clarify-or-design-verifier-before-loop"
+            overlays.append("auto-loop-gate")
+            reasons.append("loop requested but verification needs a stronger quantified target")
+        else:
+            loop_decision = "allow-bounded-loop"
+            overlays.append("auto-loop-mode")
+            reasons.append("loop requested and reliable quantified verification is available")
 
     if args.scope in {"cross-module", "project", "unknown"} or args.work_type in {"new-project", "feature", "architecture"}:
         modes.append("spec-driven-development")
@@ -56,8 +70,9 @@ def recommend(args: argparse.Namespace) -> dict:
     return {
         "primary_mode": modes[0],
         "recommended_modes": ordered,
+        "loop_decision": loop_decision,
         "reasons": reasons,
-        "decision_trace_required": len(ordered) > 1 or args.scope != "single-file",
+        "decision_trace_required": yes(args.loop_request) or len(ordered) > 1 or args.scope != "single-file",
     }
 
 
@@ -76,6 +91,8 @@ def main() -> None:
     parser.add_argument("--framework-sensitive", default="no")
     parser.add_argument("--multi-agent", default="no")
     parser.add_argument("--delivery", default="none", choices=["none", "prd", "issues"])
+    parser.add_argument("--loop-request", default="no")
+    parser.add_argument("--quantifiable", default="yes", choices=["yes", "partial", "no"])
     print(json.dumps(recommend(parser.parse_args()), indent=2))
 
 

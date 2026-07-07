@@ -3,7 +3,8 @@
 An extensible Codex skill suite for project development work across multiple modes:
 Spec-Driven Development (SDD), Behavior/Acceptance-Driven Development (BDD),
 Test-Driven Development (TDD), Eval-Driven Development (EDD), source-driven
-implementation, architecture/domain design, issue delivery, debugging, and review.
+implementation, architecture/domain design, issue delivery, debugging, review,
+and quantified auto-loop development.
 
 The suite is designed as an orchestration layer. It does not force every project
 through TDD. Instead, it chooses the lightest workflow that makes the work safer,
@@ -39,6 +40,7 @@ testing, evaluating, refactoring, reviewing, or decomposing a project or feature
 The skill helps an agent:
 
 - classify the shape and risk of a project task;
+- recognize loop/auto/run-until-done requests and require reliable quantified verification before iterating;
 - choose between SDD, BDD, TDD, EDD, source-driven work, architecture mode,
   issue delivery, or review mode;
 - load only the reference files needed for the chosen mode;
@@ -56,6 +58,7 @@ agentic-project-development/
     openai.yaml
   references/
     workflow-map.md
+    loop-auto-mode.md
     spec-driven-development.md
     source-driven-development.md
     acceptance-bdd.md
@@ -105,6 +108,21 @@ It also records which installed local skills were reviewed but intentionally
 kept outside the core router because they are domain, artifact, discovery, or
 meta-skill specialists. See `agentic-project-development/references/source-map.md`.
 
+## Auto Loop Mode
+
+When a user asks for loop, auto, autonomous iteration, keep-going, or
+run-until-done behavior, the skill first applies an auto-loop gate:
+
+1. Design a reliable quantified verification target.
+2. Refuse loop execution if the target cannot be quantified reliably.
+3. If the gate passes, run `PLAN -> DO -> VERIFY -> DECIDE`.
+4. Stop only when every required criterion scores at least 8 and all hard gates pass.
+5. Otherwise improve the weakest criterion until the max round, budget, or blocker is reached.
+
+The acceptance and testing standards still come from the normal router: SDD,
+BDD, TDD, EDD, source-driven development, architecture mode, debugging, or
+review mode as appropriate.
+
 ## Researched Skills Rewritten Into This Suite
 
 The suite incorporates the useful ideas from researched agent skill frameworks,
@@ -149,6 +167,12 @@ Try the deterministic workflow selector:
 
 ```bash
 python agentic-project-development/scripts/select_workflow.py --work-type feature --determinism deterministic --user-facing yes --scope cross-module
+```
+
+Try the auto-loop gate:
+
+```bash
+python agentic-project-development/scripts/select_workflow.py --loop-request yes --quantifiable yes --work-type feature --determinism deterministic
 ```
 
 ## Extension Points

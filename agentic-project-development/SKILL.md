@@ -1,6 +1,6 @@
 ---
 name: agentic-project-development
-description: Extensible multi-mode project development skill suite for agentic software work. Use when planning, specifying, implementing, testing, evaluating, refactoring, reviewing, or decomposing a project or feature; when choosing between Spec-Driven Development, Behavior/Acceptance-Driven Development, Test-Driven Development, Eval-Driven Development, source-documented implementation, architecture deepening, issue slicing, or code review; when converting vague project goals into explainable workflows, PRDs, vertical slices, acceptance scenarios, tests, evals, and quality gates.
+description: Extensible multi-mode project development skill suite for agentic software work. Use when planning, specifying, implementing, testing, evaluating, refactoring, reviewing, or decomposing a project or feature; when choosing between Spec-Driven Development, Behavior/Acceptance-Driven Development, Test-Driven Development, Eval-Driven Development, source-documented implementation, architecture deepening, issue slicing, code review, or auto/loop/run-until-done development requests; when converting vague project goals into explainable workflows, PRDs, vertical slices, acceptance scenarios, tests, evals, quality gates, and reliably quantified verification loops.
 ---
 
 # Agentic Project Development
@@ -9,21 +9,30 @@ description: Extensible multi-mode project development skill suite for agentic s
 
 Choose the lightest development mode that makes the project safer and more explainable. Do not force TDD, SDD, BDD, or EDD on every task. Classify the work, state the chosen mode and why, then load only the reference files needed for that mode.
 
+For any auto, loop, autonomous, keep-going, run-until-done, or repeated-iteration request, first use the auto-loop gate in `references/loop-auto-mode.md`. A loop is allowed only when the verification target can be reliably quantified. If it cannot, refuse loop execution, explain why, and continue as an ordinary non-loop task using the normal router.
+
 Treat this skill as an orchestration layer over project-development practices. It rewrites and integrates the installed Matt Pocock engineering skills plus the researched SDD, source-driven, BDD, and EDD skills into one extensible decision system.
 
 ## Workflow
 
 1. Identify the project type, user outcome, risk level, determinism, affected surfaces, existing tests, delivery target, and whether the output is human-facing, machine-facing, or LLM/agent-facing.
-2. If the request is vague, first use the alignment gate in `references/workflow-map.md`. Prefer existing project context, files, docs, and tests over asking broad questions.
-3. Select a primary mode from the mode router below. Add secondary overlays only when they reduce real risk.
-4. Read the relevant reference file before producing a plan, modifying code, or creating artifacts.
-5. Produce explicit artifacts: assumptions, success criteria, behavior scenarios, test seams, eval criteria, implementation slices, review gates, or source citations as appropriate.
-6. Keep a short decision trace: chosen mode, rejected modes, required artifacts, verification command, and unresolved risks.
-7. When the project needs repeatable local conventions, create or update `docs/agents/project-development-profile.md` using `references/personalization.md`.
+2. If the user asks for auto/loop behavior, read `references/loop-auto-mode.md` and design the quantified verification scheme before selecting implementation modes.
+3. If the request is vague, first use the alignment gate in `references/workflow-map.md`. Prefer existing project context, files, docs, and tests over asking broad questions.
+4. Select a primary mode from the mode router below. Add secondary overlays only when they reduce real risk.
+5. Read the relevant reference file before producing a plan, modifying code, or creating artifacts.
+6. Produce explicit artifacts: assumptions, success criteria, behavior scenarios, test seams, eval criteria, implementation slices, review gates, or source citations as appropriate.
+7. Keep a short decision trace: chosen mode, rejected modes, required artifacts, verification command, and unresolved risks.
+8. When the project needs repeatable local conventions, create or update `docs/agents/project-development-profile.md` using `references/personalization.md`.
 
 ## Development Mode Router
 
 When several modes apply, use this order: clarify outcome -> specify -> slice -> implement -> verify -> review. Avoid loading every reference.
+
+### Auto Loop Mode
+
+Use auto loop mode when the user asks for loop, auto, autonomous iteration, repeated improvement, keep-going, or run-until-done behavior. Read `references/loop-auto-mode.md` before all other mode references.
+
+Auto loop mode is a control wrapper, not a replacement for the normal verification modes. It must first prove that the goal has reliable quantified verification. Then it runs PLAN -> DO -> VERIFY -> DECIDE, while SDD, BDD, TDD, EDD, source-driven, architecture, and review modes still define the acceptance and testing standards. If reliable quantification is missing or inappropriate, do not run the loop.
 
 ### Spec-Driven Development
 
@@ -97,6 +106,7 @@ Always consider these families when enough context exists:
 Read these files as needed:
 
 - `references/workflow-map.md`: end-to-end lifecycle, mode selection, decision trace, and how installed skills compose.
+- `references/loop-auto-mode.md`: auto/loop trigger gate, reliable quantification standard, loop state, PLAN/DO/VERIFY/DECIDE cycle, scoring, stopping rules, and fallback behavior.
 - `references/spec-driven-development.md`: SDD workflow for assumptions, specifications, planning, tasks, and approval gates.
 - `references/source-driven-development.md`: official-doc verification overlay for framework/API/platform-sensitive work.
 - `references/acceptance-bdd.md`: BDD/Gherkin and acceptance-first workflow for user-facing behavior.
