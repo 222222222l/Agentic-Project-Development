@@ -1,6 +1,6 @@
 ---
 name: agentic-project-development
-description: Extensible multi-mode project development skill suite for agentic software work. Use when planning, specifying, implementing, testing, evaluating, refactoring, reviewing, or decomposing a project or feature; when choosing between Spec-Driven Development, Behavior/Acceptance-Driven Development, Test-Driven Development, Eval-Driven Development, source-documented implementation, architecture deepening, issue slicing, code review, or auto/loop/run-until-done development requests; when converting vague project goals into explainable workflows, PRDs, vertical slices, acceptance scenarios, tests, evals, quality gates, and reliably quantified verification loops.
+description: Extensible multi-mode project development skill suite for agentic software work. Use when planning, specifying, implementing, testing, evaluating, refactoring, reviewing, or decomposing a project or feature; when choosing between Spec-Driven Development, Behavior/Acceptance-Driven Development, Test-Driven Development, Eval-Driven Development, source-documented implementation, architecture deepening, issue slicing, code review, uncertainty discovery, decision tracing, or auto/loop/run-until-done development requests; when converting vague project goals into explainable workflows, PRDs, vertical slices, acceptance scenarios, tests, evals, quality gates, human-readable change explanations, and reliably quantified verification loops.
 ---
 
 # Agentic Project Development
@@ -9,7 +9,11 @@ description: Extensible multi-mode project development skill suite for agentic s
 
 Choose the lightest development mode that makes the project safer and more explainable. Do not force TDD, SDD, BDD, or EDD on every task. Classify the work, state the chosen mode and why, then load only the reference files needed for that mode.
 
+For all project development on Windows, avoid PowerShell unless it is clearly necessary. Prefer `cmd.exe`, Git Bash, Python scripts, or repository-native CLIs because PowerShell encoding and decoding behavior varies across Windows versions and can increase development time and cost.
+
 For any auto, loop, autonomous, keep-going, run-until-done, or repeated-iteration request, first use the auto-loop gate in `references/loop-auto-mode.md`. A loop is allowed only when the verification target can be reliably quantified. If it cannot, refuse loop execution, explain why, and continue as an ordinary non-loop task using the normal router.
+
+For vague, high-risk, architecture-sensitive, UX-sensitive, or hard-to-reverse work, use the uncertainty gate in `references/uncertainty-and-decision-trace.md`: expose unknowns before work, track high-risk decision points during work, and preserve human understanding after work.
 
 Treat this skill as an orchestration layer over project-development practices. It rewrites and integrates the installed Matt Pocock engineering skills plus the researched SDD, source-driven, BDD, and EDD skills into one extensible decision system.
 
@@ -17,16 +21,21 @@ Treat this skill as an orchestration layer over project-development practices. I
 
 1. Identify the project type, user outcome, risk level, determinism, affected surfaces, existing tests, delivery target, and whether the output is human-facing, machine-facing, or LLM/agent-facing.
 2. If the user asks for auto/loop behavior, read `references/loop-auto-mode.md` and design the quantified verification scheme before selecting implementation modes.
-3. If the request is vague, first use the alignment gate in `references/workflow-map.md`. Prefer existing project context, files, docs, and tests over asking broad questions.
-4. Select a primary mode from the mode router below. Add secondary overlays only when they reduce real risk.
-5. Read the relevant reference file before producing a plan, modifying code, or creating artifacts.
-6. Produce explicit artifacts: assumptions, success criteria, behavior scenarios, test seams, eval criteria, implementation slices, review gates, or source citations as appropriate.
-7. Keep a short decision trace: chosen mode, rejected modes, required artifacts, verification command, and unresolved risks.
-8. When the project needs repeatable local conventions, create or update `docs/agents/project-development-profile.md` using `references/personalization.md`.
+3. If the request is vague or high-risk, read `references/uncertainty-and-decision-trace.md` to expose blind spots, ask one high-leverage question at a time, and identify decision points that can change architecture, data model, API contracts, UX, tests, or delivery slices.
+4. If the request is vague, use the alignment gate in `references/workflow-map.md`. Prefer existing project context, files, docs, tests, prototypes, and references over asking broad questions.
+5. Select a primary mode from the mode router below. Add secondary overlays only when they reduce real risk.
+6. Read the relevant reference file before producing a plan, modifying code, or creating artifacts.
+7. Produce explicit artifacts: assumptions, success criteria, behavior scenarios, test seams, eval criteria, implementation slices, review gates, or source citations as appropriate.
+8. Keep a short decision trace: chosen mode, rejected modes, required artifacts, verification command, and unresolved risks.
+9. When the project needs repeatable local conventions, create or update `docs/agents/project-development-profile.md` using `references/personalization.md`.
 
 ## Development Mode Router
 
 When several modes apply, use this order: clarify outcome -> specify -> slice -> implement -> verify -> review. Avoid loading every reference.
+
+### Uncertainty and Decision Trace Overlay
+
+Use this overlay when the work has unclear goals, unknown architecture consequences, high-risk data/API/UX/test choices, unfamiliar domain technique, or non-trivial post-change explanation needs. Read `references/uncertainty-and-decision-trace.md` before detailed planning. This overlay should usually compose with SDD, BDD, architecture, delivery, or review mode instead of replacing them.
 
 ### Auto Loop Mode
 
@@ -98,6 +107,7 @@ Always consider these families when enough context exists:
 - Verification surface: unit seam, integration seam, user journey, eval dataset, source citation, manual QA.
 - Project knowledge: domain language, ADRs, docs, issue tracker, existing tests, current architecture.
 - Risk: data loss, security, money movement, compliance, performance, reliability, user trust, cost.
+- High-risk decision points: data model, API contract, UX interaction, test/eval strategy, reuse/dependency, rollout, and rollback.
 - Delivery shape: one local change, vertical slice, PRD, issue set, release gate, long-running roadmap.
 - Personalization: repo conventions, preferred tools, issue tracker, test frameworks, eval platform, documentation layout.
 
@@ -107,6 +117,7 @@ Read these files as needed:
 
 - `references/workflow-map.md`: end-to-end lifecycle, mode selection, decision trace, and how installed skills compose.
 - `references/loop-auto-mode.md`: auto/loop trigger gate, reliable quantification standard, loop state, PLAN/DO/VERIFY/DECIDE cycle, scoring, stopping rules, and fallback behavior.
+- `references/uncertainty-and-decision-trace.md`: task-before blind-spot discovery, one-question-at-a-time clarification, task-during high-risk decision tracking, layered unknown handling, and task-after change explanation.
 - `references/spec-driven-development.md`: SDD workflow for assumptions, specifications, planning, tasks, and approval gates.
 - `references/source-driven-development.md`: official-doc verification overlay for framework/API/platform-sensitive work.
 - `references/acceptance-bdd.md`: BDD/Gherkin and acceptance-first workflow for user-facing behavior.
