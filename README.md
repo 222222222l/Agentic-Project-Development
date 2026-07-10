@@ -1,69 +1,94 @@
 # Agentic Project Development
 
-An extensible Codex skill suite for project development work across multiple modes:
-Spec-Driven Development (SDD), Behavior/Acceptance-Driven Development (BDD),
-Test-Driven Development (TDD), Eval-Driven Development (EDD), source-driven
-implementation, architecture/domain design, issue delivery, debugging, review,
-and quantified auto-loop development.
+An extensible Codex skill suite for evidence-grounded project development. It routes work across SDD, BDD, TDD, EDD, source-grounded implementation, architecture/domain design, agent-system engineering, delivery, debugging, review, and quantified auto loops without treating any one method as universal.
 
-The suite is designed as an orchestration layer. It does not force every project
-through TDD. Instead, it chooses the lightest workflow that makes the work safer,
-more explainable, and easier to verify.
+The suite is a workflow layer, not an agent runtime. It can compose with existing project tools and frameworks while keeping acceptance, verification, and human approval explicit.
 
-## Install
+## Core Behavior
 
-Install the skill folder from this repository:
+- Choose the lightest development mode that reduces a real risk.
+- Ground every material phase in repository, runtime, or current source evidence.
+- Express substantial phases as input -> action -> artifact -> verifier -> stop condition.
+- Run loop/auto requests only when the verification target is reliably quantifiable.
+- Attribute failures as local, upstream, or structural before retrying.
+- Converge spec, plan, tasks, implementation, and verification before declaring completion.
+- Keep context and persistent agent instructions minimal and task-relevant.
 
-```bash
-scripts/install-skill-from-github.py --repo 222222222l/Agentic-Project-Development --path agentic-project-development
-```
+## Model Profiles
 
-You can also install manually by copying `agentic-project-development/` into:
+Instruction density adapts to the complete model-harness configuration, not the model name alone.
+
+### `frontier-compact`
+
+For strong long-horizon coding agents in mature harnesses. The model loads only routed references, gathers ordinary repository context autonomously, keeps compact phase contracts, and relies on executable or external verification.
+
+`gpt-5.6-sol` is a candidate when the current Codex harness supplies reliable tools, state, permissions, traces, and verification. `fable5` remains an explicit user-selectable alias, but the suite does not infer undocumented capabilities from the name.
+
+### `portable-guided`
+
+For open-weight, smaller, unfamiliar, or weakly tooled deployments. It uses explicit ALIGN -> EVIDENCE -> CONTRACT -> SLICE -> IMPLEMENT -> VERIFY -> REVIEW -> CONVERGE phases, re-reads files before edits, checkpoints cross-session work, and restricts multi-agent use to typed handoffs with validators.
+
+Kimi and DeepSeek deployments default here until their actual model-harness pair passes project-representative multi-run evals. Users can explicitly promote a tested deployment.
+
+Examples:
 
 ```text
-$CODEX_HOME/skills/agentic-project-development
+Use $agentic-project-development with the frontier-compact profile for this feature.
+Use $agentic-project-development with portable-guided and keep a task state file.
+Treat this Kimi deployment as frontier-compact; its harness passed our repo eval.
 ```
 
-If `CODEX_HOME` is not set, Codex normally uses:
+## Workflow
 
 ```text
-~/.codex/skills/agentic-project-development
+PROFILE -> GATE -> ALIGN -> GROUND -> SPECIFY -> SLICE
+        -> IMPLEMENT -> VERIFY -> RECOVER -> CONVERGE -> EXPLAIN
 ```
 
-Restart Codex after installing so the skill metadata is reloaded.
+The normal mode router defines acceptance and testing. Auto-loop mode only adds bounded repetition after a reliable quantification gate.
 
-## What This Skill Does
+## Auto Loop Rule
 
-Use `$agentic-project-development` when planning, specifying, implementing,
-testing, evaluating, refactoring, reviewing, or decomposing a project or feature.
+For loop, auto, keep-going, or run-until-done requests:
 
-The skill helps an agent:
+1. Name the verifier, exact metrics, hard gates, rubric grader, threshold, budget, and max rounds.
+2. Refuse the loop when checks are subjective, unavailable, non-repeatable, or controlled only by the same agent's preference.
+3. Run `PLAN -> DO -> VERIFY -> DECIDE` after the gate passes.
+4. Stop only when all hard gates and exact thresholds pass and every required rubric score is at least 8.
+5. Diagnose the weakest failure before localized repair, partial re-execution, or structural re-planning.
 
-- classify the shape and risk of a project task;
-- recognize loop/auto/run-until-done requests and require reliable quantified verification before iterating;
-- choose between SDD, BDD, TDD, EDD, source-driven work, architecture mode,
-  issue delivery, or review mode;
-- load only the reference files needed for the chosen mode;
-- produce explicit artifacts such as assumptions, specs, acceptance scenarios,
-  test seams, eval criteria, issue slices, ADRs, or review gates;
-- keep a short decision trace that explains why the mode was selected;
-- preserve room for project-specific personalization.
+## Agent-System Engineering
+
+The agent-system reference starts with the simplest viable design: deterministic code, one structured model call, one tool-using agent, a deterministic workflow, then a stateful graph or multi-agent topology only when measured value justifies coordination cost.
+
+It includes selection gates for:
+
+- OpenAI Agents SDK;
+- Microsoft Agent Framework;
+- LangGraph;
+- Pydantic AI;
+- SWE-agent and OpenHands as software-engineering reference harnesses;
+- GitHub Spec Kit and Superpowers as development methodologies rather than runtimes.
+
+No framework is installed or required by this repository.
 
 ## Repository Layout
 
 ```text
 agentic-project-development/
   SKILL.md
-  agents/
-    openai.yaml
+  agents/openai.yaml
   references/
     workflow-map.md
+    model-capability-profiles.md
     loop-auto-mode.md
+    uncertainty-and-decision-trace.md
     spec-driven-development.md
     source-driven-development.md
     acceptance-bdd.md
     test-driven-development.md
     eval-driven-development.md
+    agent-system-engineering.md
     architecture-and-domain.md
     issue-delivery.md
     review-and-quality.md
@@ -74,131 +99,53 @@ agentic-project-development/
     validate_skill_graph.py
 ```
 
-`SKILL.md` is intentionally concise. Detailed workflows live in `references/`
-and are loaded only when needed. Deterministic helpers live in `scripts/`.
+`SKILL.md` stays navigational. Detailed methods are loaded only when routed, and deterministic checks live in `scripts/`.
 
-## Integrated Local Skills
+## Install
 
-This suite rewrites and integrates the local development-related skills into a
-single project-development router:
-
-- `clarify-project-requirements`
-- `karpathy-guidelines`
-- `grill-with-docs`
-- `grilling`
-- `domain-modeling`
-- `codebase-design`
-- `setup-matt-pocock-skills`
-- `to-prd`
-- `to-issues`
-- `tdd`
-- `improve-codebase-architecture`
-- `code-review`
-- `diagnosing-bugs`
-- `vercel-composition-patterns`
-- `openai-docs`
-- `product-design:get-context`
-- `product-design:audit`
-- `product-design:ideate`
-- `product-design:image-to-code`
-- `browser:control-in-app-browser`
-- `chrome:control-chrome`
-
-It also records which installed local skills were reviewed but intentionally
-kept outside the core router because they are domain, artifact, discovery, or
-meta-skill specialists. See `agentic-project-development/references/source-map.md`.
-
-## Auto Loop Mode
-
-When a user asks for loop, auto, autonomous iteration, keep-going, or
-run-until-done behavior, the skill first applies an auto-loop gate:
-
-1. Design a reliable quantified verification target.
-2. Refuse loop execution if the target cannot be quantified reliably.
-3. If the gate passes, run `PLAN -> DO -> VERIFY -> DECIDE`.
-4. Stop only when every required criterion scores at least 8 and all hard gates pass.
-5. Otherwise improve the weakest criterion until the max round, budget, or blocker is reached.
-
-The acceptance and testing standards still come from the normal router: SDD,
-BDD, TDD, EDD, source-driven development, architecture mode, debugging, or
-review mode as appropriate.
-
-## Researched Skills Rewritten Into This Suite
-
-The suite incorporates the useful ideas from researched agent skill frameworks,
-without copying them verbatim:
-
-- `addyosmani/agent-skills` Spec-Driven Development
-- `addyosmani/agent-skills` Source-Driven Development
-- `fradser/dotclaude` Behavior-Driven Development
-- `robotlearning123/behavior-driven-testing`
-- `promptfoo/promptfoo` promptfoo evals
-- `github/awesome-copilot` Eval-Driven Development
-
-See `agentic-project-development/references/source-map.md` for the mapping.
-
-## Example Prompts
+Place `agentic-project-development/` under:
 
 ```text
-Use $agentic-project-development to choose the right development workflow for this feature.
+$CODEX_HOME/skills/agentic-project-development
 ```
+
+When `CODEX_HOME` is unset, the usual location is:
 
 ```text
-Use $agentic-project-development to turn this vague app idea into a spec, acceptance scenarios, and implementation slices.
+~/.codex/skills/agentic-project-development
 ```
 
-```text
-Use $agentic-project-development for this LLM extraction pipeline and define the eval gates before implementation.
-```
+Restart Codex after installation so skill metadata is reloaded.
 
-```text
-Use $agentic-project-development to review whether this PR satisfies the spec and has enough verification.
-```
+## Personalization
 
-## Validation
-
-Validate the skill graph after edits:
-
-```bash
-python agentic-project-development/scripts/validate_skill_graph.py --skill-dir agentic-project-development
-```
-
-Try the deterministic workflow selector:
-
-```bash
-python agentic-project-development/scripts/select_workflow.py --work-type feature --determinism deterministic --user-facing yes --scope cross-module
-```
-
-Try the auto-loop gate:
-
-```bash
-python agentic-project-development/scripts/select_workflow.py --loop-request yes --quantifiable yes --work-type feature --determinism deterministic
-```
-
-## Extension Points
-
-Customize a project by adding or updating:
+For stable repository conventions, create:
 
 ```text
 docs/agents/project-development-profile.md
 ```
 
-The personalization reference supports local defaults for:
+Override precedence is: explicit task instruction -> project profile/artifacts -> organization preset -> suite defaults. Profiles can set model execution detail, test/eval commands, state paths, framework preferences, approval boundaries, fatal gates, and non-functional constraints.
 
-- preferred development modes;
-- test and eval frameworks;
-- issue tracker conventions;
-- documentation layout;
-- risk gates;
-- source-documentation preferences;
-- project-specific vocabulary and ADR practices.
+## Validation
 
-## Design Principles
+Use the bundled Python runtime when `python` is unavailable on `PATH`.
 
-- Use the lightest workflow that reduces real risk.
-- Prefer explicit success criteria over ritual process.
-- Treat TDD as one implementation mode, not a universal default.
-- Use BDD when user-visible behavior is the contract.
-- Use EDD when semantic or probabilistic output quality matters.
-- Use source-driven development when current docs can invalidate memory.
-- Keep project-specific decisions explainable and auditable.
+```bash
+python agentic-project-development/scripts/validate_skill_graph.py --skill-dir agentic-project-development
+```
+
+Try frontier and portable routing:
+
+```bash
+python agentic-project-development/scripts/select_workflow.py --work-type feature --scope cross-module --model-name gpt-5.6-sol --harness-maturity strong
+python agentic-project-development/scripts/select_workflow.py --work-type agent-system --determinism llm --model-name Kimi-K2.7-Code --harness-maturity partial --risk high
+```
+
+## Research Basis
+
+Research and model evidence in this revision was checked on 2026-07-10.
+
+The current constraints absorb evidence from GitHub Spec Kit, Superpowers, Evaluating AGENTS.md, Agent READMEs, Spec Kit Agents, RigorBench, Harness-Bench, Meta-Agent, AgentTether, RAMP, and empirical studies of rejected agent-authored PRs. See `agentic-project-development/references/source-map.md` for links and the exact mapping.
+
+The practical result is intentionally conservative: minimal persistent context, repository-grounded phases, explicit contracts, process-discipline gates, model-harness evaluation, localized recovery, and human-readable evidence before completion.

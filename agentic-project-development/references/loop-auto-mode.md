@@ -1,5 +1,14 @@
 # Auto Loop Mode
 
+## Contents
+
+- Trigger and quantification gate
+- Verification design
+- Plan-do-verify-decide cycle
+- State and routing
+- Autonomy, safety, and stop rules
+- Integrated method sources
+
 ## Use When
 
 Use this reference when the user asks for loop, auto, autonomous iteration, keep-going, self-running, repeated improvement, run-until-done, or similar behavior.
@@ -31,6 +40,7 @@ Loop request:
 Quantified target:
 Verifier:
 Metrics or gates:
+Model profile:
 Passing threshold:
 Max rounds:
 State file:
@@ -67,7 +77,13 @@ Make the change or improve the current result. Keep changes scoped to the target
 
 ### VERIFY
 
-Run the named verifier or inspect the named artifact. Score each criterion from 1 to 10 and list remaining deficits honestly.
+Run the named verifier or inspect the named artifact. Preserve exact metrics and hard-gate results separately from subjective scoring.
+
+- Exact metrics: record the observed value and normalization, if any.
+- Hard gates: record pass/fail; a fatal failure cannot be averaged away.
+- Human or model rubric: score from 1 to 10 only when exact checks cannot capture the criterion, and name the grader.
+
+List remaining deficits honestly.
 
 Use this scale:
 
@@ -79,7 +95,7 @@ Use this scale:
 
 ### DECIDE
 
-Stop only when every required criterion is at least 8 and all hard gates pass. Otherwise, select the weakest criterion, plan the next round, and continue until the max rounds, budget, or blocker is reached.
+Stop only when all hard gates pass, exact metrics meet threshold, and every required rubric criterion is at least 8. Otherwise classify the weakest failure as local, upstream, or structural, then choose localized repair, partial re-execution, or re-planning. Continue only until the max rounds, budget, or blocker is reached.
 
 ## State File
 
@@ -125,6 +141,8 @@ State file template:
 - 
 ```
 
+Also preserve failure class, attributed cause, and correction boundary when a round fails. Do not carry a repair into unrelated contexts without evidence.
+
 Do not create state files for a single short loop unless persistence would reduce risk.
 
 ## Verification Routing
@@ -154,6 +172,8 @@ Default to the lowest autonomy level that satisfies the request:
 - Stop when the same blocker repeats twice or the verifier cannot run.
 - Never loosen the threshold mid-loop to declare success.
 - Do not count self-assessed prose as sufficient evidence when executable or external verification is available.
+- Do not restart the full workflow when a local node can be repaired and re-verified independently.
+- Stop and redesign when the decomposition or verifier is structural rather than spending the remaining budget on retries.
 - For destructive, expensive, credentialed, or externally visible actions, ask for approval before the action even if the loop gate passed.
 
 ## Method Sources Integrated
@@ -166,3 +186,6 @@ This suite absorbs loop-engineering methods as patterns, not as a mandatory exte
 - Maker/checker separation and deterministic verdict gates from review-loop harnesses.
 - Skill-eval caution from SWE-Skills-Bench: skills and loops must earn their token overhead with measurable improvement.
 - Runtime diagnosis emphasis from SWE-Doctor and RAMP: judge the running loop by observable failures, recovery, tool use, and verification evidence.
+- Process-discipline metrics from RigorBench: planning fidelity, verification coverage, recovery efficiency, abstention, and atomic transitions.
+- Model-harness pairing from Harness-Bench: treat context, tools, state, permissions, tracing, and recovery as part of capability.
+- Local/upstream/structural error attribution from Meta-Agent and dependency-aware localized repair from AgentTether.

@@ -38,7 +38,7 @@ Scenario: Eligible customer applies a discount
 
 - Feed scenarios into SDD success criteria.
 - Feed scenarios into `to-issues` acceptance criteria.
-- Use `product-design:*` skills when scenarios involve UX flows, visual product direction, image-to-code implementation, or product audits.
+- Compose with a currently available frontend or design skill when scenarios involve visual product direction or implementation.
 - Use `browser:control-in-app-browser` or `chrome:control-chrome` to verify implemented journeys in a real browser.
 - Use TDD for deterministic units behind a scenario.
 - Use EDD when a scenario's output is semantic, probabilistic, or LLM-generated.

@@ -1,73 +1,80 @@
 # Source Map
 
-This suite is a rewritten integration layer, not a verbatim bundle. It preserves the practical roles of installed and researched skills while reorganizing them under a single project-development architecture.
+This suite is a rewritten orchestration layer, not a verbatim bundle. Keep method sources separate from runtime dependencies and current local availability.
 
-## Installed Skills Integrated
-
-| Skill | Integrated role |
-| --- | --- |
-| `clarify-project-requirements` | Alignment gate and low-cost path discipline |
-| `karpathy-guidelines` | Non-trivial coding discipline: surface assumptions, keep changes simple, edit surgically, and define verifiable success criteria |
-| `grill-with-docs` | Deep project questioning plus domain/ADR capture |
-| `grilling` | One-question-at-a-time design interrogation |
-| `domain-modeling` | Shared project vocabulary and domain docs |
-| `codebase-design` | Deep-module design vocabulary and seam reasoning |
-| `setup-matt-pocock-skills` | Per-repo issue tracker, triage labels, and domain doc setup |
-| `to-prd` | Conversation/spec to PRD synthesis |
-| `to-issues` | Vertical tracer-bullet issue decomposition |
-| `tdd` | Deterministic red-green implementation at agreed seams |
-| `improve-codebase-architecture` | Architecture review and deepening opportunities |
-| `code-review` | Standards and spec review |
-| `diagnosing-bugs` | Reproduce-minimize-hypothesize-instrument-fix loop |
-| `vercel-composition-patterns` | React component API and composition overlay for scalable UI architecture |
-| `openai-docs` | Official OpenAI documentation overlay for SDK/API/model-sensitive implementation |
-| `product-design:get-context` | Product/UI brief gate before design, prototype, or image-to-code work |
-| `product-design:audit` | Evidence-based UX, flow, and accessibility review from captured screens |
-| `product-design:ideate` | Image-based visual exploration for product UI directions |
-| `product-design:image-to-code` | Responsive frontend implementation from selected visual references |
-| `browser:control-in-app-browser` | Local browser verification, screenshots, and interaction checks for web work |
-| `chrome:control-chrome` | Logged-in or extension-dependent browser verification when existing Chrome state matters |
-
-## Installed Skills Reviewed but Kept Outside the Core Router
-
-These skills remain useful, but they are domain, artifact, discovery, or meta-skill specialists rather than general project-development modes:
-
-| Skill | Reason |
-| --- | --- |
-| `find-skills` | Discovery support for finding more skills; not a development lifecycle mode |
-| `search` | Source retrieval support; source-driven development already defines when to use official sources |
-| `skill-creator`, `skill-installer`, `plugin-creator` | Meta-skills for building or installing skills/plugins |
-| `documents`, `pdf`, `presentations`, `spreadsheets`, `template-creator` | Artifact specialists used only when the project deliverable is that file type |
-| `imagegen`, `hatch-pet` | Visual asset or pet-package specialists, optional for projects needing those assets |
-| `market-signal-analysis`, `china-policy-risk-analysis` | Domain-analysis skills, not general software project-development skills |
-
-## Researched Skills Rewritten Into This Suite
+## Local Skills Integrated
 
 | Skill | Integrated role |
 | --- | --- |
-| `addyosmani/agent-skills@spec-driven-development` | SDD assumptions/spec/plan/tasks/implementation gates |
-| `addyosmani/agent-skills@source-driven-development` | Official-doc verification overlay |
-| `fradser/dotclaude@behavior-driven-development` | BDD discovery, Given/When/Then, executable specifications |
-| `robotlearning123/behavior-driven-testing@behavior-driven-testing` | Branch matrix, behavior-first test coverage, real-environment validation |
-| `promptfoo/promptfoo@promptfoo-evals` | Promptfoo eval suites, rubrics, datasets, CI eval gates |
-| `github/awesome-copilot@eval-driven-dev` | Python LLM app eval pipeline, instrumentation, golden datasets, result analysis |
-| `cobusgreyling/loop-engineering` | Loop readiness audit, loop-init/audit/cost/context patterns, budget gates, state and verifier discipline |
-| `GaosCode/PlanWeave` | File-backed task blocks, claimable work, recoverable loop state, review feedback, and Codex executor patterns |
-| `baidu-baige/LoongFlow` | Plan-Execute-Summary loop and structured experiential memory for long-running tasks |
-| `doodledood/manifest-dev` | Define-done-first manifest discipline and independent criterion verification |
-| `indiekitai/codex-orchestrator` | Codex App worktree sessions, heartbeat, ledger, and evidence-label loop patterns |
-| `StGarca/consensus-mcp` | Multi-model maker/checker review and consensus gate pattern |
-| `SWE-Skills-Bench` | Skill adoption must be evaluated because many skills fail to improve outcomes or add token overhead |
-| `SWE-Doctor` | Runtime diagnosis and reproduction-first verification for bug-fix loops |
-| `RAMP` | Runtime, tool-use, failure-recovery, dependency, and cost signals for judging agent loops |
+| `clarify-project-requirements` | Outcome alignment and lowest-cost viable path |
+| `karpathy-guidelines` | Assumptions, small scoped changes, and explicit verification |
+| `grill-with-docs`, `grilling` | High-leverage questioning and durable decision capture |
+| `domain-modeling`, `codebase-design` | Shared vocabulary, deep modules, and stable seams |
+| `setup-matt-pocock-skills` | Repo issue and domain-doc setup |
+| `to-prd`, `to-issues` | Durable intent and vertical tracer-bullet delivery |
+| `tdd` | Deterministic red-green implementation at public seams |
+| `improve-codebase-architecture` | Architecture deepening candidates |
+| `code-review`, `diagnosing-bugs` | Standards/spec review and root-cause diagnosis |
+| `agent-evaluation` | Exact metrics, fatal gates, multi-run task suites, and human trace scoring |
+
+## Current Optional Composition
+
+| Capability | Use |
+| --- | --- |
+| `openai-docs` | Official OpenAI model/API/Codex source route |
+| `vercel-composition-patterns` | React component API and composition design |
+| `browser:control-in-app-browser`, `chrome:control-chrome` | Browser-backed acceptance and logged-in journeys |
+| `sites:sites-building`, `imagegen` | Frontend delivery or visual assets when the task specifically requires them |
+
+Treat optional composition as availability-dependent. Do not claim a plugin skill is locally installed when it is merely surfaced by the current harness.
+
+## Development Methods Adapted
+
+| Source | Integrated role |
+| --- | --- |
+| [GitHub Spec Kit](https://github.com/github/spec-kit) | Constitution/spec/plan/tasks, cross-artifact analysis, checklist, converge, extensions, and project overrides |
+| [Superpowers](https://github.com/obra/superpowers) | Clean baseline, verification-before-completion, spec-then-quality review, skill behavior evals; universal TDD is intentionally not inherited |
+| `addyosmani/agent-skills` | Spec-driven and source-driven development gates |
+| `fradser/dotclaude`, `robotlearning123/behavior-driven-testing` | Behavior discovery, scenarios, branch coverage, and real-environment checks |
+| `promptfoo/promptfoo`, `github/awesome-copilot` | Prompt/agent eval datasets, graders, instrumentation, and CI gates |
+| `cobusgreyling/loop-engineering`, `GaosCode/PlanWeave`, `baidu-baige/LoongFlow` | Loop readiness, file-backed state, recoverability, and plan-execute-summary memory |
+| `doodledood/manifest-dev`, `indiekitai/codex-orchestrator`, `StGarca/consensus-mcp` | Define-done-first, worktree/ledger patterns, and maker-checker separation |
+
+## Agent Runtime Frameworks Reviewed
+
+| Framework | Position in this suite |
+| --- | --- |
+| [OpenAI Agents SDK](https://github.com/openai/openai-agents-python) | Lightweight agents, sandbox work, tools, handoffs, guardrails, sessions, and tracing |
+| [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) | Python/.NET production graphs, checkpoints, OTel, governance, and HITL |
+| [LangGraph](https://github.com/langchain-ai/langgraph) | Low-level stateful graphs, durable execution, interrupts, memory, and traces |
+| [Pydantic AI](https://github.com/pydantic/pydantic-ai) | Typed Python contracts, provider portability, evals, OTel, and durable workflows |
+| [SWE-agent](https://github.com/SWE-agent/SWE-agent), [OpenHands](https://github.com/OpenHands/OpenHands) | Software-engineering agent reference harnesses and evaluation targets |
+
+These are candidates, not required dependencies. `references/agent-system-engineering.md` defines the selection gate.
+
+## Research Constraints Added
+
+| Research | Constraint absorbed |
+| --- | --- |
+| [Evaluating AGENTS.md (2602.11988)](https://hf.co/papers/2602.11988) | Keep context files minimal; unnecessary instructions can reduce success and increase inference cost |
+| [Agent READMEs (2511.12884)](https://hf.co/papers/2511.12884) | Include neglected non-functional constraints such as security and performance |
+| [Spec Kit Agents (2604.05278)](https://hf.co/papers/2604.05278) | Ground and validate every phase against repository evidence |
+| [RigorBench (2606.22678)](https://hf.co/papers/2606.22678) | Measure planning, verification, recovery, abstention, and atomic transition integrity |
+| [Harness-Bench (2605.27922)](https://hf.co/papers/2605.27922) | Attribute capability to model plus harness configuration |
+| [Meta-Agent (2605.25233)](https://hf.co/papers/2605.25233) | Use explicit contracts, intermediate verification, and local/upstream/structural error attribution |
+| [AgentTether (2607.06273)](https://hf.co/papers/2607.06273) | Localize failed transitions and retain behavior-scoped repair memory |
+| [RAMP (2605.27492)](https://hf.co/papers/2605.27492) | Evaluate runtime failures, recovery, tool use, serial dependencies, and cost |
+| [Why Agentic-PRs Get Rejected (2602.04226)](https://hf.co/papers/2602.04226) | Keep PR scope/explanation proportional and preserve reviewer-trust evidence |
+
+## Model Evidence Boundary
+
+Evidence checked on 2026-07-10:
+
+- The current Codex harness exposes `gpt-5.6-sol` as a frontier agentic coding model; capability still depends on its tools, state, permissions, and verifier.
+- [Kimi K2.5](https://hf.co/papers/2602.02276) documents multimodal agentic training and Agent Swarm; current open checkpoints include Kimi K2.7 Code. Use `portable-guided` until the deployment passes project evals.
+- [DeepSeek V4](https://hf.co/papers/2606.19348) documents million-token open models; long context does not itself prove reliable tool execution or workflow recovery. Use `portable-guided` until evaluated.
+- Public Fable 5 evidence is dominated by agent traces and distillation datasets. Keep it as an explicit alias, not a hard-coded capability claim.
 
 ## Design Difference
 
-The original skills are usable independently. This suite adds:
-
-- A single mode-selection router.
-- Explicit tradeoffs between SDD, BDD, TDD, EDD, and source-driven work.
-- Progressive disclosure by project risk and output type.
-- Repo-level personalization.
-- Explainable decision traces.
-- A quantification-first auto loop gate for loop/auto requests.
+The suite adds a mode router, progressive references, quantification-first loops, evidence-grounded phase contracts, artifact convergence, process-discipline gates, model-harness profiles, and repo-local customization without requiring one runtime or one development ritual.

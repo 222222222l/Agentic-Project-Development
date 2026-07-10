@@ -1,144 +1,90 @@
 ---
 name: agentic-project-development
-description: Extensible multi-mode project development skill suite for agentic software work. Use when planning, specifying, implementing, testing, evaluating, refactoring, reviewing, or decomposing a project or feature; when choosing between Spec-Driven Development, Behavior/Acceptance-Driven Development, Test-Driven Development, Eval-Driven Development, source-documented implementation, architecture deepening, issue slicing, code review, uncertainty discovery, decision tracing, or auto/loop/run-until-done development requests; when converting vague project goals into explainable workflows, PRDs, vertical slices, acceptance scenarios, tests, evals, quality gates, human-readable change explanations, and reliably quantified verification loops.
+description: Route agentic project work through the lightest reliable combination of Spec-Driven, Behavior/Acceptance-Driven, Test-Driven, Eval-Driven, source-grounded, architecture/domain, agent-system, delivery, review, debugging, uncertainty, and quantified auto-loop practices. Use when planning, specifying, implementing, testing, evaluating, refactoring, reviewing, or decomposing projects and features; when building LLM or multi-agent systems; when adapting execution detail to frontier or open-weight models; or when users request loop, auto, autonomous, keep-going, or run-until-done development.
 ---
 
 # Agentic Project Development
 
-## Core Rule
+## Operating Contract
 
-Choose the lightest development mode that makes the project safer and more explainable. Do not force TDD, SDD, BDD, or EDD on every task. Classify the work, state the chosen mode and why, then load only the reference files needed for that mode.
+1. Choose the lightest mode that reduces a real risk. Do not force TDD, SDD, BDD, EDD, or multi-agent orchestration onto every task.
+2. Select an execution profile before loading detailed references. Honor an explicit user profile; otherwise use `references/model-capability-profiles.md` to choose `frontier-compact` or `portable-guided` from the model-harness capability pair.
+3. Ground every material phase in repository or source evidence. Do not let a plausible plan drift away from files, runtime state, tool feedback, or observable acceptance criteria.
+4. For loop/auto requests, read `references/loop-auto-mode.md` first. Run a loop only when the verification target is reliably quantifiable; otherwise refuse the loop and continue as an ordinary task.
+5. For vague, high-risk, hard-to-reverse, architecture-sensitive, or UX-sensitive work, read `references/uncertainty-and-decision-trace.md` before detailed planning.
+6. Stop or abstain when required evidence, permission, or verification is unavailable. Never hide a fatal gate behind an average score or confident prose.
 
-For all project development on Windows, avoid PowerShell unless it is clearly necessary. Prefer `cmd.exe`, Git Bash, Python scripts, or repository-native CLIs because PowerShell encoding and decoding behavior varies across Windows versions and can increase development time and cost.
-
-For any auto, loop, autonomous, keep-going, run-until-done, or repeated-iteration request, first use the auto-loop gate in `references/loop-auto-mode.md`. A loop is allowed only when the verification target can be reliably quantified. If it cannot, refuse loop execution, explain why, and continue as an ordinary non-loop task using the normal router.
-
-For vague, high-risk, architecture-sensitive, UX-sensitive, or hard-to-reverse work, use the uncertainty gate in `references/uncertainty-and-decision-trace.md`: expose unknowns before work, track high-risk decision points during work, and preserve human understanding after work.
-
-Treat this skill as an orchestration layer over project-development practices. It rewrites and integrates the installed Matt Pocock engineering skills plus the researched SDD, source-driven, BDD, and EDD skills into one extensible decision system.
+On Windows, prefer repository-native commands and explicit UTF-8 handling. Change shells only when encoding, quoting, or tool compatibility creates demonstrated friction.
 
 ## Workflow
 
-1. Identify the project type, user outcome, risk level, determinism, affected surfaces, existing tests, delivery target, and whether the output is human-facing, machine-facing, or LLM/agent-facing.
-2. If the user asks for auto/loop behavior, read `references/loop-auto-mode.md` and design the quantified verification scheme before selecting implementation modes.
-3. If the request is vague or high-risk, read `references/uncertainty-and-decision-trace.md` to expose blind spots, ask one high-leverage question at a time, and identify decision points that can change architecture, data model, API contracts, UX, tests, or delivery slices.
-4. If the request is vague, use the alignment gate in `references/workflow-map.md`. Prefer existing project context, files, docs, tests, prototypes, and references over asking broad questions.
-5. Select a primary mode from the mode router below. Add secondary overlays only when they reduce real risk.
-6. Read the relevant reference file before producing a plan, modifying code, or creating artifacts.
-7. Produce explicit artifacts: assumptions, success criteria, behavior scenarios, test seams, eval criteria, implementation slices, review gates, or source citations as appropriate.
-8. Keep a short decision trace: chosen mode, rejected modes, required artifacts, verification command, and unresolved risks.
-9. When the project needs repeatable local conventions, create or update `docs/agents/project-development-profile.md` using `references/personalization.md`.
+1. **Profile**: choose the model execution profile and record whether it came from the user, a known alias, or capability self-assessment.
+2. **Classify**: identify outcome, work shape, risk, determinism, scope, affected surfaces, delivery target, and verification surface.
+3. **Gate**: apply loop quantification and uncertainty gates when triggered.
+4. **Route**: choose one primary mode and only the overlays that reduce material risk.
+5. **Ground**: name the evidence for each phase: files, versions, docs, runtime state, scenarios, datasets, or prior artifacts.
+6. **Contract**: define each substantial phase as input -> action -> artifact -> verifier -> stop/escalation condition.
+7. **Execute**: deliver the smallest vertical slice that can be independently verified.
+8. **Recover**: classify failures as local, upstream, or structural before retrying; prefer localized repair over replaying the full workflow.
+9. **Converge**: check spec -> plan -> task -> implementation -> verification traceability and record remaining work without relaxing gates.
+10. **Explain**: report the chosen/rejected modes, evidence, verification, intentional non-changes, and residual risk.
 
-## Development Mode Router
+## Mode Router
 
-When several modes apply, use this order: clarify outcome -> specify -> slice -> implement -> verify -> review. Avoid loading every reference.
+| Trigger | Primary reference | Common overlays |
+| --- | --- | --- |
+| New, vague, cross-module, or stakeholder-facing work | `references/spec-driven-development.md` | BDD, architecture, uncertainty |
+| User-visible workflow, business rule, permission, or API contract | `references/acceptance-bdd.md` | SDD, TDD, browser verification |
+| Deterministic behavior or regression at a known seam | `references/test-driven-development.md` | BDD, source-grounded work |
+| LLM, RAG, prompt, routing, semantic, or agent output | `references/eval-driven-development.md` | Agent evaluation, source grounding |
+| Current framework, API, protocol, or platform behavior matters | `references/source-driven-development.md` | Any implementation or review mode |
+| Agent runtime, tool graph, memory, handoff, durable workflow, or multi-agent system | `references/agent-system-engineering.md` | EDD, source grounding, architecture |
+| Domain concepts, module boundaries, data ownership, or deep refactor | `references/architecture-and-domain.md` | SDD, TDD, decision trace |
+| PRD, issue set, multi-session or multi-worker handoff | `references/issue-delivery.md` | SDD, BDD, EDD |
+| Review, debugging, release readiness, or completion decision | `references/review-and-quality.md` | Relevant coverage mode |
+| Loop, auto, keep-going, or run-until-done | `references/loop-auto-mode.md` | Normal router after quantification |
 
-### Uncertainty and Decision Trace Overlay
+Use `references/workflow-map.md` when several rows apply or when artifact ordering is unclear.
 
-Use this overlay when the work has unclear goals, unknown architecture consequences, high-risk data/API/UX/test choices, unfamiliar domain technique, or non-trivial post-change explanation needs. Read `references/uncertainty-and-decision-trace.md` before detailed planning. This overlay should usually compose with SDD, BDD, architecture, delivery, or review mode instead of replacing them.
+## Decision Trace
 
-### Auto Loop Mode
+Keep this compact:
 
-Use auto loop mode when the user asks for loop, auto, autonomous iteration, repeated improvement, keep-going, or run-until-done behavior. Read `references/loop-auto-mode.md` before all other mode references.
+```markdown
+Model profile / source:
+Chosen mode / overlays:
+Rejected modes:
+Evidence loaded:
+Artifacts and verifier:
+Failure class or open risk:
+Next decision:
+```
 
-Auto loop mode is a control wrapper, not a replacement for the normal verification modes. It must first prove that the goal has reliable quantified verification. Then it runs PLAN -> DO -> VERIFY -> DECIDE, while SDD, BDD, TDD, EDD, source-driven, architecture, and review modes still define the acceptance and testing standards. If reliable quantification is missing or inappropriate, do not run the loop.
-
-### Spec-Driven Development
-
-Use SDD when the project or feature is new, ambiguous, cross-module, stakeholder-facing, or likely to take more than one focused session. Read `references/spec-driven-development.md`.
-
-Prefer SDD before `to-prd` when the conversation lacks a stable source of truth. Prefer `to-prd` directly only when enough discussion already exists.
-
-### Source-Driven Development
-
-Use source-driven development when framework, library, API, platform, or protocol correctness depends on current official documentation. Read `references/source-driven-development.md`.
-
-This is an overlay, not a full lifecycle. Combine it with SDD, BDD, TDD, or implementation whenever stale API memory could cause wrong code.
-
-Use `openai-docs` as the official documentation path when the project uses OpenAI products, APIs, models, or Codex surfaces.
-
-### Behavior and Acceptance Driven Development
-
-Use BDD or acceptance-driven development when user-visible behavior, workflows, rules, permissions, forms, payments, onboarding, reporting, or API contracts matter more than internal structure. Read `references/acceptance-bdd.md`.
-
-BDD scenarios can feed SDD success criteria, TDD seams, Playwright/Cucumber tests, or issue acceptance criteria.
-
-For product/UI work, compose with installed `product-design:*` skills for brief gates, visual exploration, image-to-code implementation, or UX audits. Use browser skills for screenshot-backed verification when the implementation is web-facing.
-
-### Test-Driven Development
-
-Use TDD when the behavior is deterministic, the public seam is known, and the main risk is regression or incorrect logic. Read `references/test-driven-development.md`.
-
-Use TDD as one implementation engine, not as the default for every project. Do not write implementation-coupled or tautological tests.
-
-### Eval-Driven Development
-
-Use EDD when the project contains LLM calls, retrieval, agents, prompt chains, classifiers, extractors, scoring, summarization, generation, or other probabilistic outputs. Read `references/eval-driven-development.md`.
-
-Prefer deterministic assertions where possible. Use model-graded or human-review rubrics only where semantic quality cannot be reduced to exact checks.
-
-### Architecture and Domain Design
-
-Use architecture/domain mode when the request changes module boundaries, introduces a new domain concept, deepens or splits modules, touches many files, or asks whether a codebase is becoming hard to change. Read `references/architecture-and-domain.md`.
-
-Keep project vocabulary in `CONTEXT.md` or the repo's configured domain doc. Record durable rejected decisions as ADRs when useful.
-
-For React component architecture, compose with `vercel-composition-patterns`. For non-trivial code changes, apply `karpathy-guidelines` as a lightweight discipline overlay.
-
-### Issue Delivery and Work Decomposition
-
-Use delivery mode when turning a spec, PRD, plan, or conversation into implementation issues, task slices, or AFK-agent work. Read `references/issue-delivery.md`.
-
-Prefer vertical tracer bullets over horizontal layer tasks.
-
-### Review, Debugging, and Quality Gates
-
-Use review mode when auditing a diff, verifying implementation against a spec, diagnosing failures, preparing for release, or deciding whether work is shippable. Read `references/review-and-quality.md`.
-
-Review should compare both standards and specification, then identify missing tests, missing evals, and residual risks.
-
-## Required Decision Families
-
-Always consider these families when enough context exists:
-
-- Goal clarity: user, outcome, non-goals, constraints, success criteria.
-- Work shape: feature, bug, refactor, migration, prototype, research, eval, review, release.
-- Determinism: exact behavior, probabilistic output, human judgment, external API variability.
-- Verification surface: unit seam, integration seam, user journey, eval dataset, source citation, manual QA.
-- Project knowledge: domain language, ADRs, docs, issue tracker, existing tests, current architecture.
-- Risk: data loss, security, money movement, compliance, performance, reliability, user trust, cost.
-- High-risk decision points: data model, API contract, UX interaction, test/eval strategy, reuse/dependency, rollout, and rollback.
-- Delivery shape: one local change, vertical slice, PRD, issue set, release gate, long-running roadmap.
-- Personalization: repo conventions, preferred tools, issue tracker, test frameworks, eval platform, documentation layout.
+For repeatable repo conventions, create or update `docs/agents/project-development-profile.md` using `references/personalization.md`.
 
 ## References
 
-Read these files as needed:
-
-- `references/workflow-map.md`: end-to-end lifecycle, mode selection, decision trace, and how installed skills compose.
-- `references/loop-auto-mode.md`: auto/loop trigger gate, reliable quantification standard, loop state, PLAN/DO/VERIFY/DECIDE cycle, scoring, stopping rules, and fallback behavior.
-- `references/uncertainty-and-decision-trace.md`: task-before blind-spot discovery, one-question-at-a-time clarification, task-during high-risk decision tracking, layered unknown handling, and task-after change explanation.
-- `references/spec-driven-development.md`: SDD workflow for assumptions, specifications, planning, tasks, and approval gates.
-- `references/source-driven-development.md`: official-doc verification overlay for framework/API/platform-sensitive work.
-- `references/acceptance-bdd.md`: BDD/Gherkin and acceptance-first workflow for user-facing behavior.
-- `references/test-driven-development.md`: TDD seam selection, red-green loop, anti-patterns, and when not to use TDD.
-- `references/eval-driven-development.md`: EDD for LLM/agent/RAG/prompt systems, promptfoo/Pixie-style evals, datasets, rubrics, and CI gates.
-- `references/architecture-and-domain.md`: domain modeling, deep modules, architecture review, ADRs, and explainable design vocabulary.
-- `references/issue-delivery.md`: PRD creation, issue tracker configuration, vertical slices, and AFK-agent-ready tickets.
-- `references/review-and-quality.md`: code review, debugging, release gates, acceptance coverage, and quality risk reporting.
-- `references/personalization.md`: repo-level customization profile, mode defaults, tool choices, and extension slots.
-- `references/source-map.md`: rewritten-source mapping from installed and researched skills into this suite.
+- `references/workflow-map.md`: lifecycle, phase contracts, traceability, convergence, and mode composition.
+- `references/model-capability-profiles.md`: self-selection and explicit override for frontier-compact and portable-guided execution.
+- `references/loop-auto-mode.md`: quantification gate, bounded loop, state, recovery, and stopping rules.
+- `references/uncertainty-and-decision-trace.md`: blind-spot discovery, high-risk decisions, and post-change explanation.
+- `references/spec-driven-development.md`: assumptions, specification, planning, tasks, and approval gates.
+- `references/source-driven-development.md`: official-source verification for version-sensitive work.
+- `references/acceptance-bdd.md`: behavior examples, scenarios, and acceptance-first verification.
+- `references/test-driven-development.md`: seam selection, red-green-refactor, and test anti-patterns.
+- `references/eval-driven-development.md`: datasets, evaluators, multi-run evidence, and release gates.
+- `references/agent-system-engineering.md`: framework selection, agent contracts, state, tracing, recovery, and human control.
+- `references/architecture-and-domain.md`: domain modeling, deep modules, ADRs, and stable seams.
+- `references/issue-delivery.md`: PRDs, vertical slices, and agent-ready handoffs.
+- `references/review-and-quality.md`: spec/standards review, process discipline, debugging, PR, and release gates.
+- `references/personalization.md`: layered repo overrides, tooling, risk gates, and model profile defaults.
+- `references/source-map.md`: mapping from installed skills, current frameworks, and research into this suite.
 
 ## Scripts
 
-Use `scripts/select_workflow.py` for a deterministic first-pass recommendation when the request has many possible modes.
+Run `scripts/select_workflow.py` for a deterministic first pass when routing is ambiguous. Run `scripts/validate_skill_graph.py` after every skill edit.
 
 ```powershell
-python scripts/select_workflow.py --work-type feature --determinism deterministic --user-facing yes --scope cross-module
-```
-
-Use `scripts/validate_skill_graph.py` after editing this skill to verify that all references listed in `SKILL.md` exist.
-
-```powershell
+python scripts/select_workflow.py --work-type feature --scope cross-module --model-name gpt-5.6-sol --harness-maturity strong
 python scripts/validate_skill_graph.py --skill-dir .
 ```

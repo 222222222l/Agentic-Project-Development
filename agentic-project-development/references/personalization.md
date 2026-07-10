@@ -1,5 +1,23 @@
 # Personalization and Extension
 
+## Contents
+
+- Override precedence
+- Repo profile template
+- Extension pattern
+- Personal defaults
+
+## Override Precedence
+
+Resolve conflicts in this order:
+
+1. Explicit user instruction for the current task.
+2. Project-local profile and task artifacts.
+3. Organization or team preset.
+4. This skill suite's defaults.
+
+Keep overrides small. A profile should contain only information that changes agent behavior in this repository.
+
 ## Repo Profile
 
 Create `docs/agents/project-development-profile.md` when a repo needs stable local preferences.
@@ -9,6 +27,8 @@ Create `docs/agents/project-development-profile.md` when a repo needs stable loc
 
 ## Default Mode Preferences
 
+- Model profile default:
+- Model-harness configurations already promoted by eval:
 - Default lifecycle:
 - Auto loop default:
 - Max auto loop rounds:
@@ -40,6 +60,16 @@ Create `docs/agents/project-development-profile.md` when a repo needs stable loc
 - Manual checks:
 - Loop verifiers:
 - Loop state path:
+- Fatal gates:
+- Security/performance/reliability/cost checks:
+
+## Agent Systems
+
+- Preferred framework or no-framework rule:
+- Trace/observability backend:
+- State/checkpoint backend:
+- Human approval boundaries:
+- Eval dataset and repeated-run count:
 
 ## Local Conventions
 
@@ -81,3 +111,5 @@ Good defaults for solo project development:
 - Use EDD only for LLM/semantic quality.
 - Use source-driven development for fast-moving frameworks and APIs.
 - Use issue slicing only when work will span multiple sessions or agents.
+- Default unknown or open-weight model-harness pairs to `portable-guided`; promote only from project-representative eval evidence.
+- Keep AGENTS/context files minimal: exact commands, boundaries, non-functional constraints, and hazards only.

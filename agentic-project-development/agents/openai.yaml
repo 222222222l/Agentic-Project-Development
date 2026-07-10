@@ -1,4 +1,4 @@
 interface:
   display_name: "Agentic Project Development"
-  short_description: "Multi-mode development suite with quantified auto-loop gating"
-  default_prompt: "Use $agentic-project-development to choose an appropriate development workflow and apply auto-loop gating when requested."
+  short_description: "Adaptive development with evidence and model profiles"
+  default_prompt: "Use $agentic-project-development to select a model profile, route the work, and verify it with grounded evidence."
