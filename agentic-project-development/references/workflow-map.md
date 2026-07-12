@@ -54,6 +54,7 @@ Validate intermediate artifacts before they become downstream context. A clean f
 | UI workflow, permissions, checkout, onboarding | BDD | TDD or browser journey |
 | LLM, agent, RAG, prompt, extractor, classifier | EDD | Agent-system engineering |
 | Tool graph, handoff, memory, durable or multi-agent runtime | Agent-system engineering | EDD, architecture |
+| Production traces, feedback curation, reusable failures, or continuous improvement | Data-flywheel development | Agent evaluation standard, EDD, agent-system engineering |
 | New framework/API integration | Source-grounded | TDD, BDD, or EDD |
 | Codebase feels hard to change | Architecture/domain | Review after tracer bullet |
 | PR/diff quality check | Review | BDD/TDD/EDD gap analysis |

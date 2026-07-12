@@ -66,6 +66,22 @@ These are candidates, not required dependencies. `references/agent-system-engine
 | [RAMP (2605.27492)](https://hf.co/papers/2605.27492) | Evaluate runtime failures, recovery, tool use, serial dependencies, and cost |
 | [Why Agentic-PRs Get Rejected (2602.04226)](https://hf.co/papers/2602.04226) | Keep PR scope/explanation proportional and preserve reviewer-trust evidence |
 
+## Data-Flywheel Methods Integrated
+
+Evidence checked on 2026-07-12:
+
+| Source | Constraint absorbed |
+| --- | --- |
+| [Shared ChatGPT discussion: Data Flywheel and AI Applications](https://chatgpt.com/share/6a533694-1c98-83e8-932f-6a6d05e8410a) | Separate product, learning, and validation loops; prioritize attributable feedback and the lowest-cost effective improvement |
+| [OpenAI: trustworthy evaluation playbook](https://openai.com/index/trustworthy-third-party-evaluations-foundations/) | Evaluate the model plus harness, tools, safeguards, environment, and budget; report contamination, reward hacking, broken tasks, and other validity hazards |
+| [OpenAI AgentKit](https://openai.com/index/introducing-agentkit/) | Use versioned datasets, end-to-end trace grading, human annotations, and evidence-backed optimization |
+| [Anthropic: Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) | Define tasks, trials, graders, and complete trajectories; use multi-run evidence, stable isolated environments, calibrated graders, and capability/regression suites |
+| [Google Cloud agent observability](https://docs.cloud.google.com/stackdriver/docs/observability/agent-observability) | Unify logs, metrics, traces, prompts, tool calls, safety, cost, and quality through OpenTelemetry-compatible telemetry |
+| [Microsoft Foundry Agent DevOps loop](https://devblogs.microsoft.com/foundry/build-2026-from-observability-to-roi-for-ai-agents-on-any-framework/) | Convert production traces into datasets, replay incidents, evaluate multi-turn behavior, preserve candidate lineage and rollback, and measure business ROI |
+| [AWS production feedback loops](https://docs.aws.amazon.com/prescriptive-guidance/latest/gen-ai-lifecycle-operational-excellence/prod-monitoring-feedback.html) | Link every feedback item to its full trace with a stable `trace_id`; centralize schema validation and retain humans for high-risk decisions |
+| [AWS AgentCore quality optimization](https://aws.amazon.com/blogs/machine-learning/introducing-agent-quality-optimization-in-agentcore-now-in-preview/) | Use observe -> evaluate -> improve with batch evaluation and controlled A/B testing before promotion |
+| [OpenTelemetry GenAI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai) | Keep agent, model, tool, MCP, metric, and event telemetry vendor-neutral and portable |
+
 ## Model Evidence Boundary
 
 Evidence checked on 2026-07-10:

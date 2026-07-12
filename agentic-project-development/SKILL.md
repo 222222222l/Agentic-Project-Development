@@ -1,6 +1,6 @@
 ---
 name: agentic-project-development
-description: Route agentic project work through the lightest reliable combination of Spec-Driven, Behavior/Acceptance-Driven, Test-Driven, Eval-Driven, source-grounded, architecture/domain, agent-system, delivery, review, debugging, uncertainty, and quantified auto-loop practices. Use when planning, specifying, implementing, testing, evaluating, refactoring, reviewing, or decomposing projects and features; when building LLM or multi-agent systems; when adapting execution detail to frontier or open-weight models; or when users request loop, auto, autonomous, keep-going, or run-until-done development.
+description: Route agentic project work through the lightest reliable combination of Spec-Driven, Behavior/Acceptance-Driven, Test-Driven, Eval-Driven, source-grounded, architecture/domain, agent-system, data-flywheel, delivery, review, debugging, uncertainty, and quantified auto-loop practices. Use when planning, specifying, implementing, testing, evaluating, refactoring, reviewing, or decomposing projects and features; when building LLM or multi-agent systems; when instrumenting structured traces, reusable feedback data, continuous evaluation, or evidence-backed improvement loops; when adapting execution detail to frontier or open-weight models; or when users request loop, auto, autonomous, keep-going, or run-until-done development.
 ---
 
 # Agentic Project Development
@@ -39,6 +39,7 @@ On Windows, prefer repository-native commands and explicit UTF-8 handling. Chang
 | LLM, RAG, prompt, routing, semantic, or agent output | `references/eval-driven-development.md` | Agent evaluation, source grounding |
 | Current framework, API, protocol, or platform behavior matters | `references/source-driven-development.md` | Any implementation or review mode |
 | Agent runtime, tool graph, memory, handoff, durable workflow, or multi-agent system | `references/agent-system-engineering.md` | EDD, source grounding, architecture |
+| Production traces, feedback data, reusable failures, continuous improvement, or data flywheel | `references/data-flywheel-development.md` | Agent evaluation standard, EDD, agent-system engineering |
 | Domain concepts, module boundaries, data ownership, or deep refactor | `references/architecture-and-domain.md` | SDD, TDD, decision trace |
 | PRD, issue set, multi-session or multi-worker handoff | `references/issue-delivery.md` | SDD, BDD, EDD |
 | Review, debugging, release readiness, or completion decision | `references/review-and-quality.md` | Relevant coverage mode |
@@ -74,6 +75,8 @@ For repeatable repo conventions, create or update `docs/agents/project-developme
 - `references/test-driven-development.md`: seam selection, red-green-refactor, and test anti-patterns.
 - `references/eval-driven-development.md`: datasets, evaluators, multi-run evidence, and release gates.
 - `references/agent-system-engineering.md`: framework selection, agent contracts, state, tracing, recovery, and human control.
+- `references/data-flywheel-development.md`: structured run data, trace and feedback contracts, curation, reuse, and the observe-to-release loop.
+- `references/agent-evaluation-standard.md`: metric definitions, dataset rules, default thresholds, experiment comparison, and release gates.
 - `references/architecture-and-domain.md`: domain modeling, deep modules, ADRs, and stable seams.
 - `references/issue-delivery.md`: PRDs, vertical slices, and agent-ready handoffs.
 - `references/review-and-quality.md`: spec/standards review, process discipline, debugging, PR, and release gates.
