@@ -5,6 +5,7 @@
 - Lifecycle
 - Grounded phase contract
 - Mode selection
+- Project execution routing
 - Current skill composition
 - Artifact traceability
 - Decision templates
@@ -17,17 +18,19 @@ Use this file when several development modes apply, when artifact ordering is un
 
 1. **Profile**: choose `frontier-compact` or `portable-guided` from the model-harness pair.
 2. **Loop gate**: for loop/auto requests, prove reliable quantified verification before repetition.
-3. **Expose unknowns**: scan architecture, history, data, constraints, risks, and references.
-4. **Align**: define outcome, users, non-goals, approvals, and done criteria.
-5. **Ground**: attach each material claim to repo files, runtime state, current sources, examples, or prior artifacts.
-6. **Specify**: create a durable source of truth when ambiguity or scope warrants it.
-7. **Model behavior**: express user-visible rules as scenarios or acceptance criteria.
-8. **Plan slices**: create vertical increments with explicit phase contracts.
-9. **Implement**: use TDD, direct implementation, source grounding, or prototypes according to risk.
-10. **Evaluate**: run exact checks, gates, evals, browser/manual QA, and review.
-11. **Recover**: attribute failures as local, upstream, or structural before targeted repair.
-12. **Converge**: check spec -> plan -> task -> implementation -> verification coverage and append only genuine remaining work.
-13. **Explain and record**: report why, what changed, evidence, risks, intentional non-changes, and reusable learning.
+3. **Route execution**: map task structure and choose main owner, capability role, worker reuse, independent verification, and fallback.
+4. **Expose unknowns**: scan architecture, history, data, constraints, risks, and references.
+5. **Align**: define outcome, users, non-goals, approvals, and done criteria.
+6. **Ground**: attach each material claim to repo files, runtime state, current sources, examples, or prior artifacts.
+7. **Specify**: create a durable source of truth when ambiguity or scope warrants it.
+8. **Model behavior**: express user-visible rules as scenarios or acceptance criteria.
+9. **Plan slices**: create vertical increments with explicit phase contracts.
+10. **Implement**: use TDD, direct implementation, source grounding, or prototypes according to risk.
+11. **Reassess**: re-route after direction-changing evidence, repeated verifier failure, or excessive coordination cost.
+12. **Evaluate**: run exact checks, gates, evals, browser/manual QA, and review.
+13. **Recover**: attribute failures as local, upstream, or structural before targeted repair.
+14. **Converge**: check spec -> plan -> task -> implementation -> verification coverage and append only genuine remaining work.
+15. **Explain and record**: report why, what changed, evidence, routes, fallbacks, risks, intentional non-changes, and reusable learning.
 
 ## Grounded Phase Contract
 
@@ -54,6 +57,7 @@ Validate intermediate artifacts before they become downstream context. A clean f
 | UI workflow, permissions, checkout, onboarding | BDD | TDD or browser journey |
 | LLM, agent, RAG, prompt, extractor, classifier | EDD | Agent-system engineering |
 | Tool graph, handoff, memory, durable or multi-agent runtime | Agent-system engineering | EDD, architecture |
+| Project model route, specialist worker, or independent verifier | Project model routing | Agent-system engineering, review |
 | New framework/API integration | Source-grounded | TDD, BDD, or EDD |
 | Codebase feels hard to change | Architecture/domain | Review after tracer bullet |
 | PR/diff quality check | Review | BDD/TDD/EDD gap analysis |
@@ -73,6 +77,10 @@ Validate intermediate artifacts before they become downstream context. A clean f
 
 Compose optional skills only when they are currently available. Do not encode a missing integration as a required step.
 
+## Project Execution Routing
+
+Read `project-model-routing.md` before spawning a specialist or selecting a concrete model alias. Start with one owner, route by capability rather than model prestige, count context/handoff/retry/verification overhead, reuse a related worker, and reserve a fresh worker for independent verification or changed boundaries.
+
 ## Artifact Traceability Gate
 
 Before declaring non-trivial work complete, answer:
@@ -91,6 +99,8 @@ Record uncovered criteria as remaining work. Do not silently redefine done.
 ## Development Decision
 
 Model profile / selection source:
+Execution owner / capability role / selection source:
+Worker reuse / fresh verifier / fallback:
 Primary mode / overlays:
 Rejected modes:
 Evidence loaded:

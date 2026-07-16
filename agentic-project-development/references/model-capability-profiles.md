@@ -4,6 +4,8 @@
 
 Adapt instruction density to the model plus execution harness. Treat model capability as a property of the full configuration: model, tools, context policy, permissions, state, tracing, and verifier.
 
+This profile controls instruction density; it does not by itself choose a task worker or subagent model. Use `project-model-routing.md` after task structure is known.
+
 ## Selection Order
 
 1. Honor an explicit user choice: `frontier-compact` or `portable-guided`.
@@ -40,7 +42,7 @@ Use for strong long-horizon coding agents in mature harnesses.
 - Keep plans outcome-oriented. Expand steps only at high-risk or hard-to-reverse decisions.
 - Use compact phase contracts and one decision trace instead of repeating instructions.
 - Verify with executable or external evidence; do not add prose checkpoints that have no decision value.
-- Use multi-agent work only when tasks are independent, ownership is disjoint, and integration has a named verifier.
+- Use multi-agent work only after the project routing gate shows independent work, disjoint ownership, a named integration verifier, and lower expected total cost.
 - After compaction or handoff, preserve goal, constraints, changed files, evidence, verifier, failures, and next action.
 
 Minimum phase contract:
@@ -76,7 +78,7 @@ Additional constraints:
 - Re-read current files before edits; do not rely on remembered repository state.
 - Require a clean or understood baseline before attributing new failures to the change.
 - Classify a failure as local, upstream, or structural before retrying.
-- Prefer one worker. Add agents only when the harness supports isolation and every handoff has typed inputs, outputs, and validators.
+- Prefer one owner. Add agents only when the project routing gate passes, the harness supports isolation, and every handoff has typed inputs, outputs, and validators.
 - Checkpoint after each slice; do not batch unrelated edits behind one final test.
 
 ## User Overrides

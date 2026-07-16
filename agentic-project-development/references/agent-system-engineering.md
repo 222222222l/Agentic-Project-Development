@@ -16,6 +16,12 @@ Start with the simplest executable design that can satisfy the acceptance and ev
 
 Do not use multiple agents merely to simulate an organization. Each added agent must own a distinct capability or independent check that exceeds its coordination cost.
 
+## Project Runtime Routing
+
+Use `project-model-routing.md` when routing project work through the current Codex or another agent harness. Keep orchestration and integration with one main owner. Select subagents by semantic capability role first and map to concrete model IDs only when the active runtime exposes them.
+
+The routing skill is policy, not a scheduler. It may request an exposed subagent model, reuse a worker handle, and require fresh verification, but it cannot switch the current main model or create persistence and telemetry the harness does not provide.
+
 ## Required Contracts
 
 For every node or agent, define:
@@ -45,6 +51,7 @@ Keep state transitions explicit. Persist only information needed for recovery, a
 6. Prefer localized retry, partial re-execution, or re-decomposition over full blind replay.
 7. Preserve a compact repair memory: failure evidence, attributed cause, correction, and boundary where it applies.
 8. Re-run the task suite across more than one seed or attempt before release.
+9. Reassess model and worker routing when a failure becomes upstream or structural, rather than assuming the original specialization remains correct.
 
 ## Framework Selection
 

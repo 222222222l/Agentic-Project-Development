@@ -1,4 +1,4 @@
 interface:
   display_name: "Agentic Project Development"
-  short_description: "Adaptive development with evidence and model profiles"
-  default_prompt: "Use $agentic-project-development to select a model profile, route the work, and verify it with grounded evidence."
+  short_description: "Adaptive development with model routing and evidence"
+  default_prompt: "Use $agentic-project-development to select an execution profile, route work and subagents by capability and total cost, and verify it with grounded evidence."

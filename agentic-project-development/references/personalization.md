@@ -4,6 +4,7 @@
 
 - Override precedence
 - Repo profile template
+- Project model routing
 - Extension pattern
 - Personal defaults
 
@@ -71,6 +72,21 @@ Create `docs/agents/project-development-profile.md` when a repo needs stable loc
 - Human approval boundaries:
 - Eval dataset and repeated-run count:
 
+## Project Model Routing
+
+- Routing enabled:
+- Default orchestrator capability:
+- Evaluated role -> model aliases:
+- Harness-exposed model IDs:
+- Maximum explorers:
+- Delegate high raw-information exploration:
+- Keep implementation owner:
+- Reuse key:
+- Fresh verifier required for:
+- Total-cost preference:
+- Model-unavailable fallback:
+- User approval required for:
+
 ## Local Conventions
 
 - Naming:
@@ -112,4 +128,6 @@ Good defaults for solo project development:
 - Use source-driven development for fast-moving frameworks and APIs.
 - Use issue slicing only when work will span multiple sessions or agents.
 - Default unknown or open-weight model-harness pairs to `portable-guided`; promote only from project-representative eval evidence.
+- Keep one main execution owner; delegate only when specialization, independent exploration, or fresh verification exceeds coordination cost.
+- Reuse a worker for the same objective, module, data flow, and trust boundary; use a fresh context for independent verification.
 - Keep AGENTS/context files minimal: exact commands, boundaries, non-functional constraints, and hazards only.

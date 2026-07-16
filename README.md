@@ -1,6 +1,6 @@
 # Agentic Project Development
 
-An extensible Codex skill suite for evidence-grounded project development. It routes work across SDD, BDD, TDD, EDD, source-grounded implementation, architecture/domain design, agent-system engineering, delivery, debugging, review, and quantified auto loops without treating any one method as universal.
+An extensible Codex skill suite for evidence-grounded project development. It routes work across SDD, BDD, TDD, EDD, source-grounded implementation, architecture/domain design, project-level model and subagent routing, delivery, debugging, review, and quantified auto loops without treating any one method as universal.
 
 The suite is a workflow layer, not an agent runtime. It can compose with existing project tools and frameworks while keeping acceptance, verification, and human approval explicit.
 
@@ -11,6 +11,8 @@ The suite is a workflow layer, not an agent runtime. It can compose with existin
 - Express substantial phases as input -> action -> artifact -> verifier -> stop condition.
 - Run loop/auto requests only when the verification target is reliably quantifiable.
 - Attribute failures as local, upstream, or structural before retrying.
+- Route models by task capability and total execution plus coordination cost; keep one main owner by default.
+- Reuse workers for related context and require fresh context when verification must be independent.
 - Converge spec, plan, tasks, implementation, and verification before declaring completion.
 - Keep context and persistent agent instructions minimal and task-relevant.
 
@@ -38,11 +40,25 @@ Use $agentic-project-development with portable-guided and keep a task state file
 Treat this Kimi deployment as frontier-compact; its harness passed our repo eval.
 ```
 
+## Project Model Routing
+
+The suite can implement project-level routing policy in Codex: classify each work unit, choose a semantic capability role, decide whether delegation is worth its coordination cost, reuse a related worker, and request a fresh verifier. A project can map evaluated roles to model IDs in `docs/agents/project-development-profile.md`.
+
+The boundary is explicit. A skill cannot force-switch the current main model, expose a model the active host does not provide, guarantee subagent persistence across sessions, or compute exact cost without telemetry. Runtime capability wins; unavailable model requests fall back to the nearest exposed role and must be reported.
+
+Default route:
+
+```text
+ROUTE -> EXECUTE -> REASSESS -> VERIFY
+```
+
+Start with the main agent. Delegate only high-volume exploration, independent investigation axes, meaningful specialist capability, or high-risk independent verification. Optimize total cost as execution + context loading + handoff + retry + verification.
+
 ## Workflow
 
 ```text
-PROFILE -> GATE -> ALIGN -> GROUND -> SPECIFY -> SLICE
-        -> IMPLEMENT -> VERIFY -> RECOVER -> CONVERGE -> EXPLAIN
+PROFILE -> GATE -> ROUTE -> ALIGN -> GROUND -> SPECIFY -> SLICE
+        -> EXECUTE -> REASSESS -> VERIFY -> RECOVER -> CONVERGE -> EXPLAIN
 ```
 
 The normal mode router defines acceptance and testing. Auto-loop mode only adds bounded repetition after a reliable quantification gate.
@@ -81,6 +97,7 @@ agentic-project-development/
   references/
     workflow-map.md
     model-capability-profiles.md
+    project-model-routing.md
     loop-auto-mode.md
     uncertainty-and-decision-trace.md
     spec-driven-development.md
@@ -96,6 +113,7 @@ agentic-project-development/
     source-map.md
   scripts/
     select_workflow.py
+    test_select_workflow.py
     validate_skill_graph.py
 ```
 
@@ -127,12 +145,15 @@ docs/agents/project-development-profile.md
 
 Override precedence is: explicit task instruction -> project profile/artifacts -> organization preset -> suite defaults. Profiles can set model execution detail, test/eval commands, state paths, framework preferences, approval boundaries, fatal gates, and non-functional constraints.
 
+Project profiles can also set evaluated role-to-model aliases, maximum explorers, worker reuse keys, fresh-verifier triggers, total-cost preference, and unavailable-model fallback. These are policies, not new runtime permissions.
+
 ## Validation
 
 Use the bundled Python runtime when `python` is unavailable on `PATH`.
 
 ```bash
 python agentic-project-development/scripts/validate_skill_graph.py --skill-dir agentic-project-development
+python agentic-project-development/scripts/test_select_workflow.py
 ```
 
 Try frontier and portable routing:
@@ -140,11 +161,14 @@ Try frontier and portable routing:
 ```bash
 python agentic-project-development/scripts/select_workflow.py --work-type feature --scope cross-module --model-name gpt-5.6-sol --harness-maturity strong
 python agentic-project-development/scripts/select_workflow.py --work-type agent-system --determinism llm --model-name Kimi-K2.7-Code --harness-maturity partial --risk high
+python agentic-project-development/scripts/select_workflow.py --work-type review --scope project --risk high --task-role verification --verification-independence required
 ```
 
 ## Research Basis
 
 Research and model evidence in this revision was checked on 2026-07-10.
+
+The project-routing boundary was checked against the active Codex subagent interface on 2026-07-16. Concrete model availability remains host-specific.
 
 The current constraints absorb evidence from GitHub Spec Kit, Superpowers, Evaluating AGENTS.md, Agent READMEs, Spec Kit Agents, RigorBench, Harness-Bench, Meta-Agent, AgentTether, RAMP, and empirical studies of rejected agent-authored PRs. See `agentic-project-development/references/source-map.md` for links and the exact mapping.
 

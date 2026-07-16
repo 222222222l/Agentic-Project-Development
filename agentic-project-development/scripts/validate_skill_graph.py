@@ -71,6 +71,39 @@ def main() -> None:
     for readme in skill_dir.rglob("README.md"):
         errors.append(f"skill folder must not contain README.md: {readme.relative_to(skill_dir)}")
 
+    routing_file = skill_dir / "references" / "project-model-routing.md"
+    if routing_file.exists():
+        routing_text = routing_file.read_text(encoding="utf-8")
+        for fragment in (
+            "ROUTE -> EXECUTE -> REASSESS -> VERIFY",
+            "total cost = execution + context loading + handoff + retry + verification",
+            "Start with one agent",
+            "Reuse an existing worker handle",
+            "A skill cannot by itself switch the current main model",
+        ):
+            if fragment not in routing_text:
+                errors.append(f"project routing reference is missing contract: {fragment}")
+
+    selector = skill_dir / "scripts" / "select_workflow.py"
+    if selector.exists():
+        selector_text = selector.read_text(encoding="utf-8")
+        for fragment in (
+            "--task-role",
+            "--delegation-shape",
+            "--worker-reuse",
+            "--verification-independence",
+            '"execution_owner"',
+            '"fallback_if_model_unavailable"',
+        ):
+            if fragment not in selector_text:
+                errors.append(f"workflow selector is missing routing field: {fragment}")
+
+    personalization = skill_dir / "references" / "personalization.md"
+    if personalization.exists():
+        profile_text = personalization.read_text(encoding="utf-8")
+        if "## Project Model Routing" not in profile_text:
+            errors.append("personalization reference lacks project model routing fields")
+
     openai_yaml = skill_dir / "agents" / "openai.yaml"
     if not openai_yaml.exists():
         errors.append("missing agents/openai.yaml")

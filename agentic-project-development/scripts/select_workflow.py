@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Recommend project-development modes and model instruction density."""
+"""Recommend development modes, instruction density, and project execution routing."""
 
 from __future__ import annotations
 
@@ -9,6 +9,14 @@ import json
 
 FRONTIER_ALIASES = ("gpt-5.6-sol", "fable5", "fable-5")
 PORTABLE_ALIASES = ("kimi", "deepseek", "qwen", "llama", "mistral", "gemma")
+ROLE_MAP = {
+    "orchestration": "orchestrator-editor",
+    "reasoning": "reasoning-investigator",
+    "code": "code-executor",
+    "visual": "visual-evaluator",
+    "research": "source-researcher",
+    "verification": "independent-verifier",
+}
 
 
 def yes(value: str) -> bool:
@@ -41,6 +49,141 @@ def choose_model_profile(args: argparse.Namespace) -> tuple[str, str, list[str]]
     return "portable-guided", "safe-fallback", reasons
 
 
+def choose_capability_role(args: argparse.Namespace) -> tuple[str, str]:
+    if args.task_role != "auto":
+        return ROLE_MAP[args.task_role], "explicit-user-or-project-route"
+    if args.work_type in {"review", "release"}:
+        return "independent-verifier", "work-shape"
+    if args.work_type == "research":
+        return "source-researcher", "work-shape"
+    if args.work_type in {"architecture", "migration"}:
+        return "reasoning-investigator", "work-shape"
+    if args.work_type == "new-project":
+        return "orchestrator-editor", "work-shape"
+    return "code-executor", "work-shape"
+
+
+def choose_execution_route(
+    args: argparse.Namespace, capability_role: str, broad_scope: bool
+) -> dict:
+    reasons: list[str] = []
+    conflicts: list[str] = []
+    delegate = False
+    subagent_role = "none"
+    subagent_count = 0
+
+    auto_fresh_verifier = (
+        args.risk == "high"
+        and (broad_scope or args.work_type in {"review", "release", "migration"})
+    )
+    fresh_verifier = args.verification_independence == "required" or (
+        args.verification_independence == "auto" and auto_fresh_verifier
+    )
+    if args.delegation_shape == "independent-review":
+        fresh_verifier = True
+
+    if args.delegation_shape == "main-only":
+        reasons.append("explicit main-only route disables execution delegation")
+        if fresh_verifier:
+            conflicts.append("independent verification is required but delegation is main-only")
+    elif args.delegation_shape == "exploration":
+        delegate = True
+        subagent_role = "source-researcher"
+        subagent_count = max(1, min(2, args.independent_axes or 1))
+        reasons.append("explicit exploration route uses bounded read-only workers")
+    elif args.delegation_shape == "specialist":
+        delegate = True
+        subagent_role = capability_role
+        subagent_count = 1
+        reasons.append("explicit specialist route delegates the selected capability role")
+    elif args.delegation_shape == "parallel-independent":
+        delegate = True
+        subagent_role = capability_role
+        subagent_count = max(1, min(2, args.independent_axes or 2))
+        reasons.append("explicit independent axes permit bounded parallel delegation")
+    elif args.delegation_shape == "independent-review":
+        delegate = True
+        subagent_role = "independent-verifier"
+        subagent_count = 1
+        reasons.append("explicit independent review uses a fresh verifier")
+    elif args.coordination_cost != "high" and args.raw_information_volume == "high":
+        delegate = True
+        subagent_role = "source-researcher"
+        subagent_count = max(1, min(2, args.independent_axes or 1))
+        reasons.append("high raw-information volume justifies bounded exploration")
+    elif args.coordination_cost != "high" and args.independent_axes >= 2:
+        delegate = True
+        subagent_role = capability_role
+        subagent_count = min(2, args.independent_axes)
+        reasons.append("multiple independent axes exceed expected coordination cost")
+    elif (
+        args.coordination_cost != "high"
+        and yes(args.multi_agent)
+        and args.scope != "single-file"
+    ):
+        delegate = True
+        subagent_role = capability_role
+        subagent_count = 1
+        reasons.append("explicit multi-agent request permits one bounded specialist")
+    elif fresh_verifier:
+        delegate = True
+        subagent_role = "independent-verifier"
+        subagent_count = 1
+        reasons.append("fresh verification is the only justified delegation")
+    else:
+        reasons.append("one main owner is cheaper and sufficient for this task shape")
+
+    verifier_is_delegate = fresh_verifier and subagent_role == "independent-verifier"
+    if fresh_verifier:
+        reasons.append("risk or explicit policy requires fresh-context verification")
+
+    reuse_worker = (
+        delegate
+        and subagent_role != "independent-verifier"
+        and args.worker_reuse == "reuse-related"
+    )
+    if reuse_worker:
+        reasons.append("related objective and context permit worker continuation")
+    elif args.worker_reuse == "reuse-related" and subagent_role == "independent-verifier":
+        conflicts.append("independent verification cannot reuse the implementation worker")
+    elif args.worker_reuse == "fresh":
+        reasons.append("changed or isolated context requires a fresh worker")
+
+    requested_model = args.requested_model.strip() or None
+    model_request = "none"
+    if requested_model:
+        model_request = "request-if-exposed-by-active-harness"
+        reasons.append("concrete model request is conditional on runtime availability")
+
+    verification_route = "fresh-independent-verifier" if fresh_verifier else "main-agent-plus-executable-verifiers"
+    if conflicts:
+        verification_route = "unsatisfied-routing-constraint"
+
+    return {
+        "execution_owner": "main-agent-orchestrator",
+        "capability_role": capability_role,
+        "delegate": delegate,
+        "subagent_role": subagent_role,
+        "subagent_count": subagent_count,
+        "reuse_worker": reuse_worker,
+        "worker_reuse_policy": (
+            "reuse-related-handle" if reuse_worker else "fresh-or-main-owner"
+        ),
+        "fresh_verifier": fresh_verifier,
+        "verifier_is_execution_delegate": verifier_is_delegate,
+        "verification_route": verification_route,
+        "requested_model": requested_model,
+        "model_request": model_request,
+        "fallback_if_model_unavailable": (
+            "preserve the capability role, use the nearest exposed model, "
+            "or keep the main agent; disclose the fallback"
+        ),
+        "coordination_cost_assumption": args.coordination_cost,
+        "routing_conflicts": conflicts,
+        "routing_reasons": reasons,
+    }
+
+
 def recommend(args: argparse.Namespace) -> dict:
     modes: list[str] = []
     overlays: list[str] = []
@@ -52,6 +195,20 @@ def recommend(args: argparse.Namespace) -> dict:
     reasons.extend(profile_reasons)
     if args.model_profile == "auto":
         references.append("references/model-capability-profiles.md")
+
+    capability_role, capability_role_source = choose_capability_role(args)
+    broad_scope = args.scope in {"cross-module", "project", "unknown"}
+    execution_route = choose_execution_route(args, capability_role, broad_scope)
+    reasons.extend(execution_route["routing_reasons"])
+    routing_signal = (
+        execution_route["delegate"]
+        or execution_route["fresh_verifier"]
+        or args.task_role != "auto"
+        or args.worker_reuse != "auto"
+        or bool(args.requested_model.strip())
+    )
+    if routing_signal:
+        references.append("references/project-model-routing.md")
 
     if yes(args.loop_request):
         references.append("references/loop-auto-mode.md")
@@ -74,7 +231,6 @@ def recommend(args: argparse.Namespace) -> dict:
         reasons.append("risk or unknown scope requires blind-spot and decision tracking")
 
     agent_system = yes(args.agent_system) or args.work_type == "agent-system"
-    broad_scope = args.scope in {"cross-module", "project", "unknown"}
 
     if args.work_type in {"review", "release"}:
         modes.append("review-and-quality-gates")
@@ -133,7 +289,12 @@ def recommend(args: argparse.Namespace) -> dict:
     ordered_modes = list(dict.fromkeys(modes + overlays))
     ordered_refs = list(dict.fromkeys(references))
     process_gate = (
-        args.risk == "high" or broad_scope or yes(args.loop_request) or yes(args.multi_agent)
+        args.risk == "high"
+        or broad_scope
+        or yes(args.loop_request)
+        or yes(args.multi_agent)
+        or execution_route["delegate"]
+        or execution_route["fresh_verifier"]
     )
     if len(ordered_modes) > 1:
         ordered_refs.insert(0, "references/workflow-map.md")
@@ -141,12 +302,14 @@ def recommend(args: argparse.Namespace) -> dict:
     return {
         "model_profile": profile,
         "model_profile_source": profile_source,
+        "capability_role_source": capability_role_source,
         "primary_mode": modes[0],
         "recommended_modes": ordered_modes,
         "required_references": list(dict.fromkeys(ordered_refs)),
         "loop_decision": loop_decision,
         "repository_grounding_required": args.work_type != "research",
         "process_discipline_gate": process_gate,
+        "execution_route": execution_route,
         "reasons": reasons,
         "decision_trace_required": process_gate or len(ordered_modes) > 1,
     }
@@ -182,6 +345,27 @@ def main() -> None:
     parser.add_argument("--harness-maturity", default="unknown", choices=[
         "unknown", "basic", "partial", "strong"
     ])
+    parser.add_argument("--task-role", default="auto", choices=[
+        "auto", "orchestration", "reasoning", "code", "visual", "research", "verification"
+    ])
+    parser.add_argument("--delegation-shape", default="auto", choices=[
+        "auto", "main-only", "exploration", "specialist", "parallel-independent",
+        "independent-review"
+    ])
+    parser.add_argument("--raw-information-volume", default="low", choices=[
+        "low", "medium", "high"
+    ])
+    parser.add_argument("--independent-axes", type=int, default=0, choices=range(0, 4))
+    parser.add_argument("--worker-reuse", default="auto", choices=[
+        "auto", "reuse-related", "fresh", "unavailable"
+    ])
+    parser.add_argument("--verification-independence", default="auto", choices=[
+        "auto", "required", "not-required"
+    ])
+    parser.add_argument("--coordination-cost", default="medium", choices=[
+        "low", "medium", "high"
+    ])
+    parser.add_argument("--requested-model", default="")
     print(json.dumps(recommend(parser.parse_args()), indent=2))
 
 

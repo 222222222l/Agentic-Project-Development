@@ -52,6 +52,15 @@ Treat optional composition as availability-dependent. Do not claim a plugin skil
 
 These are candidates, not required dependencies. `references/agent-system-engineering.md` defines the selection gate.
 
+## Project Routing Principles
+
+| Evidence | Constraint absorbed |
+| --- | --- |
+| User-provided model-routing diagrams, 2026-07-16 | Map task structure before choosing a model; separate initial editor, mid-course reassessment, and final verifier roles |
+| User-provided capability and cost diagrams, 2026-07-16 | Route reasoning, code, visual, and research work by capability; optimize execution plus coordination cost |
+| User-provided worker-reuse diagram, 2026-07-16 | Reuse workers for the same objective and context; use fresh workers for independent verification or changed boundaries |
+| Active Codex subagent interface observed on 2026-07-16 | Treat model overrides, roles, and worker continuation as runtime capabilities; never promise universal IDs or persistence |
+
 ## Research Constraints Added
 
 | Research | Constraint absorbed |
