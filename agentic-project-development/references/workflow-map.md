@@ -7,6 +7,7 @@
 - Mode selection
 - Project execution routing
 - Current skill composition
+- Patch minimization
 - Artifact traceability
 - Decision templates
 
@@ -29,8 +30,9 @@ Use this file when several development modes apply, when artifact ordering is un
 11. **Reassess**: re-route after direction-changing evidence, repeated verifier failure, or excessive coordination cost.
 12. **Evaluate**: run exact checks, gates, evals, browser/manual QA, and review.
 13. **Recover**: attribute failures as local, upstream, or structural before targeted repair.
-14. **Converge**: check spec -> plan -> task -> implementation -> verification coverage and append only genuine remaining work.
-15. **Explain and record**: report why, what changed, evidence, routes, fallbacks, risks, intentional non-changes, and reusable learning.
+14. **Minimize**: when eligible, reduce the passing patch to the smallest task-owned change that preserves the full acceptance contract and maintainability gates.
+15. **Converge**: check spec -> plan -> task -> implementation -> verification coverage and append only genuine remaining work.
+16. **Explain and record**: report why, what changed, evidence, routes, fallbacks, risks, intentional non-changes, and reusable learning.
 
 ## Grounded Phase Contract
 
@@ -62,6 +64,7 @@ Validate intermediate artifacts before they become downstream context. A clean f
 | New framework/API integration | Source-grounded | TDD, BDD, or EDD |
 | Codebase feels hard to change | Architecture/domain | Review after tracer bullet |
 | PR/diff quality check | Review | BDD/TDD/EDD gap analysis |
+| Passing agent patch contains exploratory residue or needs simplification | Trajectory-guided patch minimization | Review, acceptance, architecture |
 | Vague or high-risk task | Uncertainty and decision trace | SDD, BDD, architecture |
 | Loop/auto/run-until-done | Auto-loop gate | Normal router after quantification |
 
@@ -82,6 +85,10 @@ Compose optional skills only when they are currently available. Do not encode a 
 
 Read `project-model-routing.md` before spawning a specialist or selecting a concrete model alias. Start with one owner, route by capability rather than model prestige, count context/handoff/retry/verification overhead, reuse a related worker, and reserve a fresh worker for independent verification or changed boundaries.
 
+## Patch Minimization
+
+Read `trajectory-guided-patch-minimization.md` only after a code-producing task has a reproducible passing baseline and the ownership and verifier gates are satisfied. Treat it as a conditional post-success overlay, not a replacement for specification, design, testing, or review. Record an explicit skip reason when the verifier, edit lineage, rollback, or acceptance coverage is insufficient.
+
 ## Artifact Traceability Gate
 
 Before declaring non-trivial work complete, answer:
@@ -91,6 +98,7 @@ Before declaring non-trivial work complete, answer:
 - Which planned item was changed or dropped, and why?
 - Which failure was repaired, and was it local, upstream, or structural?
 - Which non-functional constraints cover security, performance, reliability, cost, and rollback?
+- Was eligible agent-authored change minimized, or was minimization skipped for a recorded ownership, verifier, risk, or cost reason?
 
 Record uncovered criteria as remaining work. Do not silently redefine done.
 

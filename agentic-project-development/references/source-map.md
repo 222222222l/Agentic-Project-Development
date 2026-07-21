@@ -86,6 +86,7 @@ These are candidates, not required dependencies. `references/agent-system-engine
 | [AgentTether (2607.06273)](https://hf.co/papers/2607.06273) | Localize failed transitions and retain behavior-scoped repair memory |
 | [RAMP (2605.27492)](https://hf.co/papers/2605.27492) | Evaluate runtime failures, recovery, tool use, serial dependencies, and cost |
 | [Why Agentic-PRs Get Rejected (2602.04226)](https://hf.co/papers/2602.04226) | Keep PR scope/explanation proportional and preserve reviewer-trust evidence |
+| [TRIM (2607.18161v1)](https://arxiv.org/abs/2607.18161v1) | Define agent CodeSlop as removable functional redundancy; use trajectory-guided coarse-to-fine counterfactual deletion after success, but strengthen test-only preservation into a full acceptance and maintainability contract |
 
 ## Data-Flywheel Methods Integrated
 
@@ -114,4 +115,4 @@ Evidence checked on 2026-07-10:
 
 ## Design Difference
 
-The suite adds a mode router, progressive references, quantification-first loops, evidence-grounded phase contracts, artifact convergence, process-discipline gates, model-harness profiles, and repo-local customization without requiring one runtime or one development ritual.
+The suite adds a mode router, progressive references, quantification-first loops, evidence-grounded phase contracts, acceptance-preserving patch minimization, artifact convergence, process-discipline gates, model-harness profiles, and repo-local customization without requiring one runtime or one development ritual.

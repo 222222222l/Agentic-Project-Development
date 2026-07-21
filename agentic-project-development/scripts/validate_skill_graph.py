@@ -104,6 +104,25 @@ def main() -> None:
         if "## Project Model Routing" not in profile_text:
             errors.append("personalization reference lacks project model routing fields")
 
+    minimization = skill_dir / "references" / "trajectory-guided-patch-minimization.md"
+    if minimization.exists():
+        minimization_text = minimization.read_text(encoding="utf-8")
+        for fragment in (
+            "Correctness precedes minimization",
+            "task-owned changes",
+            "frozen acceptance verifier",
+            "user-authored or unrelated changes",
+            "Do not optimize raw line count",
+        ):
+            if fragment not in minimization_text:
+                errors.append(f"patch minimization reference is missing contract: {fragment}")
+        for fragment in (
+            "Passing agent-generated patch with multi-step edit history",
+            "**Minimize**",
+        ):
+            if fragment not in text:
+                errors.append(f"SKILL.md is missing patch minimization route: {fragment}")
+
     openai_yaml = skill_dir / "agents" / "openai.yaml"
     if not openai_yaml.exists():
         errors.append("missing agents/openai.yaml")

@@ -1,6 +1,6 @@
 # Agentic Project Development
 
-An extensible Codex skill suite for evidence-grounded project development. It routes work across SDD, BDD, TDD, EDD, source-grounded implementation, architecture/domain design, project-level model and subagent routing, delivery, debugging, review, and quantified auto loops without treating any one method as universal.
+An extensible Codex skill suite for evidence-grounded project development. It routes work across SDD, BDD, TDD, EDD, source-grounded implementation, architecture/domain design, project-level model and subagent routing, delivery, debugging, review, acceptance-preserving patch minimization, and quantified auto loops without treating any one method as universal.
 
 The suite is a workflow layer, not an agent runtime. It can compose with existing project tools and frameworks while keeping acceptance, verification, and human approval explicit.
 
@@ -58,10 +58,10 @@ Start with the main agent. Delegate only high-volume exploration, independent in
 
 ```text
 PROFILE -> GATE -> ROUTE -> ALIGN -> GROUND -> SPECIFY -> SLICE
-        -> EXECUTE -> REASSESS -> VERIFY -> RECOVER -> CONVERGE -> EXPLAIN
+        -> EXECUTE -> REASSESS -> VERIFY -> RECOVER -> MINIMIZE -> CONVERGE -> EXPLAIN
 ```
 
-The normal mode router defines acceptance and testing. Auto-loop mode only adds bounded repetition after a reliable quantification gate.
+The normal mode router defines acceptance and testing. Patch minimization is a conditional post-success gate for eligible task-owned edits, and auto-loop mode only adds bounded repetition after a reliable quantification gate.
 
 ## Auto Loop Rule
 
@@ -106,9 +106,12 @@ agentic-project-development/
     test-driven-development.md
     eval-driven-development.md
     agent-system-engineering.md
+    data-flywheel-development.md
+    agent-evaluation-standard.md
     architecture-and-domain.md
     issue-delivery.md
     review-and-quality.md
+    trajectory-guided-patch-minimization.md
     personalization.md
     source-map.md
   scripts/
@@ -168,8 +171,10 @@ python agentic-project-development/scripts/select_workflow.py --work-type review
 
 Research and model evidence in this revision was checked on 2026-07-10.
 
+The trajectory-guided patch-minimization evidence and adaptation boundary were checked against TRIM (arXiv:2607.18161v1) on 2026-07-21.
+
 The project-routing boundary was checked against the active Codex subagent interface on 2026-07-16. Concrete model availability remains host-specific.
 
-The current constraints absorb evidence from GitHub Spec Kit, Superpowers, Evaluating AGENTS.md, Agent READMEs, Spec Kit Agents, RigorBench, Harness-Bench, Meta-Agent, AgentTether, RAMP, and empirical studies of rejected agent-authored PRs. See `agentic-project-development/references/source-map.md` for links and the exact mapping.
+The current constraints absorb evidence from GitHub Spec Kit, Superpowers, Evaluating AGENTS.md, Agent READMEs, Spec Kit Agents, RigorBench, Harness-Bench, Meta-Agent, AgentTether, RAMP, TRIM, and empirical studies of rejected agent-authored PRs. See `agentic-project-development/references/source-map.md` for links and the exact mapping.
 
 The practical result is intentionally conservative: minimal persistent context, repository-grounded phases, explicit contracts, process-discipline gates, model-harness evaluation, localized recovery, and human-readable evidence before completion.

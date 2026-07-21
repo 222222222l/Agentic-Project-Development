@@ -8,9 +8,10 @@ Use this mode for code review, implementation verification, debugging, regressio
 
 1. **Spec fidelity**: Does the implementation satisfy the spec, PRD, issue, scenarios, or eval criteria?
 2. **Engineering standards**: Does it fit project style, architecture, test strategy, security posture, performance needs, and maintainability?
-3. **Verification quality**: Are tests/evals/source checks meaningful and sufficient?
-4. **Residual risk**: What can still fail and how would we notice?
-5. **Process discipline**: Did planning remain faithful, verification cover claims, recovery target causes, abstention protect missing evidence, and each transition preserve a valid state?
+3. **Change necessity**: Can any task-owned edit be removed while preserving the complete acceptance contract and maintainability?
+4. **Verification quality**: Are tests/evals/source checks meaningful and sufficient?
+5. **Residual risk**: What can still fail and how would we notice?
+6. **Process discipline**: Did planning remain faithful, verification cover claims, recovery target causes, abstention protect missing evidence, and each transition preserve a valid state?
 
 ## Debugging Loop
 
@@ -32,6 +33,17 @@ Pick gates based on project type:
 - Architecture refactor: seam stability and old behavior preserved.
 - Release: changelog, migration notes, monitoring, rollback path.
 - Agent system: model-harness metadata, repeated runs, trace inspection, failure attribution, approval boundaries, and fatal gates.
+
+## Change-Minimization Gate
+
+After the implementation first passes its acceptance verifier, read
+`trajectory-guided-patch-minimization.md` when the diff was produced through
+several edit/test cycles, contains speculative or superseded work, or is broader
+than the requested behavior. Preserve user-authored and unrelated changes.
+Accept a removal only when the frozen acceptance bundle still passes, the owned
+change surface strictly shrinks, and the result remains clearer and easier to
+maintain. Skip automatic minimization when the verifier is incomplete, flaky,
+destructive, or too costly for the declared budget.
 
 ## Process Discipline Gate
 
@@ -69,4 +81,5 @@ Lead with findings when reviewing. Include:
 - Use `browser:control-in-app-browser` or `chrome:control-chrome` for screenshot-backed web QA and interaction checks.
 - Use BDD/TDD/EDD references to identify missing coverage type.
 - Use source-driven development to catch stale API patterns.
+- Use trajectory-guided patch minimization for eligible passing agent patches; do not substitute raw line-count reduction for maintainability review.
 - Use `agent-evaluation` for multi-run agent evidence and `agent-system-engineering.md` for trajectory-level failures.

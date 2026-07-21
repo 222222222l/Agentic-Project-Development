@@ -42,7 +42,12 @@ Keep state transitions explicit. Persist only information needed for recovery, a
 
 1. Define capabilities, unacceptable failures, and fatal gates.
 2. Build a representative multi-run task suite before optimizing prompts or topology.
-3. Instrument tool calls, state transitions, approvals, token/cost signals, artifacts, and verifier outputs.
+3. Instrument tool calls, state transitions, approvals, token/cost signals,
+   artifacts, and verifier outputs. For coding agents eligible for patch
+   minimization, preserve normalized task-owned edit sequence, file,
+   before/after artifact references, feedback request, and final-survival
+   linkage; use `trajectory-guided-patch-minimization.md` rather than creating a
+   second trace system.
 4. Separate exact metrics, threshold gates, and human preference using `agent-evaluation`.
 5. Diagnose failed trajectories as:
    - **Local**: one node, tool call, schema, or action is wrong; retry or repair that unit.
