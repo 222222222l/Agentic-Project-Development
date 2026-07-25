@@ -5,6 +5,7 @@
 - Override precedence
 - Repo profile template
 - Project model routing
+- Skill and context governance
 - Extension pattern
 - Personal defaults
 
@@ -87,6 +88,20 @@ Create `docs/agents/project-development-profile.md` when a repo needs stable loc
 - Model-unavailable fallback:
 - User approval required for:
 
+## Skill and Context Governance
+
+- Allowed Skill sources and trust classes:
+- Candidate Skill limit (initial empirical prior: 1-3):
+- Version and incompatibility checks:
+- Third-party Skill inspection and permission policy:
+- With/without Skill eval command and dataset:
+- Persistent context source-of-truth paths:
+- Rules that must not be duplicated into AGENTS/context files:
+- Context-pressure and stale-state signals:
+- Compaction or progress-state policy promoted by eval:
+- Evidence artifact store and stable reference format:
+- Sealed confirmation set and promotion approver:
+
 ## Local Conventions
 
 - Naming:
@@ -131,3 +146,7 @@ Good defaults for solo project development:
 - Keep one main execution owner; delegate only when specialization, independent exploration, or fresh verification exceeds coordination cost.
 - Reuse a worker for the same objective, module, data flow, and trust boundary; use a fresh context for independent verification.
 - Keep AGENTS/context files minimal: exact commands, boundaries, non-functional constraints, and hazards only.
+- Treat third-party Skills as untrusted until source, content, dependencies,
+  permissions, and task applicability are established.
+- Keep task-generated Skill refinements temporary until paired held-out evidence
+  promotes them; do not auto-retire shared Skills from low use alone.

@@ -87,6 +87,19 @@ These are candidates, not required dependencies. `references/agent-system-engine
 | [RAMP (2605.27492)](https://hf.co/papers/2605.27492) | Evaluate runtime failures, recovery, tool use, serial dependencies, and cost |
 | [Why Agentic-PRs Get Rejected (2602.04226)](https://hf.co/papers/2602.04226) | Keep PR scope/explanation proportional and preserve reviewer-trust evidence |
 | [TRIM (2607.18161v1)](https://arxiv.org/abs/2607.18161v1) | Define agent CodeSlop as removable functional redundancy; use trajectory-guided coarse-to-fine counterfactual deletion after success, but strengthen test-only preservation into a full acceptance and maintainability contract |
+| [SkillsBench v4 (2602.12670v4)](https://arxiv.org/abs/2602.12670v4) | Use a small applicable Skill set as an empirical prior, require paired no-Skill/current-baseline evaluation, and prevent task-generated Skills from automatic promotion |
+| [SWE-Skills-Bench (2603.15401v1)](https://arxiv.org/abs/2603.15401v1) | Require applicability, version compatibility, fallback, and marginal cost evidence; availability does not establish utility |
+| [Evaluating AGENTS.md v2 (2602.11988v2)](https://arxiv.org/abs/2602.11988v2) | Keep persistent context non-duplicative and behavior-changing; do not generate repository overviews by default |
+| [Skill Coverage (2606.20659v2)](https://arxiv.org/abs/2606.20659v2) | Report auditable behavior-constraint coverage separately from task success and target only evidenced failures |
+| [ContextBench (2602.05892v3)](https://arxiv.org/abs/2602.05892v3) | Diagnose context precision, redundancy, and explored-but-unused evidence only when a reviewed evidence map supports the denominator |
+| [Less Context, Better Agents (2606.10209v1)](https://arxiv.org/abs/2606.10209v1) | Offer recent exact state plus compact evicted-history progress and artifact references as an evaluated long-horizon policy; do not universalize its window sizes |
+| [GSME (2607.13683v1)](https://arxiv.org/abs/2607.13683v1) | Keep optional harness evolution behind immutable verifiers and permissions, activation evidence, paired repeated trials, predeclared effects, and sealed confirmation |
+| [Skill-Inject (2602.20156v1)](https://arxiv.org/abs/2602.20156v1) | Treat third-party Skills as untrusted capability packages; pin provenance, inspect dependencies, enforce least privilege, and separate authorization from instructions |
+
+The suite does not make autonomous Skill generation, learned composition,
+neural context pruning, automatic merge/retire, or second-level reference
+routing a default. The README records the reviewed experimental results and the
+reason each unpromoted mechanism remains optional.
 
 ## Data-Flywheel Methods Integrated
 

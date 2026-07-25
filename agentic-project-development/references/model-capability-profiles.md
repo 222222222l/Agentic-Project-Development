@@ -1,5 +1,15 @@
 # Model Capability Profiles
 
+## Contents
+
+- Purpose
+- Selection order
+- Capability probe
+- Frontier-compact
+- Portable-guided
+- User overrides
+- Promotion rule
+
 ## Purpose
 
 Adapt instruction density to the model plus execution harness. Treat model capability as a property of the full configuration: model, tools, context policy, permissions, state, tracing, and verifier.
@@ -26,6 +36,8 @@ Choose `frontier-compact` only when all are true:
 - Reliably inspect files, repository state, and tool outputs before acting.
 - Preserve outcome, constraints, and verifier across long or compacted contexts.
 - Follow conditional references without loading the entire skill bundle.
+- Select an applicable Skill from a deterministically filtered candidate set,
+  respect version and permission constraints, and use the declared fallback.
 - Produce schema-stable artifacts and respect explicit stop or abstention gates.
 - Attribute failures from evidence and change strategy instead of blindly repeating.
 - Run the named verifier and distinguish observed results from self-assessment.
@@ -38,6 +50,8 @@ Otherwise choose `portable-guided`.
 Use for strong long-horizon coding agents in mature harnesses.
 
 - Load only this file, the router-selected mode references, and task-local evidence.
+- Start with the smallest applicable Skill set; exceed the one-to-three Skill
+  empirical prior only when dependencies or project evaluation justify it.
 - Let the model gather ordinary repo context autonomously; ask only direction-changing questions.
 - Keep plans outcome-oriented. Expand steps only at high-risk or hard-to-reverse decisions.
 - Use compact phase contracts and one decision trace instead of repeating instructions.
@@ -73,6 +87,8 @@ Run phases explicitly:
 Additional constraints:
 
 - Read one routed reference at a time and summarize its operative rules before acting.
+- Filter Skill candidates by task, version, permissions, and incompatibilities
+  before asking the model to choose; provide the candidate rationale explicitly.
 - Use explicit file paths, commands, expected outputs, and acceptance examples.
 - For multi-step or cross-session work, maintain a task state file with completed evidence and next action.
 - Re-read current files before edits; do not rely on remembered repository state.
@@ -95,4 +111,4 @@ An override changes instruction density, not safety, approval, source, or verifi
 
 ## Promotion Rule
 
-Promote a model-harness pair from `portable-guided` only after repeated project-representative runs show acceptable task success, verification coverage, recovery, abstention, cost, and trace quality. Use `agent-evaluation` for multi-run evidence; do not promote from one successful demo.
+Promote a model-harness pair from `portable-guided` only after repeated project-representative runs show acceptable task success, Skill selection and behavior coverage, context use, verification coverage, recovery, abstention, cost, and trace quality. Use `agent-evaluation-standard.md` for multi-run evidence; do not promote from one successful demo.

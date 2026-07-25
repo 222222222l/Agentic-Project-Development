@@ -15,6 +15,8 @@ The suite is a workflow layer, not an agent runtime. It can compose with existin
 - Reuse workers for related context and require fresh context when verification must be independent.
 - Converge spec, plan, tasks, implementation, and verification before declaring completion.
 - Keep context and persistent agent instructions minimal and task-relevant.
+- Treat Skill, context-policy, and harness changes as evaluated candidates with
+  provenance, permissions, paired utility, and rollback rather than as trusted prose.
 
 ## Model Profiles
 
@@ -106,6 +108,7 @@ agentic-project-development/
     test-driven-development.md
     eval-driven-development.md
     agent-system-engineering.md
+    skill-context-harness-governance.md
     data-flywheel-development.md
     agent-evaluation-standard.md
     architecture-and-domain.md
@@ -165,16 +168,57 @@ Try frontier and portable routing:
 python agentic-project-development/scripts/select_workflow.py --work-type feature --scope cross-module --model-name gpt-5.6-sol --harness-maturity strong
 python agentic-project-development/scripts/select_workflow.py --work-type agent-system --determinism llm --model-name Kimi-K2.7-Code --harness-maturity partial --risk high
 python agentic-project-development/scripts/select_workflow.py --work-type review --scope project --risk high --task-role verification --verification-independence required
+python agentic-project-development/scripts/select_workflow.py --work-type skill --scope single-module
 ```
 
 ## Research Basis
 
-Research and model evidence in this revision was checked on 2026-07-10.
+Research and model evidence in the base suite was checked on 2026-07-10. The
+Skill/context/harness governance increment was checked against the linked arXiv
+versions on 2026-07-25. These are empirical results in the reported settings,
+not universal constants.
 
 The trajectory-guided patch-minimization evidence and adaptation boundary were checked against TRIM (arXiv:2607.18161v1) on 2026-07-21.
 
 The project-routing boundary was checked against the active Codex subagent interface on 2026-07-16. Concrete model availability remains host-specific.
 
-The current constraints absorb evidence from GitHub Spec Kit, Superpowers, Evaluating AGENTS.md, Agent READMEs, Spec Kit Agents, RigorBench, Harness-Bench, Meta-Agent, AgentTether, RAMP, TRIM, and empirical studies of rejected agent-authored PRs. See `agentic-project-development/references/source-map.md` for links and the exact mapping.
+The current constraints also absorb evidence from GitHub Spec Kit, Superpowers,
+Agent READMEs, Spec Kit Agents, RigorBench, Harness-Bench, Meta-Agent,
+AgentTether, RAMP, TRIM, and empirical studies of rejected agent-authored PRs.
+See `agentic-project-development/references/source-map.md` for the complete
+mapping.
+
+### Skill, context, and harness increment
+
+| Research result | Evidence used | Conservative integration boundary |
+| --- | --- | --- |
+| [SkillsBench v4, arXiv:2602.12670v4](https://arxiv.org/abs/2602.12670v4) | 87 tasks, 8 domains, and 18 model-harness configurations; curated Skills raised average pass rate from 33.9% to 50.5%. One to three Skills outperformed larger bundles; comprehensive instructions added only 0.7 points, while task-time self-generated Skills underperformed no-Skill baselines in all three tested authoring configurations. | Start with the smallest applicable set, use one to three only as an empirical prior, and require paired downstream evidence. Task-generated refinements remain temporary. |
+| [SWE-Skills-Bench, arXiv:2603.15401v1](https://arxiv.org/abs/2603.15401v1) | Across 49 public SWE Skills and about 565 task instances, average gain was 1.2 points; 39 Skills had no pass-rate gain and three degraded results, including version-mismatch failures. Token overhead could rise without utility. | Require applicability, version compatibility, fallback, and cost-per-success evidence. Do not assume an available Skill helps. |
+| [Evaluating AGENTS.md v2, arXiv:2602.11988v2](https://arxiv.org/abs/2602.11988v2) | On 138 tasks from 12 repositories, developer context files averaged a non-significant 2.4% improvement (`p=0.21`); generated context did not improve success and increased inference cost. Generated context helped only when canonical documentation was removed. | Keep persistent context limited to non-duplicated commands, boundaries, hazards, and non-functional constraints. Do not generate repository overviews by default. |
+| [Skill Coverage, arXiv:2606.20659v2](https://arxiv.org/abs/2606.20659v2) | Across 4,283 extracted behavior constraints and five model-harness configurations, observed trajectories covered about 38.66%-45.51%; targeted reinforcement of failed constraints recovered 16.0% of selected failed tasks. | Add observable constraint coverage as a diagnostic alongside task success. It is not a universal release score and requires auditable applicability labels. |
+| [ContextBench, arXiv:2602.05892v3](https://arxiv.org/abs/2602.05892v3) | 1,136 real issues across 66 repositories showed that broad retrieval can trade precision for recall and that agents can find context during exploration but fail to use it in the final solution. | Record context precision, redundancy, and explored-but-unused evidence only where a reviewed evidence map makes the metric reliable. |
+| [Less Context, Better Agents, arXiv:2606.10209v1](https://arxiv.org/abs/2606.10209v1) | In a 50-task long-horizon ERP study with five runs per configuration, recent exact tool pairs plus evicted-history summaries raised completion from 71.0% to 91.6% while reducing tokens by 62.7%; the study remains workflow-specific. | Offer immutable contract + recent exact state + compact progress + artifact references when project evidence shows context pressure. Do not copy the paper's fixed window sizes into suite defaults. |
+| [GSME, arXiv:2607.13683v1](https://arxiv.org/abs/2607.13683v1) | With a frozen base model and gated harness evolution, six evaluated domains reported sealed-test gains of 9.2-15.5 points. A 5.1-point SWE-bench gain was correctly left unconfirmed because its paired statistic was insufficient (`z=0.78`). | For optional evolution, freeze verifiers and permissions, require activation evidence, paired repeated trials, a predeclared effect, and sealed confirmation. Inconclusive candidates do not promote. |
+| [Skill-Inject, arXiv:2602.20156v1](https://arxiv.org/abs/2602.20156v1) | The benchmark contains 202 injection-task pairs and reports attack success up to 80% against frontier agents; simple filtering and scaling were insufficient in the tested threat models. | Treat third-party Skills as untrusted, pin provenance, inspect code and dependencies, enforce least privilege, and keep contextual authorization outside Skill instructions. |
+
+### Deliberately not promoted to defaults
+
+- [SkillOps](https://arxiv.org/abs/2605.13716v1),
+  [SkillComposer](https://arxiv.org/abs/2606.32025v1), and
+  [AFTER](https://arxiv.org/abs/2606.23127v1) motivate typed maintenance,
+  ordered composition, and transfer testing, but their closed, synthetic, or
+  domain-limited evidence does not justify an autonomous library manager,
+  trained composer, or automatic cross-role sharing here.
+- [SWE-Pruner](https://arxiv.org/abs/2601.16746v4),
+  [AdaCoM](https://arxiv.org/abs/2605.30785v1), and
+  [Memex(RL)](https://arxiv.org/abs/2603.04257v1) remain optional experiment
+  designs. This suite does not require a neural context manager, fixed pruning
+  ratio, or learned memory policy.
+- [Progressive Disclosure](https://arxiv.org/abs/2607.17598v1) found no benefit
+  from a second routing layer in its tested long-context setting. The suite
+  retains its existing one-level `SKILL.md` -> direct reference architecture,
+  but does not claim that result as a universal prohibition.
+- No paper reviewed here is used to justify automatic Skill deletion,
+  self-modification of verifiers, or silent permission expansion.
 
 The practical result is intentionally conservative: minimal persistent context, repository-grounded phases, explicit contracts, process-discipline gates, model-harness evaluation, localized recovery, and human-readable evidence before completion.

@@ -87,6 +87,19 @@ class WorkflowRoutingTests(unittest.TestCase):
         self.assertEqual(execution["model_request"], "request-if-exposed-by-active-harness")
         self.assertIn("nearest exposed model", execution["fallback_if_model_unavailable"])
 
+    def test_skill_change_routes_governance_and_paired_evaluation(self) -> None:
+        result = route("--work-type", "skill", "--scope", "single-module")
+        self.assertEqual(result["primary_mode"], "skill-context-harness-governance")
+        self.assertIn(
+            "references/skill-context-harness-governance.md",
+            result["required_references"],
+        )
+        self.assertIn(
+            "references/agent-evaluation-standard.md",
+            result["required_references"],
+        )
+        self.assertTrue(result["process_discipline_gate"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -152,6 +152,12 @@ cause:
 Do not use fine-tuning to mask a broken tool, stale knowledge source, unclear
 business rule, or invalid evaluator.
 
+When the candidate is a Skill, persistent context file, context policy, or
+harness policy, read `skill-context-harness-governance.md`. Keep task-generated
+procedures temporary, preserve their source trajectories, and require paired
+held-out evidence before promoting them into a shared library or default
+context.
+
 ### 7. Evaluate
 
 Freeze the baseline and candidate configurations. Run the same task set,

@@ -56,7 +56,7 @@ def choose_capability_role(args: argparse.Namespace) -> tuple[str, str]:
         return "independent-verifier", "work-shape"
     if args.work_type == "research":
         return "source-researcher", "work-shape"
-    if args.work_type in {"architecture", "migration"}:
+    if args.work_type in {"architecture", "migration", "skill"}:
         return "reasoning-investigator", "work-shape"
     if args.work_type == "new-project":
         return "orchestrator-editor", "work-shape"
@@ -242,6 +242,17 @@ def recommend(args: argparse.Namespace) -> dict:
         references.append("references/agent-system-engineering.md")
         reasons.append("tools, state, handoffs, memory, or agent topology need explicit contracts")
 
+    if args.work_type == "skill":
+        modes.append("skill-context-harness-governance")
+        references.extend([
+            "references/skill-context-harness-governance.md",
+            "references/agent-evaluation-standard.md",
+        ])
+        reasons.append(
+            "Skill, persistent context, or harness changes need provenance, "
+            "permission, paired-utility, and promotion gates"
+        )
+
     if broad_scope or args.work_type in {"new-project", "architecture", "migration"} or (
         args.work_type == "feature" and args.scope != "single-file"
     ):
@@ -293,6 +304,7 @@ def recommend(args: argparse.Namespace) -> dict:
         or broad_scope
         or yes(args.loop_request)
         or yes(args.multi_agent)
+        or args.work_type == "skill"
         or execution_route["delegate"]
         or execution_route["fresh_verifier"]
     )
@@ -319,7 +331,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--work-type", default="feature", choices=[
         "new-project", "feature", "bug", "refactor", "architecture", "migration",
-        "library", "agent-system", "prototype", "review", "release", "research"
+        "library", "agent-system", "skill", "prototype", "review", "release", "research"
     ])
     parser.add_argument("--determinism", default="deterministic", choices=[
         "deterministic", "llm", "probabilistic", "semantic", "unknown"

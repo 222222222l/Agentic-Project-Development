@@ -6,6 +6,7 @@
 - Grounded phase contract
 - Mode selection
 - Project execution routing
+- Skill, context, and harness governance
 - Current skill composition
 - Patch minimization
 - Artifact traceability
@@ -20,19 +21,20 @@ Use this file when several development modes apply, when artifact ordering is un
 1. **Profile**: choose `frontier-compact` or `portable-guided` from the model-harness pair.
 2. **Loop gate**: for loop/auto requests, prove reliable quantified verification before repetition.
 3. **Route execution**: map task structure and choose main owner, capability role, worker reuse, independent verification, and fallback.
-4. **Expose unknowns**: scan architecture, history, data, constraints, risks, and references.
-5. **Align**: define outcome, users, non-goals, approvals, and done criteria.
-6. **Ground**: attach each material claim to repo files, runtime state, current sources, examples, or prior artifacts.
-7. **Specify**: create a durable source of truth when ambiguity or scope warrants it.
-8. **Model behavior**: express user-visible rules as scenarios or acceptance criteria.
-9. **Plan slices**: create vertical increments with explicit phase contracts.
-10. **Implement**: use TDD, direct implementation, source grounding, or prototypes according to risk.
-11. **Reassess**: re-route after direction-changing evidence, repeated verifier failure, or excessive coordination cost.
-12. **Evaluate**: run exact checks, gates, evals, browser/manual QA, and review.
-13. **Recover**: attribute failures as local, upstream, or structural before targeted repair.
-14. **Minimize**: when eligible, reduce the passing patch to the smallest task-owned change that preserves the full acceptance contract and maintainability gates.
-15. **Converge**: check spec -> plan -> task -> implementation -> verification coverage and append only genuine remaining work.
-16. **Explain and record**: report why, what changed, evidence, routes, fallbacks, risks, intentional non-changes, and reusable learning.
+4. **Govern Skill and context changes**: when triggered, establish candidate scope, source, trust, permissions, paired baseline, and evidence state before promotion.
+5. **Expose unknowns**: scan architecture, history, data, constraints, risks, and references.
+6. **Align**: define outcome, users, non-goals, approvals, and done criteria.
+7. **Ground**: attach each material claim to repo files, runtime state, current sources, examples, or prior artifacts.
+8. **Specify**: create a durable source of truth when ambiguity or scope warrants it.
+9. **Model behavior**: express user-visible rules as scenarios or acceptance criteria.
+10. **Plan slices**: create vertical increments with explicit phase contracts.
+11. **Implement**: use TDD, direct implementation, source grounding, or prototypes according to risk.
+12. **Reassess**: re-route after direction-changing evidence, repeated verifier failure, or excessive coordination cost.
+13. **Evaluate**: run exact checks, gates, evals, browser/manual QA, and review.
+14. **Recover**: attribute failures as local, upstream, or structural before targeted repair.
+15. **Minimize**: when eligible, reduce the passing patch to the smallest task-owned change that preserves the full acceptance contract and maintainability gates.
+16. **Converge**: check spec -> plan -> task -> implementation -> verification coverage and append only genuine remaining work.
+17. **Explain and record**: report why, what changed, evidence, routes, fallbacks, risks, intentional non-changes, and reusable learning.
 
 ## Grounded Phase Contract
 
@@ -59,6 +61,7 @@ Validate intermediate artifacts before they become downstream context. A clean f
 | UI workflow, permissions, checkout, onboarding | BDD | TDD or browser journey |
 | LLM, agent, RAG, prompt, extractor, classifier | EDD | Agent-system engineering |
 | Tool graph, handoff, memory, durable or multi-agent runtime | Agent-system engineering | EDD, architecture |
+| Skill, persistent context, context policy, or harness policy change | Skill/context/harness governance | Agent evaluation, source grounding, agent-system engineering |
 | Project model route, specialist worker, or independent verifier | Project model routing | Agent-system engineering, review |
 | Production traces, feedback curation, reusable failures, or continuous improvement | Data-flywheel development | Agent evaluation standard, EDD, agent-system engineering |
 | New framework/API integration | Source-grounded | TDD, BDD, or EDD |
@@ -85,6 +88,16 @@ Compose optional skills only when they are currently available. Do not encode a 
 
 Read `project-model-routing.md` before spawning a specialist or selecting a concrete model alias. Start with one owner, route by capability rather than model prestige, count context/handoff/retry/verification overhead, reuse a related worker, and reserve a fresh worker for independent verification or changed boundaries.
 
+## Skill, Context, and Harness Governance
+
+Read `skill-context-harness-governance.md` before changing a Skill, persistent
+context file, context construction, compaction policy, memory selection, or
+harness prompt. Keep one compact router with direct references. Establish the
+candidate's scope, source, hash, permissions, applicability, fallback, and
+evidence state; compare it against the current or no-Skill baseline under equal
+budgets before default promotion. Treat task-generated refinements as temporary
+until held-out evidence exists.
+
 ## Patch Minimization
 
 Read `trajectory-guided-patch-minimization.md` only after a code-producing task has a reproducible passing baseline and the ownership and verifier gates are satisfied. Treat it as a conditional post-success overlay, not a replacement for specification, design, testing, or review. Record an explicit skip reason when the verifier, edit lineage, rollback, or acceptance coverage is insufficient.
@@ -98,6 +111,7 @@ Before declaring non-trivial work complete, answer:
 - Which planned item was changed or dropped, and why?
 - Which failure was repaired, and was it local, upstream, or structural?
 - Which non-functional constraints cover security, performance, reliability, cost, and rollback?
+- If Skill or context changed, what was the paired baseline, was the candidate actually activated, and what trust and permission boundary applied?
 - Was eligible agent-authored change minimized, or was minimization skipped for a recorded ownership, verifier, risk, or cost reason?
 
 Record uncovered criteria as remaining work. Do not silently redefine done.
@@ -110,6 +124,7 @@ Record uncovered criteria as remaining work. Do not silently redefine done.
 Model profile / selection source:
 Execution owner / capability role / selection source:
 Worker reuse / fresh verifier / fallback:
+Skill/context candidate / evidence state / trust:
 Primary mode / overlays:
 Rejected modes:
 Evidence loaded:

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import re
 from pathlib import Path
 
@@ -68,6 +69,21 @@ def main() -> None:
     for rel in sorted(bundled - listed):
         errors.append(f"bundled resource is not directly listed in SKILL.md: {rel}")
 
+    content_hashes: dict[str, str] = {}
+    for rel in sorted(path for path in bundled if path.startswith("references/")):
+        resource_text = (skill_dir / rel).read_text(encoding="utf-8")
+        normalized = "\n".join(
+            line.rstrip() for line in resource_text.splitlines()
+        ).strip()
+        digest = hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+        if digest in content_hashes:
+            errors.append(
+                "duplicate normalized reference content: "
+                f"{content_hashes[digest]} and {rel}"
+            )
+        else:
+            content_hashes[digest] = rel
+
     for readme in skill_dir.rglob("README.md"):
         errors.append(f"skill folder must not contain README.md: {readme.relative_to(skill_dir)}")
 
@@ -94,6 +110,8 @@ def main() -> None:
             "--verification-independence",
             '"execution_owner"',
             '"fallback_if_model_unavailable"',
+            '"skill"',
+            "references/skill-context-harness-governance.md",
         ):
             if fragment not in selector_text:
                 errors.append(f"workflow selector is missing routing field: {fragment}")
@@ -103,6 +121,26 @@ def main() -> None:
         profile_text = personalization.read_text(encoding="utf-8")
         if "## Project Model Routing" not in profile_text:
             errors.append("personalization reference lacks project model routing fields")
+
+    governance = skill_dir / "references" / "skill-context-harness-governance.md"
+    if governance.exists():
+        governance_text = governance.read_text(encoding="utf-8")
+        for fragment in (
+            "## Evidence Threshold",
+            "## Candidate Contract",
+            "## Bounded Context Policy",
+            "## Paired Promotion Gate",
+            "## Skill Supply-Chain Gate",
+            "## Controlled Evolution Gate",
+        ):
+            if fragment not in governance_text:
+                errors.append(f"Skill governance reference is missing contract: {fragment}")
+        for fragment in (
+            "Skill creation/update/removal, persistent context",
+            "Skill/context candidate / source and trust",
+        ):
+            if fragment not in text:
+                errors.append(f"SKILL.md is missing Skill governance route: {fragment}")
 
     minimization = skill_dir / "references" / "trajectory-guided-patch-minimization.md"
     if minimization.exists():

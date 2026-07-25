@@ -5,6 +5,7 @@
 - Evaluation object and evidence packet
 - Dataset and grader requirements
 - Metric definitions
+- Skill and context policy experiments
 - Default release gates
 - Experiment and online validation rules
 - Flywheel health scorecard
@@ -141,10 +142,17 @@ handoff_success_rate = accepted_valid_handoffs / attempted_handoffs
 recovery_rate = recovered_eligible_failures / eligible_recoverable_failures
 unsupported_claim_rate = unsupported_material_claims / material_claims
 verification_coverage = verified_material_claims / material_claims_requiring_verification
+skill_applicability_precision = applicable_loaded_skills / loaded_skills
+skill_behavior_coverage = evidenced_applicable_constraints / applicable_constraints
+context_use_rate = retrieved_units_used_in_final_decision / retrieved_units
+retrieval_redundancy = redundant_retrieved_units / retrieved_units
 ```
 
 Also report turns, tool calls, retries, tokens, latency, and state transitions per
-successful task. Do not reward shorter paths that omit required verification.
+successful task. Report Skill discovery, read, activation, and fallback use as
+separate events. Use context-use metrics only when a reviewed evidence map makes
+their denominators reliable. Do not reward shorter paths that omit required
+verification.
 
 ### Observability and reproducibility
 
@@ -249,6 +257,34 @@ Do not claim improvement when:
 - a model grader is uncalibrated or saw variant identity;
 - a score increase comes from evaluation leakage or reward hacking;
 - the business outcome is unchanged and no approved proxy relationship exists.
+
+## Skill and Context Policy Experiments
+
+Read `skill-context-harness-governance.md` when the intended variable is a
+Skill, persistent context file, retrieval/composition policy, compaction policy,
+or harness instruction. Compare the current or no-Skill baseline with the
+candidate under equal tasks, budgets, tools, permissions, environment, and
+graders. Only the intended Skill or context factor may differ between the two
+`system_harness_id` manifests.
+
+In addition to the baseline-candidate report:
+
+- record whether each candidate was discovered, read, activated, used, skipped,
+  or replaced by fallback behavior;
+- report behavior coverage separately from task success;
+- include negative applicability, version-mismatch, and baseline-stronger cases;
+- report context precision, redundancy, explored-but-unused evidence, and stale
+  state failures only when those labels are reliable;
+- test held-out tasks whenever utility beyond one task is claimed;
+- test changed role, domain, model, or harness only when transfer across that
+  axis is claimed;
+- never promote a task-generated candidate from the same trajectory that
+  authored it.
+
+Treat one to three loaded Skills as an initial experimental prior, not a release
+gate. Do not encode a universal context window or summary interval from one
+benchmark. If the sample cannot distinguish a real gain from noise, return
+`inconclusive` and retain the baseline.
 
 ## Online Validation
 

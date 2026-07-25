@@ -1,6 +1,6 @@
 ---
 name: agentic-project-development
-description: Route agentic project work through the lightest reliable combination of Spec-Driven, Behavior/Acceptance-Driven, Test-Driven, Eval-Driven, source-grounded, architecture/domain, agent-system, project-level model and subagent routing, data-flywheel, delivery, review, debugging, uncertainty, trajectory-guided patch minimization, and quantified auto-loop practices. Use when planning, specifying, implementing, testing, evaluating, refactoring, reviewing, minimizing agent-generated patches, or decomposing projects and features; when building LLM or multi-agent systems; when instrumenting structured traces, reusable feedback data, continuous evaluation, or evidence-backed improvement loops; when adapting execution detail or task roles to frontier or open-weight models; or when users request loop, auto, autonomous, keep-going, or run-until-done development.
+description: Route agentic project work through the lightest reliable combination of Spec-Driven, Behavior/Acceptance-Driven, Test-Driven, Eval-Driven, source-grounded, architecture/domain, agent-system, Skill/context/harness governance, project-level model and subagent routing, data-flywheel, delivery, review, debugging, uncertainty, trajectory-guided patch minimization, and quantified auto-loop practices. Use when planning, specifying, implementing, testing, evaluating, refactoring, reviewing, minimizing agent-generated patches, or decomposing projects and features; when building LLM or multi-agent systems; when creating, updating, consolidating, securing, or evaluating Skills, persistent context, or harness policies; when instrumenting structured traces, reusable feedback data, continuous evaluation, or evidence-backed improvement loops; when adapting execution detail or task roles to frontier or open-weight models; or when users request loop, auto, autonomous, keep-going, or run-until-done development.
 ---
 
 # Agentic Project Development
@@ -15,6 +15,7 @@ description: Route agentic project work through the lightest reliable combinatio
 6. For vague, high-risk, hard-to-reverse, architecture-sensitive, or UX-sensitive work, read `references/uncertainty-and-decision-trace.md` before detailed planning.
 7. Stop or abstain when required evidence, permission, runtime capability, or verification is unavailable. Never hide a fatal gate behind an average score or confident prose.
 8. After a code-producing task first passes its acceptance verifier, read `references/trajectory-guided-patch-minimization.md` when the patch contains multi-step agent exploration, suspected residual edits, or an explicit simplification request. Minimize only task-owned changes and preserve the passing baseline as rollback.
+9. Before changing a Skill, persistent context file, context policy, or harness policy, read `references/skill-context-harness-governance.md`. Keep the candidate set small, establish provenance and permissions, and require paired downstream evidence before default promotion.
 
 On Windows, prefer repository-native commands and explicit UTF-8 handling. Change shells only when encoding, quoting, or tool compatibility creates demonstrated friction.
 
@@ -22,7 +23,7 @@ On Windows, prefer repository-native commands and explicit UTF-8 handling. Chang
 
 1. **Profile**: choose the instruction-density profile and record whether it came from the user, repo, known alias, or capability self-assessment.
 2. **Classify**: map outcome, task structure, required capability, risk, determinism, scope, affected surfaces, delivery target, and verification surface before choosing a model.
-3. **Gate**: apply loop quantification, uncertainty, delegation, and independent-verification gates when triggered.
+3. **Gate**: apply loop quantification, uncertainty, Skill/context/harness, delegation, and independent-verification gates when triggered.
 4. **Route**: choose the development modes, execution owner, capability role, worker reuse, and safe fallback. Concrete model IDs are optional runtime aliases.
 5. **Ground**: name the evidence for each phase: files, versions, docs, runtime state, scenarios, datasets, or prior artifacts.
 6. **Contract**: define each substantial phase as input -> action -> artifact -> verifier -> stop/escalation condition.
@@ -43,6 +44,7 @@ On Windows, prefer repository-native commands and explicit UTF-8 handling. Chang
 | LLM, RAG, prompt, routing, semantic, or agent output | `references/eval-driven-development.md` | Agent evaluation, source grounding |
 | Current framework, API, protocol, or platform behavior matters | `references/source-driven-development.md` | Any implementation or review mode |
 | Agent runtime, tool graph, memory, handoff, durable workflow, or multi-agent system | `references/agent-system-engineering.md` | EDD, source grounding, architecture |
+| Skill creation/update/removal, persistent context, context policy, or harness policy | `references/skill-context-harness-governance.md` | Agent evaluation, source grounding, agent-system engineering |
 | Project model routing, specialist subagent, worker reuse, or independent verifier | `references/project-model-routing.md` | Agent-system engineering, review |
 | Production traces, feedback data, reusable failures, continuous improvement, or data flywheel | `references/data-flywheel-development.md` | Agent evaluation standard, EDD, agent-system engineering |
 | Domain concepts, module boundaries, data ownership, or deep refactor | `references/architecture-and-domain.md` | SDD, TDD, decision trace |
@@ -60,6 +62,7 @@ Keep this compact:
 ```markdown
 Model profile / source:
 Execution route / source:
+Skill/context candidate / source and trust:
 Chosen mode / overlays:
 Rejected modes:
 Evidence loaded:
@@ -83,6 +86,7 @@ For repeatable repo conventions, create or update `docs/agents/project-developme
 - `references/test-driven-development.md`: seam selection, red-green-refactor, and test anti-patterns.
 - `references/eval-driven-development.md`: datasets, evaluators, multi-run evidence, and release gates.
 - `references/agent-system-engineering.md`: framework selection, agent contracts, state, tracing, recovery, and human control.
+- `references/skill-context-harness-governance.md`: evidence thresholds, bounded context, Skill utility and coverage, supply-chain trust, library maintenance, and controlled evolution.
 - `references/data-flywheel-development.md`: structured run data, trace and feedback contracts, curation, reuse, and the observe-to-release loop.
 - `references/agent-evaluation-standard.md`: metric definitions, dataset rules, default thresholds, experiment comparison, and release gates.
 - `references/architecture-and-domain.md`: domain modeling, deep modules, ADRs, and stable seams.
