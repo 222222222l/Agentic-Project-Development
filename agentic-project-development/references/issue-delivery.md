@@ -8,7 +8,9 @@ Use this mode when converting a conversation, spec, PRD, design, bug report, or 
 
 Create a PRD when product intent and technical direction need a durable handoff. The PRD should focus on problem, solution, users, implementation decisions, testing decisions, out-of-scope items, and unresolved risks.
 
-Use `to-prd` when existing conversation context is already sufficient. Use SDD first when it is not.
+When existing context is sufficient, write the PRD directly or use `to-prd` if
+available. Resolve material ambiguity with the bundled SDD guidance first;
+an external helper is not required to produce the handoff.
 
 ## Vertical Slice Rules
 

@@ -18,6 +18,9 @@ Use deterministic tests for deterministic code around the LLM. Use evals for sem
 
 ## Tool Choices
 
+These are optional styles for existing project tools, not dependencies. If none
+is installed, use the repository's runner and the bundled evaluation standard.
+
 Use `promptfoo-evals` style when the project needs a general eval suite for prompts, endpoints, RAG pipelines, or agent outputs and can run through `promptfoo`.
 
 Use Pixie/eval-driven-dev style when working on a Python LLM application that benefits from instrumentation, real app execution, golden datasets, evaluator mapping, and persisted analysis artifacts.
@@ -31,7 +34,9 @@ Do not mock the core LLM in evals. Mock or instrument external data sources only
 3. Create a small but representative dataset first.
 4. Split metrics into exact quantitative measures, fatal/threshold gates, and human preference scores.
 5. Add evaluators; prefer deterministic assertions where possible.
-6. Run repeated trials and preserve raw outputs and trajectories.
+6. Run repeated trials and preserve raw outputs and trajectories, including
+   failed attempts and their cost. Separate development, regression and sealed
+   holdout data; adaptive development probes are not final benchmark estimates.
 7. Analyze failures before changing prompts, code, topology, or model profile.
 8. Compare the complete model-harness configuration, not model names in isolation.
 9. Add the eval to CI or a documented release gate when stable.
@@ -42,8 +47,10 @@ Do not mock the core LLM in evals. Mock or instrument external data sources only
 - Use BDD to express user-facing semantic scenarios.
 - Use source-driven development for SDK/tool-calling/eval-platform correctness.
 - Use review mode to compare code changes against eval deltas.
-- Use `agent-evaluation` for multi-run task suites, fatal gates, trace packets, and weighted reporting.
+- Use `agent-evaluation-standard.md` for repeated task suites, fatal gates, trace
+  packets and paired task-clustered comparisons.
 - Use `agent-system-engineering.md` for tool graphs, memory, handoffs, recovery, observability, and framework decisions.
+- Use `skill-context-harness-governance.md` for behavior-matched candidate verification.
 
 ## Output Contract
 

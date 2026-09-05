@@ -28,6 +28,9 @@ Use it for architecture reviews, refactors, module deepening, hard-to-test code,
 
 ## Integration
 
+The named skills below are optional helpers when available. Otherwise apply the
+process above and the bundled testing/review references using project tools.
+
 - `karpathy-guidelines`: keep architecture edits scoped, assumption-led, and verifiable.
 - `domain-modeling`: sharpen vocabulary and maintain `CONTEXT.md`.
 - `codebase-design`: design deep modules and testable seams.

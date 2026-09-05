@@ -8,6 +8,7 @@
 - Skill and context policy experiments
 - Default release gates
 - Experiment and online validation rules
+- Adaptive development and task-clustered comparisons
 - Flywheel health scorecard
 - Decision record
 
@@ -55,6 +56,12 @@ approver: ""
 Store per-case and per-trial results. Aggregate-only reports are insufficient.
 
 ## Dataset Standard
+
+Size the suite and thresholds to the claim, risk, task diversity and detectable
+effect *before* candidate selection. Numeric defaults below are examples for an
+operational agent release, not prerequisites for ordinary coding or Skill edits,
+and not values established by the research. Repeated runs reduce trial noise;
+they do not replace independent tasks or justify a significance claim alone.
 
 Maintain separate, versioned suites:
 
@@ -123,7 +130,8 @@ results for high-risk and materially different groups.
 
 ```text
 task_success_rate = successful_trials / eligible_trials
-pass@1 = successful_first_trials / tasks
+task_macro_success = mean(per_task_successful_trials / per_task_trials)
+empirical_first_attempt_success = successful_first_trials / tasks
 pass^k = tasks_where_all_k_trials_pass / tasks
 fatal_failure_rate = fatal_trials / eligible_trials
 abstention_precision = correct_abstentions / all_abstentions
@@ -132,6 +140,11 @@ abstention_recall = correct_abstentions / cases_requiring_abstention
 
 Use `pass@k` only where several attempts are an allowed product behavior. Use
 `pass^k` when repeated reliability matters.
+
+Declare whether pass@1 estimates the expected single-attempt success from all
+independent trials or uses just the first recorded attempt. Report task-macro
+and trial-micro aggregation explicitly when repetitions differ. Empty
+denominators are undefined, never zero or a passing score.
 
 ### Trajectory quality
 
@@ -149,7 +162,9 @@ retrieval_redundancy = redundant_retrieved_units / retrieved_units
 ```
 
 Also report turns, tool calls, retries, tokens, latency, and state transitions per
-successful task. Report Skill discovery, read, activation, and fallback use as
+successful task and for the complete attempted population. Report idle/no-action
+turns, duplicate retrieval and redundant full-suite runs when traces support
+those labels. Report Skill discovery, read, activation, and fallback use as
 separate events. Use context-use metrics only when a reviewed evidence map makes
 their denominators reliable. Do not reward shorter paths that omit required
 verification.
@@ -167,7 +182,8 @@ schema_validity_rate = valid_structured_outputs / structured_outputs
 
 ```text
 cost_per_success =
-  (model_cost + tool_cost + human_review_cost + attributed_error_loss)
+  (all_attempt_model_cost + all_attempt_tool_cost + human_review_cost
+   + attributed_error_loss)
   / successful_tasks
 
 value_per_success = verified_business_value / successful_tasks
@@ -175,6 +191,14 @@ agent_roi = (verified_business_value - total_operating_cost) / total_operating_c
 ```
 
 Report P50 and P95 cost and latency. Means alone hide long tails.
+
+Use a consistent denominator: successful trials for trial-level total cost,
+successful tasks for total task budgets that include allowed retries. Report
+input, output, cached-input tokens and cache-adjusted billed cost separately.
+Charge optimizer, retrieval-worker, evaluation, retry and integration overhead
+to the method that used them. Report successful-run-only costs as conditional
+diagnostics, not cost per success; omitting failed runs can reverse a ranking.
+With no successes, cost per success is undefined/infinite, not zero.
 
 ### Data-flywheel health
 
@@ -189,8 +213,10 @@ promotion_hit_rate = promoted_candidates_improving_online_target / promoted_cand
 
 ## Default Hard Gates
 
-These are starting defaults. Tighten them for high-stakes work. Do not loosen a
-gate during an active experiment merely to pass the candidate.
+These are illustrative operational defaults, not universal research thresholds.
+Choose the applicable project gates in advance. Do not loosen a gate during an
+active experiment merely to pass the candidate. Static validation and bounded
+smoke checks may finish an authorized edit without establishing efficacy.
 
 ### All profiles
 
@@ -221,7 +247,8 @@ gate during an active experiment merely to pass the candidate.
 
 - use at least five independent trials per critical case;
 - require `100%` pass on safety, authorization, and irreversible-action suites;
-- require human approval for production promotion and consequential actions;
+- enforce the active authorization policy at production promotion and consequential
+  actions; reuse approval already granted for the same scope;
 - use a lower-confidence-bound decision: the candidate's 95% confidence lower
   bound must meet the minimum target, not only the point estimate;
 - require `pass^5` on critical deterministic-outcome cases to meet the project target;
@@ -245,18 +272,42 @@ infrastructure or time effects may matter. Report:
 - any environment, provider, or dataset drift during the run.
 
 For binary outcomes, use a paired method such as McNemar's test when sample size
-supports it. For online rates, report confidence intervals and predeclared
+supports it and each task contributes one independent outcome. For repeated
+trials, preserve baseline/candidate pairs and cluster resampling by task or
+scenario; do not treat correlated repetitions as independent tasks. Report
+intervals and the number of unique tasks, not only a p-value. For online rates,
+report confidence intervals and predeclared
 minimum effect. For subjective results, use blinded pairwise human preference
 with ties and inter-reviewer agreement.
 
 Do not claim improvement when:
 
 - the candidate changed several uncontrolled variables;
-- the test set was chosen after seeing candidate outputs;
+- the reported final test set was chosen after seeing candidate outputs;
 - retries or budgets differ without being part of the claim;
 - a model grader is uncalibrated or saw variant identity;
 - a score increase comes from evaluation leakage or reward hacking;
 - the business outcome is unchanged and no approved proxy relationship exists.
+
+## Adaptive Development and Final Confirmation
+
+Behavior-based task selection can reduce *development* evaluation cost. Log
+selection rationale, the affected behavior, regression sentinels, budgets and
+all tried candidates. Confirm promising changes on unused development cases;
+reserve an inaccessible holdout for the final nominated candidate. That holdout
+must not guide task grouping, prompt authoring or selection.
+
+Predeclare the minimum effect, uncertainty method, stopping rule and primary
+metric. For cost improvements, require quality non-inferiority against a stated
+margin with enough evidence; an insignificant quality difference is not proof
+of equality. Small or saturated task sets may remain inconclusive even after
+many repeated trials. Control repeated looks/multiple comparisons or label
+exploratory results accordingly. Do not select a best run and call it pass@1.
+
+Separate three reports: diagnostic behavior changes, final task performance,
+and resource cost. An activated rule can be followed without improving success;
+use rule-withheld controls for material instruction additions. See
+`skill-context-harness-governance.md` for the staged verification procedure.
 
 ## Skill and Context Policy Experiments
 

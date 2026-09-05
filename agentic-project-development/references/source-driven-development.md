@@ -29,8 +29,10 @@ Avoid using random blog posts, Q&A sites, or memory as primary authority for ver
 - Combine with SDD for new systems whose stack choices matter.
 - Combine with TDD when API behavior can be tested deterministically.
 - Combine with EDD when LLM SDK, tool-calling, tracing, or eval APIs are involved.
-- Use `openai-docs` as the official-source path when building with OpenAI products or APIs.
-- Use `vercel-composition-patterns` when current React component architecture or React 19 API guidance matters.
+- Use `openai-docs` when available for OpenAI products or APIs; otherwise inspect
+  local SDK/version evidence and consult official OpenAI documentation.
+- Use `vercel-composition-patterns` when available and relevant to React component
+  architecture; otherwise verify the specific API in official React documentation.
 - Combine with review mode to catch stale APIs in diffs.
 
 ## Output Contract

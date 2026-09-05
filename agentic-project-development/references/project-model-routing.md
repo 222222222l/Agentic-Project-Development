@@ -43,7 +43,9 @@ Roles describe required capability. Map them to concrete model IDs only from the
 
 ## Delegation Gate
 
-Start with one agent. Delegate only when at least one condition is true and the expected value exceeds coordination cost:
+Start with one agent. Respect the current host and user's delegation policy;
+this reference does not grant authorization. Delegate only when at least one
+condition is true and the expected value exceeds coordination cost:
 
 - exploration will produce much more raw information than the final conclusion;
 - there are two or more independent investigation axes with no overlapping search;
@@ -66,6 +68,13 @@ Return or escalation condition:
 
 Wait for the worker, consume its distilled result, and do not repeat its search. Spot-check only material uncertainty.
 
+Continue useful independent work while a worker runs. For shared material that
+would otherwise be sent repeatedly, use one canonical artifact plus concise
+references. Keep coordination aligned to dependencies, avoid introductions and
+all-to-all status chatter, and use disjoint ownership or isolated worktrees for
+concurrent edits. A coordinator role needs real integration responsibility;
+the label itself supplies no measured advantage.
+
 ## Model Selection and Total Cost
 
 Resolve a route in this order:
@@ -83,6 +92,12 @@ total cost = execution + context loading + handoff + retry + verification
 ```
 
 Use observed telemetry when available. Otherwise compare `low`, `medium`, or `high` coordination cost and record the assumption. A cheap worker that needs repeated prompting, duplicated context, and stronger re-verification may cost more than one capable owner.
+
+Compare a single-owner baseline at matched total budget. Include failed runs,
+cached input, duplicated retrieval, synchronization and final integration cost;
+fewer output tokens are not automatically lower billed cost. Do not infer model
+capability from vendor, weight access or a stale alias list. Research scope and
+counterexamples are recorded in `research-evidence-2026-09.md`.
 
 When the user requests an unavailable model, preserve the requested role and select the nearest exposed capability. Report the fallback; never silently claim the requested model ran.
 

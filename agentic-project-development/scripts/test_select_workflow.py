@@ -30,6 +30,87 @@ class WorkflowRoutingTests(unittest.TestCase):
         self.assertFalse(execution["delegate"])
         self.assertFalse(execution["fresh_verifier"])
         self.assertEqual(execution["capability_role"], "code-executor")
+        self.assertTrue(result["lightweight_path"])
+        self.assertFalse(result["decision_trace_required"])
+        self.assertEqual(result["required_references"], [])
+
+    def test_names_do_not_override_observed_capability(self) -> None:
+        for name in ("gpt-5.6-sol", "fable5", "qwen", "unknown-future-model"):
+            with self.subTest(name=name):
+                result = route("--model-name", name, "--harness-maturity", "strong")
+                self.assertEqual(result["model_profile"], "portable-guided")
+                capable = route(
+                    "--model-name", name, "--capability-tier", "frontier",
+                    "--harness-maturity", "strong",
+                )
+                self.assertEqual(capable["model_profile"], "frontier-compact")
+
+    def test_explicit_profile_wins_and_weak_harness_falls_back(self) -> None:
+        explicit = route("--model-profile", "frontier-compact")
+        self.assertEqual(explicit["model_profile"], "frontier-compact")
+        self.assertIn("references/model-capability-profiles.md", explicit["required_references"])
+        weak = route("--capability-tier", "frontier", "--harness-maturity", "basic")
+        self.assertEqual(weak["model_profile"], "portable-guided")
+
+    def test_small_refactor_does_not_require_architecture_work(self) -> None:
+        result = route("--work-type", "refactor", "--risk", "low")
+        self.assertTrue(result["lightweight_path"])
+        self.assertEqual(result["required_references"], [])
+        self.assertFalse(result["decision_trace_required"])
+
+    def test_delivery_request_is_not_a_lightweight_edit(self) -> None:
+        result = route("--risk", "low", "--delivery", "prd")
+        self.assertFalse(result["lightweight_path"])
+        self.assertIn("references/issue-delivery.md", result["required_references"])
+
+    def test_loop_does_not_assume_a_verifier(self) -> None:
+        for quantifiable, decision in (
+            (None, "design-verifier-before-loop"),
+            ("yes", "allow-bounded-loop"),
+            ("no", "refuse-loop-fallback-ordinary-task"),
+        ):
+            args = ["--loop-request", "yes"]
+            if quantifiable:
+                args.extend(["--quantifiable", quantifiable])
+            result = route(*args)
+            self.assertEqual(result["loop_decision"], decision)
+
+    def test_long_work_preserves_state_without_claiming_loop_permission(self) -> None:
+        result = route("--horizon", "long")
+        self.assertEqual(result["state_tracking"], "dependencies-and-verifier-revisions")
+        self.assertIn("references/loop-auto-mode.md", result["required_references"])
+        self.assertEqual(result["loop_decision"], "not-requested")
+
+    def test_each_bottleneck_routes_targeted_guidance(self) -> None:
+        for bottleneck in ("retrieval", "context", "tools", "verification", "retry", "coordination"):
+            result = route("--bottleneck", bottleneck, "--risk", "low")
+            self.assertIn("references/efficient-execution.md", result["required_references"])
+            self.assertFalse(result["lightweight_path"])
+
+    def test_semantic_work_does_not_take_lightweight_path(self) -> None:
+        result = route("--risk", "low", "--determinism", "semantic")
+        self.assertFalse(result["lightweight_path"])
+        self.assertIn("eval-driven-development", result["recommended_modes"])
+
+    def test_forbidden_delegation_wins_over_exploration_request(self) -> None:
+        result = route(
+            "--delegation-policy", "forbidden", "--delegation-shape", "exploration",
+            "--raw-information-volume", "high", "--independent-axes", "2",
+        )
+        self.assertFalse(result["execution_route"]["delegate"])
+        self.assertTrue(result["execution_route"]["routing_conflicts"])
+
+    def test_forbidden_delegation_exposes_required_review_conflict(self) -> None:
+        result = route("--delegation-policy", "forbidden", "--verification-independence", "required")
+        execution = result["execution_route"]
+        self.assertFalse(execution["delegate"])
+        self.assertEqual(execution["verification_route"], "unsatisfied-routing-constraint")
+
+    def test_suggestion_is_not_authorization(self) -> None:
+        result = route("--raw-information-volume", "high")
+        execution = result["execution_route"]
+        self.assertTrue(execution["route_is_recommendation"])
+        self.assertEqual(execution["authorization_status"], "check-active-host-and-user-policy")
 
     def test_high_volume_independent_exploration_uses_two_workers(self) -> None:
         result = route(

@@ -1,5 +1,13 @@
 # Agent System Engineering
 
+## Contents
+
+- Architecture and runtime routing
+- Node contracts and reliability
+- Tool and context efficiency
+- Framework selection
+- Model-harness evaluation and human control
+
 ## Use When
 
 Use this mode when building or changing an LLM agent, coding agent, tool-using workflow, memory system, evaluator, handoff graph, durable run, or multi-agent application.
@@ -48,7 +56,7 @@ Keep state transitions explicit. Persist only information needed for recovery, a
    before/after artifact references, feedback request, and final-survival
    linkage; use `trajectory-guided-patch-minimization.md` rather than creating a
    second trace system.
-4. Separate exact metrics, threshold gates, and human preference using `agent-evaluation`.
+4. Separate exact metrics, threshold gates, and human preference using `agent-evaluation-standard.md`.
 5. Diagnose failed trajectories as:
    - **Local**: one node, tool call, schema, or action is wrong; retry or repair that unit.
    - **Upstream**: a valid downstream step received bad context; repair from the source transition.
@@ -57,6 +65,21 @@ Keep state transitions explicit. Persist only information needed for recovery, a
 7. Preserve a compact repair memory: failure evidence, attributed cause, correction, and boundary where it applies.
 8. Re-run the task suite across more than one seed or attempt before release.
 9. Reassess model and worker routing when a failure becomes upstream or structural, rather than assuming the original specialization remains correct.
+
+## Tool and Context Efficiency
+
+Use `efficient-execution.md` when trace costs justify intervention. Tool
+architecture changes need matched evaluation: preserve available capabilities,
+count cache-adjusted cost, failed runs and verification, and test both success
+and repeated reliability. Structured state updates need validation, explicit
+deletion semantics and a recoverable evidence trail. A shorter context does not
+prove that necessary history has been preserved.
+
+For long workflows, persist dependencies and completed regression obligations;
+resume against real environment state. For Skill/harness tuning, use staged
+behavior-based development verification and sealed confirmation from
+`skill-context-harness-governance.md`. These procedures do not require replacing
+the existing framework with the latest research harness.
 
 ## Framework Selection
 
@@ -89,4 +112,8 @@ Minimum release evidence:
 
 ## Human Control
 
-Require explicit approval for consequential external actions. Keep authorization separate from model confidence. Make retries idempotent where possible, attach rollback or compensation to side effects, and never let a recovered trajectory conceal an earlier external mutation.
+Require authorization for consequential external actions and reuse it when
+already given for the same scope. Keep authorization separate from model
+confidence. Make retries idempotent where possible, attach rollback or
+compensation to side effects, and never let a recovered trajectory conceal an
+earlier external mutation.

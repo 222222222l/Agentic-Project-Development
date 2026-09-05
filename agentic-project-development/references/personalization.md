@@ -19,6 +19,8 @@ Resolve conflicts in this order:
 4. This skill suite's defaults.
 
 Keep overrides small. A profile should contain only information that changes agent behavior in this repository.
+This precedence applies within project workflow preferences; it cannot override
+the active host's system/developer instructions or grant unavailable authority.
 
 ## Repo Profile
 
@@ -33,8 +35,8 @@ Create `docs/agents/project-development-profile.md` when a repo needs stable loc
 - Model-harness configurations already promoted by eval:
 - Default lifecycle:
 - Auto loop default:
-- Max auto loop rounds:
-- Minimum loop passing score:
+- Per-hypothesis retry budget / overall task budget:
+- Acceptance thresholds and stopping rule:
 - Prefer SDD when:
 - Prefer BDD when:
 - Prefer TDD when:
@@ -91,7 +93,7 @@ Create `docs/agents/project-development-profile.md` when a repo needs stable loc
 ## Skill and Context Governance
 
 - Allowed Skill sources and trust classes:
-- Candidate Skill limit (initial empirical prior: 1-3):
+- Skill marginal-coverage rule and context budget:
 - Version and incompatibility checks:
 - Third-party Skill inspection and permission policy:
 - With/without Skill eval command and dataset:
@@ -134,15 +136,20 @@ Do not add large details to `SKILL.md`. Keep the entry point navigational.
 Good defaults for solo project development:
 
 - Use auto loop mode only when the user asks for loop/auto/run-until-done behavior and the target can be reliably quantified.
-- Refuse loop execution when the verifier is subjective, unavailable, or not repeatable; continue as an ordinary task.
-- Default to 3 loop rounds and require every loop criterion to score at least 8.
-- Use SDD for any feature touching more than one module.
+- Do not optimize against an unavailable, unrepeatable or uncalibrated verifier;
+  build reliable verification or continue ordinary work. A repeatable human
+  rubric can be valid when its calibration and decision rule fit the claim.
+- Set task-specific acceptance and budget before optimization; do not apply a
+  universal rubric score or round count.
+- Use SDD when cross-module ambiguity or dependencies warrant a durable contract.
 - Use BDD for user journeys and business rules.
 - Use TDD for deterministic logic and regressions.
 - Use EDD only for LLM/semantic quality.
 - Use source-driven development for fast-moving frameworks and APIs.
 - Use issue slicing only when work will span multiple sessions or agents.
-- Default unknown or open-weight model-harness pairs to `portable-guided`; promote only from project-representative eval evidence.
+- Add guidance for unfamiliar or weak phases based on the actual model-harness
+  pair, regardless of vendor or weight access; compact guidance is valid when
+  capability is observed.
 - Keep one main execution owner; delegate only when specialization, independent exploration, or fresh verification exceeds coordination cost.
 - Reuse a worker for the same objective, module, data flow, and trust boundary; use a fresh context for independent verification.
 - Keep AGENTS/context files minimal: exact commands, boundaries, non-functional constraints, and hazards only.

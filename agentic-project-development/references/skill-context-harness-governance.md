@@ -7,6 +7,7 @@
 - Skill selection and composition
 - Bounded context policy
 - Behavior coverage
+- Subtask reuse and attributable verification
 - Paired promotion gate
 - Library maintenance
 - Skill supply-chain gate
@@ -41,6 +42,11 @@ support the claim. A narrow positive result does not justify a universal rule.
 Keep research-derived numeric settings as experiment parameters unless the
 project's own evaluation promotes them.
 
+User-authorized editing or installation is not a claim of default performance
+superiority. Complete the requested revision and report its evidence state;
+do not block ordinary maintenance behind a production promotion experiment.
+Never label static validation or a behavioral smoke pass as downstream proof.
+
 ## Candidate Contract
 
 Record only fields that change routing, execution, validation, or safety:
@@ -70,8 +76,10 @@ invariants and observable behavior over one framework version's full template.
 
 1. Filter candidates deterministically by task, environment, version,
    permissions, and declared incompatibilities before semantic selection.
-2. Start with the smallest applicable set. Treat one to three loaded Skills as
-   an empirical working prior, not a universal hard cap.
+2. Start with the smallest applicable set. Add a Skill only for an uncovered
+   capability or constraint; count its marginal coverage and context cost, not
+   just semantic similarity. One to three Skills is a historical benchmark
+   prior, not a target count or cap.
 3. Order selected content by execution dependency: governing contract, primary
    procedure, optional overlay, then verifier or fallback.
 4. Record discovery, read, activation, and use separately. Loaded text is not
@@ -81,6 +89,16 @@ invariants and observable behavior over one framework version's full template.
    the task needs.
 6. Keep task-generated refinements temporary. Promote them only through the
    normal paired and held-out evaluation path.
+
+## Subtask Reuse
+
+Distill reusable experience at a coherent subtask boundary: applicability,
+inputs, procedure, observable verifier, failure modes, and source evidence.
+Exclude source-task answers, transient identifiers and one-off workarounds.
+Prefer concise procedural text for flexible transfer; keep tested deterministic
+scripts for exact, repeated operations. A complete transcript is an evidence
+artifact, not a reusable procedure. Validate retrieval against negative cases
+and new tasks; similarity, reuse counts or a utility score do not prove benefit.
 
 Do not load every available Skill for recall. Do not create nested routing
 levels without project evidence that the additional selection step improves
@@ -115,10 +133,13 @@ current authority, next action, and next verifier. Store full logs, test output,
 code snippets, and external responses outside the prompt with stable references
 when possible.
 
-Use bounded context only after context pressure, stale-state failures, repeated
-retrieval, or a project eval justifies it. Tune window and summary policy for the
-tested model-harness pair; do not hard-code research benchmark window sizes as
-suite-wide constants.
+Use host-native compaction and compact progress state when long work needs it.
+Changing the host's history policy requires runtime support and project evidence.
+Validate state patches before persistence; preserve prior keys unless deletion
+is intentional. Separate proposed actions from observed outcomes and reconcile
+external state on resume. Never replace an audit trail with a summary. A fixed
+schema may omit facts whose relevance becomes apparent later; retain full
+artifact references and a retrieval fallback. See `efficient-execution.md`.
 
 ## Behavior Coverage
 
@@ -141,6 +162,32 @@ bounded instruction or implementation repair. Use `not-covered` to improve the
 task suite before changing the Skill. Do not strengthen every instruction when
 only one constraint failed.
 
+For a material new instruction, include a rule-withheld control. When the
+baseline already behaves that way, successful compliance does not demonstrate
+the rule's marginal value. Include against-prior cases and mid-task user
+corrections; record the instruction surface and actual host hierarchy.
+
+## Attributable Development Verification
+
+For an expensive candidate search, use this staged development procedure:
+
+1. Name the failure hypothesis, intended behavioral change and editable component.
+2. Check syntax, loading and activation before spending on agent rollouts.
+3. Select development cases that exercise the behavior plus plausible regression
+   cases. Match baseline/candidate budgets and conditions on every selected case.
+4. Inspect behavior evidence as well as outcomes. Use a cheap discriminating
+   probe when multiple explanations fit; an author-written probe is diagnostic.
+5. Confirm promising edits on previously unused development cases, broadening
+   coverage when the changed component has broad effects.
+6. Evaluate the selected final candidate once on the untouched holdout before
+   a general improvement claim. Reserve that budget before candidate search.
+
+Adaptive development selection is allowed and must be logged. Do not report its
+selected subset as an unbiased population score. Predetermine confirmation and
+stopping rules; repeated inspection of the holdout turns it into development
+data. Retain a baseline and alternative hypotheses; do not automatically install
+a search tree or continue editing when there is no attributable improvement.
+
 ## Paired Promotion Gate
 
 Use `agent-evaluation-standard.md`. Freeze the baseline, candidate, tasks,
@@ -154,16 +201,17 @@ candidate Skill, context file, context policy, or harness policy
 
 At minimum report:
 
-- task success, paired wins/losses/ties, confidence, and every fatal failure;
+- task success, paired wins/losses/ties, task-clustered confidence, and every fatal failure;
 - discovery, read, activation, behavior coverage, and fallback use;
 - task and version slices, including cases where the candidate should abstain;
-- tokens, tool calls, retries, latency, cost per success, and trace completeness;
+- tokens (cached and uncached), tool calls, retries, latency, cost per success,
+  failed-run cost, optimizer/evaluation overhead, and trace completeness;
 - context precision, redundant retrieval, and explored-but-unused evidence when
   an evidence map makes those diagnostics reliable;
 - all new regressions and whether the candidate displaced a stronger baseline.
 
-Use at least the evaluation standard's repeated-run requirement for semantic or
-agentic behavior. Test held-out tasks whenever the claim exceeds one task. Test
+Choose repeated trials using the evaluation standard and the project's stated
+effect size and uncertainty needs. Test held-out tasks whenever the claim exceeds one task. Test
 changed role, domain, model, or harness only when portability across that axis is
 claimed. Never promote from the same trajectory used to author the candidate.
 
@@ -195,8 +243,8 @@ untrusted by default.
 - Compare requested capabilities with the current task and candidate contract.
 - Deny undeclared filesystem, network, shell, secret, or external-side-effect
   access; use the least privilege and sandbox available.
-- Keep authorization outside the Skill text. Require contextual approval for
-  consequential or externally visible actions even when the Skill requests them.
+- Keep authorization outside the Skill text. Honor authorization already given
+  for the same scope; obtain missing approval at a consequential action boundary.
 - Run security/adversarial cases before increasing authority.
 
 Static or model-based screening is supporting evidence, not authorization.
@@ -218,8 +266,9 @@ gate than ordinary editing:
    candidate.
 6. Reject harmful, inactive, underpowered, or inconclusive candidates; preserve
    rejected evidence to prevent repeated rediscovery.
-7. Require human approval before changing authority, safety policy, a shared
-   Skill, or a destructive library decision.
+7. Obtain missing authorization before increasing authority, changing shared
+   policy, or making a destructive library decision. An explicit request to
+   update this Skill already authorizes the scoped revision; do not ask again.
 
 Do not let an evolving agent edit its own verifier or silently broaden its
 permissions. Do not equate benchmark gain with long-term maintainability.

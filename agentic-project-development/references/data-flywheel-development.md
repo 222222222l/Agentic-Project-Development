@@ -158,6 +158,11 @@ procedures temporary, preserve their source trajectories, and require paired
 held-out evidence before promoting them into a shared library or default
 context.
 
+Extract reusable procedures from verified subtasks rather than entire task
+transcripts. Keep applicability, verifier, negative examples, source revision
+and expiration conditions. Diagnose whether retrieval changed behavior before
+counting reuse as learning; expire stale facts without erasing source evidence.
+
 ### 7. Evaluate
 
 Freeze the baseline and candidate configurations. Run the same task set,

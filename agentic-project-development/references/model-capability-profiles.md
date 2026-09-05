@@ -1,114 +1,66 @@
 # Model Capability Profiles
 
-## Contents
+Profiles control instruction density, not model selection, authority, or required
+quality. Treat the model, tools and harness as a pair. Open weights, provider,
+brand, and context-window size do not determine the profile.
 
-- Purpose
-- Selection order
-- Capability probe
-- Frontier-compact
-- Portable-guided
-- User overrides
-- Promotion rule
+## Selection
 
-## Purpose
+1. Honor the user's explicit profile.
+2. Otherwise use the repository's evaluated default, when applicable.
+3. Otherwise assess observed task-relevant capability and available tools.
+4. If evidence is missing, use guided steps for the uncertain phase; do not
+   demand an eight-stage ceremony for a trivial edit.
 
-Adapt instruction density to the model plus execution harness. Treat model capability as a property of the full configuration: model, tools, context policy, permissions, state, tracing, and verifier.
-
-This profile controls instruction density; it does not by itself choose a task worker or subagent model. Use `project-model-routing.md` after task structure is known.
-
-## Selection Order
-
-1. Honor an explicit user choice: `frontier-compact` or `portable-guided`.
-2. Honor a repo default from `docs/agents/project-development-profile.md` when the user is silent.
-3. Otherwise self-assess the model-harness pair using the capability probe below.
-4. When uncertain, choose `portable-guided`. Record the selection source in the decision trace.
-
-Known names are hints, not proof:
-
-- Treat `gpt-5.6-sol` as a `frontier-compact` candidate when the current harness exposes reliable tools, state, and verification.
-- Treat `fable5` or `fable-5` as a user-selectable frontier alias only when the runtime exposes that model or agent. Public evidence is currently trace-oriented, so do not infer hidden capabilities from the name alone.
-- Default open-weight Kimi, DeepSeek, Qwen, and similar deployments to `portable-guided` until the actual harness passes project-local evals. A user may override this after evidence.
+Use `project-model-routing.md` only when deciding execution ownership or models.
+Concrete aliases belong to the active host or a versioned project profile. The
+workflow selector accepts `--model-name` as descriptive metadata; it deliberately
+does not classify capabilities from name substrings.
 
 ## Capability Probe
 
-Choose `frontier-compact` only when all are true:
+Evidence for compact execution includes the ability to:
 
-- Reliably inspect files, repository state, and tool outputs before acting.
-- Preserve outcome, constraints, and verifier across long or compacted contexts.
-- Follow conditional references without loading the entire skill bundle.
-- Select an applicable Skill from a deterministically filtered candidate set,
-  respect version and permission constraints, and use the declared fallback.
-- Produce schema-stable artifacts and respect explicit stop or abstention gates.
-- Attribute failures from evidence and change strategy instead of blindly repeating.
-- Run the named verifier and distinguish observed results from self-assessment.
-- The harness exposes safe file/tool execution, permissions, state, and useful traces.
+- ground actions in files, runtime state and tool outputs;
+- preserve user constraints, remaining work and verifiers across long context;
+- load relevant references conditionally without loading the entire bundle;
+- use tool schemas and structured results reliably;
+- diagnose failures and change an unsuccessful approach;
+- distinguish observed acceptance from its own confidence;
+- recover state within the host's permissions and tool capabilities.
 
-Otherwise choose `portable-guided`.
+Infer from available traces or a small relevant task; do not run a synthetic
+benchmark before every assignment. Escalate guidance only where a probe fails.
 
 ## Frontier-Compact
 
-Use for strong long-horizon coding agents in mature harnesses.
+For a capable model-harness pair, regardless of vendor or weight access:
 
-- Load only this file, the router-selected mode references, and task-local evidence.
-- Start with the smallest applicable Skill set; exceed the one-to-three Skill
-  empirical prior only when dependencies or project evaluation justify it.
-- Let the model gather ordinary repo context autonomously; ask only direction-changing questions.
-- Keep plans outcome-oriented. Expand steps only at high-risk or hard-to-reverse decisions.
-- Use compact phase contracts and one decision trace instead of repeating instructions.
-- Verify with executable or external evidence; do not add prose checkpoints that have no decision value.
-- Use multi-agent work only after the project routing gate shows independent work, disjoint ownership, a named integration verifier, and lower expected total cost.
-- After compaction or handoff, preserve goal, constraints, changed files, evidence, verifier, failures, and next action.
-
-Minimum phase contract:
-
-```markdown
-Outcome:
-Evidence:
-Change boundary:
-Verifier:
-Stop / escalate when:
-```
+- keep one outcome, evidence boundary and verifier;
+- let the agent discover routine context and implement independently;
+- load only the current mode's material;
+- expand plans at ambiguity, dependency or hard-to-reverse decisions;
+- retain concise state at slice boundaries when recovery needs it;
+- use executable results instead of repetitive prose checkpoints.
 
 ## Portable-Guided
 
-Use for open-weight, smaller, unfamiliar, weakly tooled, or unevenly instruction-following model-harness pairs.
+For an unfamiliar or uneven model-harness pair:
 
-Run phases explicitly:
+- give explicit paths, expected artifacts and acceptance examples;
+- make the next dependency and next verifier unambiguous;
+- read the current file before editing and validate structured outputs;
+- checkpoint completed results, current revision and remaining work;
+- repair the demonstrated weak phase before expanding the whole workflow.
 
-1. **ALIGN**: restate outcome, non-goals, constraints, and done criteria.
-2. **EVIDENCE**: list exact files, versions, runtime state, sources, and unresolved assumptions.
-3. **CONTRACT**: define input, action, artifact, verifier, and stop condition for the next phase.
-4. **SLICE**: choose one vertical, independently verifiable increment.
-5. **IMPLEMENT**: make only the scoped change; list touched files and deviations.
-6. **VERIFY**: run the named command or evaluator and preserve raw failures.
-7. **REVIEW**: check spec fidelity first, engineering quality second, residual risk third.
-8. **CONVERGE**: map acceptance criteria to evidence and name remaining work.
+For substantial work, ALIGN -> EVIDENCE -> IMPLEMENT -> VERIFY -> CONVERGE is
+a useful scaffold. Steps may share an artifact; do not summarize every reference
+or repeat its rules as a mandatory output.
 
-Additional constraints:
+## Reassessment
 
-- Read one routed reference at a time and summarize its operative rules before acting.
-- Filter Skill candidates by task, version, permissions, and incompatibilities
-  before asking the model to choose; provide the candidate rationale explicitly.
-- Use explicit file paths, commands, expected outputs, and acceptance examples.
-- For multi-step or cross-session work, maintain a task state file with completed evidence and next action.
-- Re-read current files before edits; do not rely on remembered repository state.
-- Require a clean or understood baseline before attributing new failures to the change.
-- Classify a failure as local, upstream, or structural before retrying.
-- Prefer one owner. Add agents only when the project routing gate passes, the harness supports isolation, and every handoff has typed inputs, outputs, and validators.
-- Checkpoint after each slice; do not batch unrelated edits behind one final test.
-
-## User Overrides
-
-Accept natural-language directives such as:
-
-```text
-Use the frontier-compact profile for this task.
-Use the portable-guided profile and keep a state file.
-Treat this Kimi deployment as frontier-compact; its harness passed our repo eval.
-```
-
-An override changes instruction density, not safety, approval, source, or verification gates.
-
-## Promotion Rule
-
-Promote a model-harness pair from `portable-guided` only after repeated project-representative runs show acceptable task success, Skill selection and behavior coverage, context use, verification coverage, recovery, abstention, cost, and trace quality. Use `agent-evaluation-standard.md` for multi-run evidence; do not promote from one successful demo.
+Allow a tested open-weight deployment to use compact guidance, and add structure
+to a frontier proprietary deployment when it fails on this task. Change one
+intended factor when claiming a profile improves performance. Compare repeated
+representative tasks and cost using `agent-evaluation-standard.md`; one clean
+run supports a local decision, not universal transfer.

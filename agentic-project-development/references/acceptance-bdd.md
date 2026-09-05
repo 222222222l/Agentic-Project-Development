@@ -37,9 +37,12 @@ Scenario: Eligible customer applies a discount
 ## Integration
 
 - Feed scenarios into SDD success criteria.
-- Feed scenarios into `to-issues` acceptance criteria.
+- Feed scenarios into issue acceptance criteria, directly or through `to-issues`
+  when available.
 - Compose with a currently available frontend or design skill when scenarios involve visual product direction or implementation.
-- Use `browser:control-in-app-browser` or `chrome:control-chrome` to verify implemented journeys in a real browser.
+- Verify implemented journeys with the available browser tool or project runner.
+  Named browser skills are optional; if browser execution is unavailable, report
+  the coverage gap and perform the relevant checks that are available.
 - Use TDD for deterministic units behind a scenario.
 - Use EDD when a scenario's output is semantic, probabilistic, or LLM-generated.
 - Use review mode to check which scenarios are untested.

@@ -7,8 +7,6 @@ import argparse
 import json
 
 
-FRONTIER_ALIASES = ("gpt-5.6-sol", "fable5", "fable-5")
-PORTABLE_ALIASES = ("kimi", "deepseek", "qwen", "llama", "mistral", "gemma")
 ROLE_MAP = {
     "orchestration": "orchestrator-editor",
     "reasoning": "reasoning-investigator",
@@ -30,20 +28,16 @@ def choose_model_profile(args: argparse.Namespace) -> tuple[str, str, list[str]]
             f"explicit model profile selected: {args.model_profile}"
         ]
 
-    model_name = args.model_name.lower().strip()
-    frontier_hint = any(alias in model_name for alias in FRONTIER_ALIASES)
-    portable_hint = any(alias in model_name for alias in PORTABLE_ALIASES)
-
-    if args.capability_tier == "frontier" or frontier_hint:
+    if args.capability_tier == "frontier":
         if args.harness_maturity == "strong":
             reasons.append("frontier capability plus a strong harness supports compact routing")
-            return "frontier-compact", "capability-or-model-hint", reasons
-        reasons.append("frontier model hint lacks a strong verified harness")
+            return "frontier-compact", "declared-capability-and-harness", reasons
+        reasons.append("declared frontier capability lacks a strong verified harness")
         return "portable-guided", "safe-fallback", reasons
 
-    if args.capability_tier == "portable" or portable_hint:
-        reasons.append("portable or open-weight model hint benefits from explicit phase contracts")
-        return "portable-guided", "capability-or-model-hint", reasons
+    if args.capability_tier == "portable":
+        reasons.append("declared capability calls for guidance at uncertain phases")
+        return "portable-guided", "declared-capability-and-harness", reasons
 
     reasons.append("unknown model-harness capability defaults to portable guidance")
     return "portable-guided", "safe-fallback", reasons
@@ -82,7 +76,13 @@ def choose_execution_route(
     if args.delegation_shape == "independent-review":
         fresh_verifier = True
 
-    if args.delegation_shape == "main-only":
+    if args.delegation_policy == "forbidden":
+        reasons.append("host or user policy forbids delegation")
+        if fresh_verifier:
+            conflicts.append("independent verification is required but delegation is forbidden")
+        if args.delegation_shape not in {"auto", "main-only"}:
+            conflicts.append("requested delegation conflicts with host or user policy")
+    elif args.delegation_shape == "main-only":
         reasons.append("explicit main-only route disables execution delegation")
         if fresh_verifier:
             conflicts.append("independent verification is required but delegation is main-only")
@@ -163,6 +163,12 @@ def choose_execution_route(
         "execution_owner": "main-agent-orchestrator",
         "capability_role": capability_role,
         "delegate": delegate,
+        "authorization_status": (
+            "forbidden" if args.delegation_policy == "forbidden" else
+            "declared-allowed" if args.delegation_policy == "allowed" else
+            "check-active-host-and-user-policy"
+        ),
+        "route_is_recommendation": True,
         "subagent_role": subagent_role,
         "subagent_count": subagent_count,
         "reuse_worker": reuse_worker,
@@ -193,7 +199,9 @@ def recommend(args: argparse.Namespace) -> dict:
 
     profile, profile_source, profile_reasons = choose_model_profile(args)
     reasons.extend(profile_reasons)
-    if args.model_profile == "auto":
+    if args.model_profile != "auto" or (
+        args.risk != "low" or args.scope != "single-file"
+    ):
         references.append("references/model-capability-profiles.md")
 
     capability_role, capability_role_source = choose_capability_role(args)
@@ -209,6 +217,16 @@ def recommend(args: argparse.Namespace) -> dict:
     )
     if routing_signal:
         references.append("references/project-model-routing.md")
+
+    if args.bottleneck != "none":
+        overlays.append("efficient-execution")
+        references.append("references/efficient-execution.md")
+        reasons.append(f"observed {args.bottleneck} overhead calls for a targeted intervention")
+
+    if args.horizon == "long":
+        overlays.append("dependency-and-resume-state")
+        references.append("references/loop-auto-mode.md")
+        reasons.append("long work needs evidence-backed dependencies and retained regression obligations")
 
     if yes(args.loop_request):
         references.append("references/loop-auto-mode.md")
@@ -265,7 +283,23 @@ def recommend(args: argparse.Namespace) -> dict:
         references.append("references/acceptance-bdd.md")
         reasons.append("user-visible behavior needs acceptance scenarios")
 
-    if args.determinism == "deterministic" and args.work_type in {
+    lightweight = (
+        args.risk == "low"
+        and args.scope == "single-file"
+        and args.horizon == "short"
+        and args.bottleneck == "none"
+        and args.delivery == "none"
+        and not agent_system
+        and not yes(args.loop_request)
+        and not yes(args.multi_agent)
+        and not execution_route["delegate"]
+        and not execution_route["fresh_verifier"]
+        and not yes(args.user_facing)
+        and not yes(args.framework_sensitive)
+        and args.work_type in {"feature", "bug", "refactor", "library", "prototype", "documentation"}
+        and args.determinism == "deterministic"
+    )
+    if not lightweight and args.determinism == "deterministic" and args.work_type in {
         "bug", "feature", "refactor", "library", "migration"
     }:
         overlays.append("test-driven-development")
@@ -283,7 +317,7 @@ def recommend(args: argparse.Namespace) -> dict:
         references.append("references/source-driven-development.md")
         reasons.append("framework or API correctness depends on current official docs")
 
-    if args.work_type in {"architecture", "refactor", "migration"} or args.scope == "cross-module":
+    if (not lightweight and args.work_type in {"architecture", "refactor", "migration"}) or args.scope == "cross-module":
         overlays.append("architecture-domain-design")
         references.append("references/architecture-and-domain.md")
         reasons.append("module boundaries or domain language may change")
@@ -305,15 +339,20 @@ def recommend(args: argparse.Namespace) -> dict:
         or yes(args.loop_request)
         or yes(args.multi_agent)
         or args.work_type == "skill"
+        or args.horizon == "long"
         or execution_route["delegate"]
         or execution_route["fresh_verifier"]
     )
-    if len(ordered_modes) > 1:
+    if len(ordered_modes) > 1 and broad_scope:
         ordered_refs.insert(0, "references/workflow-map.md")
 
     return {
         "model_profile": profile,
         "model_profile_source": profile_source,
+        "model_name": args.model_name.strip() or None,
+        "lightweight_path": lightweight,
+        "bottleneck": args.bottleneck,
+        "state_tracking": "dependencies-and-verifier-revisions" if args.horizon == "long" else "as-needed",
         "capability_role_source": capability_role_source,
         "primary_mode": modes[0],
         "recommended_modes": ordered_modes,
@@ -331,7 +370,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--work-type", default="feature", choices=[
         "new-project", "feature", "bug", "refactor", "architecture", "migration",
-        "library", "agent-system", "skill", "prototype", "review", "release", "research"
+        "library", "agent-system", "skill", "prototype", "review", "release", "research", "documentation"
     ])
     parser.add_argument("--determinism", default="deterministic", choices=[
         "deterministic", "llm", "probabilistic", "semantic", "unknown"
@@ -346,7 +385,11 @@ def main() -> None:
     parser.add_argument("--multi-agent", default="no")
     parser.add_argument("--delivery", default="none", choices=["none", "prd", "issues"])
     parser.add_argument("--loop-request", default="no")
-    parser.add_argument("--quantifiable", default="yes", choices=["yes", "partial", "no"])
+    parser.add_argument("--quantifiable", default="partial", choices=["yes", "partial", "no"])
+    parser.add_argument("--horizon", default="short", choices=["short", "long"])
+    parser.add_argument("--bottleneck", default="none", choices=[
+        "none", "retrieval", "context", "tools", "verification", "retry", "coordination"
+    ])
     parser.add_argument("--model-name", default="")
     parser.add_argument("--model-profile", default="auto", choices=[
         "auto", "frontier-compact", "portable-guided"
@@ -364,6 +407,9 @@ def main() -> None:
         "auto", "main-only", "exploration", "specialist", "parallel-independent",
         "independent-review"
     ])
+    parser.add_argument("--delegation-policy", default="unknown", choices=[
+        "unknown", "allowed", "forbidden"
+    ], help="Active host/user policy; recommendations never grant authorization")
     parser.add_argument("--raw-information-volume", default="low", choices=[
         "low", "medium", "high"
     ])

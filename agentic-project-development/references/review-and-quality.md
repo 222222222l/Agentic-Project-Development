@@ -74,6 +74,10 @@ Lead with findings when reviewing. Include:
 
 ## Integration
 
+The named external skills below are optional when currently available. The
+review axes, debugging loop and bundled BDD/TDD/EDD references are sufficient
+fallbacks; never block review or install a missing skill automatically.
+
 - Use `code-review` for diff review.
 - Use `diagnosing-bugs` for hard failures.
 - Use `karpathy-guidelines` to check whether changes stayed simple, surgical, and explicitly verified.
@@ -82,4 +86,4 @@ Lead with findings when reviewing. Include:
 - Use BDD/TDD/EDD references to identify missing coverage type.
 - Use source-driven development to catch stale API patterns.
 - Use trajectory-guided patch minimization for eligible passing agent patches; do not substitute raw line-count reduction for maintainability review.
-- Use `agent-evaluation` for multi-run agent evidence and `agent-system-engineering.md` for trajectory-level failures.
+- Use `agent-evaluation-standard.md` for multi-run agent evidence and `agent-system-engineering.md` for trajectory-level failures.

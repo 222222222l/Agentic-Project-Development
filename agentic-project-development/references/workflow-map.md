@@ -18,7 +18,12 @@ Use this file when several development modes apply, when artifact ordering is un
 
 ## Lifecycle
 
-1. **Profile**: choose `frontier-compact` or `portable-guided` from the model-harness pair.
+This is a menu for substantial work, not a checklist to execute in full. A clear
+local edit follows inspect -> change -> relevant check. Share one compact
+contract across overlapping modes; create documents only for decisions that
+need persistence.
+
+1. **Profile when needed**: choose guidance from the observed model-harness capability.
 2. **Loop gate**: for loop/auto requests, prove reliable quantified verification before repetition.
 3. **Route execution**: map task structure and choose main owner, capability role, worker reuse, independent verification, and fallback.
 4. **Govern Skill and context changes**: when triggered, establish candidate scope, source, trust, permissions, paired baseline, and evidence state before promotion.
@@ -27,18 +32,21 @@ Use this file when several development modes apply, when artifact ordering is un
 7. **Ground**: attach each material claim to repo files, runtime state, current sources, examples, or prior artifacts.
 8. **Specify**: create a durable source of truth when ambiguity or scope warrants it.
 9. **Model behavior**: express user-visible rules as scenarios or acceptance criteria.
-10. **Plan slices**: create vertical increments with explicit phase contracts.
+10. **Plan slices**: create vertical increments with evidence-backed prerequisites,
+    verifiers and retained regression obligations for later dependent changes.
 11. **Implement**: use TDD, direct implementation, source grounding, or prototypes according to risk.
 12. **Reassess**: re-route after direction-changing evidence, repeated verifier failure, or excessive coordination cost.
 13. **Evaluate**: run exact checks, gates, evals, browser/manual QA, and review.
 14. **Recover**: attribute failures as local, upstream, or structural before targeted repair.
 15. **Minimize**: when eligible, reduce the passing patch to the smallest task-owned change that preserves the full acceptance contract and maintainability gates.
 16. **Converge**: check spec -> plan -> task -> implementation -> verification coverage and append only genuine remaining work.
-17. **Explain and record**: report why, what changed, evidence, routes, fallbacks, risks, intentional non-changes, and reusable learning.
+17. **Explain and record**: report outcome, material verification and limits.
+    Record routes or rejected options only when they explain a consequential choice.
 
 ## Grounded Phase Contract
 
-Use this for each substantial phase. `portable-guided` requires every field; `frontier-compact` may keep it terse.
+Use relevant fields for a substantial phase; reuse the existing task contract
+instead of filling another template when no decision changes.
 
 ```markdown
 Phase / outcome:
@@ -70,6 +78,7 @@ Validate intermediate artifacts before they become downstream context. A clean f
 | Passing agent patch contains exploratory residue or needs simplification | Trajectory-guided patch minimization | Review, acceptance, architecture |
 | Vague or high-risk task | Uncertainty and decision trace | SDD, BDD, architecture |
 | Loop/auto/run-until-done | Auto-loop gate | Normal router after quantification |
+| Retrieval, tool, context or verification overhead | Efficient execution | Trace diagnosis and scoped experiment |
 
 ## Current Skill Composition
 

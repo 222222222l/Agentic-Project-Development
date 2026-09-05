@@ -1,20 +1,23 @@
 # Source Map
 
-This suite is a rewritten orchestration layer, not a verbatim bundle. Keep method sources separate from runtime dependencies and current local availability.
+This suite adapts development methods into a portable workflow. Historical source
+lineage is not a list of installed dependencies or current model capabilities.
+Read only the method reference needed for the current task.
 
 ## Contents
 
-- Local skills integrated
+- Historical method inputs
 - Current optional composition
 - Development methods adapted
 - Agent runtime frameworks reviewed
-- Project routing principles
-- Research constraints added
+- Runtime routing boundary
+- September 2026 research review
+- Historical research constraints
 - Data-flywheel methods integrated
 - Model evidence boundary
 - Design difference
 
-## Local Skills Integrated
+## Historical Method Inputs
 
 | Skill | Integrated role |
 | --- | --- |
@@ -64,16 +67,34 @@ Treat optional composition as availability-dependent. Do not claim a plugin skil
 
 These are candidates, not required dependencies. `references/agent-system-engineering.md` defines the selection gate.
 
-## Project Routing Principles
+## Runtime Routing Boundary
 
-| Evidence | Constraint absorbed |
-| --- | --- |
-| User-provided model-routing diagrams, 2026-07-16 | Map task structure before choosing a model; separate initial editor, mid-course reassessment, and final verifier roles |
-| User-provided capability and cost diagrams, 2026-07-16 | Route reasoning, code, visual, and research work by capability; optimize execution plus coordination cost |
-| User-provided worker-reuse diagram, 2026-07-16 | Reuse workers for the same objective and context; use fresh workers for independent verification or changed boundaries |
-| Active Codex subagent interface observed on 2026-07-16 | Treat model overrides, roles, and worker continuation as runtime capabilities; never promise universal IDs or persistence |
+Roles, worker reuse and total-cost routing are implemented in
+`project-model-routing.md`. Runtime tools and current project evidence determine
+available models and delegation. Historical session diagrams and model aliases
+are not portable capability evidence. Keep concrete mappings in project profiles.
 
-## Research Constraints Added
+## September 2026 Research Review
+
+Read `research-evidence-2026-09.md` for the 2026-07-05–2026-09-05 review:
+versioned primary sources, dates, experiment conditions, negative results,
+adoption decisions, and claims that still need local validation.
+
+- Tool architecture and retrieval: `efficient-execution.md`.
+- Skill transfer, diagnostic probes and behavior-based development verification:
+  `skill-context-harness-governance.md`.
+- Task-clustered comparison, failed-run costs and sealed confirmation:
+  `agent-evaluation-standard.md`.
+- Dependency readiness, retained regression obligations and recovery:
+  `loop-auto-mode.md`.
+- Capability-based profiles without vendor or weight-access assumptions:
+  `model-capability-profiles.md`.
+
+## Historical Research Constraints
+
+The following sources predate this review or were already absorbed in earlier
+revisions. They remain provenance; newer evidence above scopes their use.
+
 
 | Research | Constraint absorbed |
 | --- | --- |
@@ -98,8 +119,8 @@ These are candidates, not required dependencies. `references/agent-system-engine
 
 The suite does not make autonomous Skill generation, learned composition,
 neural context pruning, automatic merge/retire, or second-level reference
-routing a default. The README records the reviewed experimental results and the
-reason each unpromoted mechanism remains optional.
+routing a default. The research evidence record distinguishes adopted procedures from optional
+runtime experiments and unmeasured transfer claims.
 
 ## Data-Flywheel Methods Integrated
 
@@ -119,12 +140,11 @@ Evidence checked on 2026-07-12:
 
 ## Model Evidence Boundary
 
-Evidence checked on 2026-07-10:
-
-- The current Codex harness exposes `gpt-5.6-sol` as a frontier agentic coding model; capability still depends on its tools, state, permissions, and verifier.
-- [Kimi K2.5](https://hf.co/papers/2602.02276) documents multimodal agentic training and Agent Swarm; current open checkpoints include Kimi K2.7 Code. Use `portable-guided` until the deployment passes project evals.
-- [DeepSeek V4](https://hf.co/papers/2606.19348) documents million-token open models; long context does not itself prove reliable tool execution or workflow recovery. Use `portable-guided` until evaluated.
-- Public Fable 5 evidence is dominated by agent traces and distillation datasets. Keep it as an explicit alias, not a hard-coded capability claim.
+No model brand, weight-access category, context length or historical host alias
+establishes a capability profile. Use the active host's model list, current
+primary documentation when version-specific behavior matters, and representative
+project observations. An unavailable alias does not authorize a provider change
+or a new dependency. Preserve the role and report the available fallback.
 
 ## Design Difference
 

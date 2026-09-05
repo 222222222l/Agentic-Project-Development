@@ -19,8 +19,13 @@ Skip a full spec for tiny, reversible, self-contained changes. Still write accep
 
 1. **Ground**: inspect repository evidence, historical behavior, current sources, and project constraints before drafting.
 2. **Specify**: state assumptions, ask only direction-changing questions, then write the spec.
-3. **Approve**: get explicit user confirmation when ambiguity affects scope, cost, data, or irreversible decisions.
+3. **Resolve**: use existing authorization and repository evidence for routine
+   choices. Ask when unresolved ambiguity materially changes scope, cost, data
+   or an irreversible decision; do independent authorized work in parallel.
 4. **Plan**: convert the spec into implementation slices and phase contracts.
+   Record only evidence-supported prerequisite edges; validate an upstream
+   artifact before its dependents consume it. Keep completed checks as regression
+   obligations when later slices change the same contracts.
 5. **Analyze**: verify consistency and coverage across spec, plan, acceptance criteria, and tasks before implementation.
 6. **Implement**: execute and verify one vertical slice at a time.
 7. **Converge**: map implemented evidence back to acceptance criteria and append genuine remaining work.
@@ -51,6 +56,9 @@ Skip a full spec for tiny, reversible, self-contained changes. Still write accep
 ```
 
 ## Integration With Existing Skills
+
+External skills in this list are optional if currently available. Otherwise use
+this reference and the bundled `issue-delivery.md` workflow directly.
 
 - Use `grill-with-docs` before SDD when the domain language or constraints are not yet shared.
 - Use `to-prd` after SDD when the spec is stable enough to publish as a product/engineering artifact.
