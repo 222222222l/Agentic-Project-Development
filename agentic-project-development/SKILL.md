@@ -9,12 +9,11 @@ Optimize verified completion per total effort: execution, context, retries,
 coordination, verification, and human review. This is a portable workflow skill;
 it does not supply a runtime, switch models, or grant tools or permissions.
 
-On Windows, for all project development work, avoid PowerShell when a repository-
-native command, `cmd.exe`, Git, or another stable project tool can perform the
-operation. Prefer explicit UTF-8 handling and deterministic command forms because
-PowerShell and version-specific shell behavior can introduce encoding, quoting,
-or decoding errors that increase development time and cost. Use PowerShell only
-when it is required by the task or when compatibility has been demonstrated.
+On Windows, prefer repository-native tools and structured argument lists. Use
+PowerShell for native filesystem, NTFS, registry, and service operations; read
+and write text with explicit UTF-8. Choose the shell from the operation and
+observed compatibility. Do not pass destructive filesystem operations between
+shells or interpolate untrusted text into executable command strings.
 
 ## Start with the Task
 
@@ -101,6 +100,11 @@ For long work, preserve current goal, constraints, completed evidence, remaining
 dependencies, known failures, artifact pointers, and next verifier. Reconcile
 saved state with the actual workspace on resume; never mark a planned action as
 completed before observing its result.
+
+Treat mid-task user corrections and status questions as steering unless they
+explicitly replace or cancel the goal. Answer status briefly and continue the
+remaining authorized work. A skill guideline cannot override the user's scope;
+when it materially blocks progress, identify the exact file and rule.
 
 ## Optional Decision Record and Tools
 
