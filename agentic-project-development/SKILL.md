@@ -9,6 +9,13 @@ Optimize verified completion per total effort: execution, context, retries,
 coordination, verification, and human review. This is a portable workflow skill;
 it does not supply a runtime, switch models, or grant tools or permissions.
 
+On Windows, for all project development work, avoid PowerShell when a repository-
+native command, `cmd.exe`, Git, or another stable project tool can perform the
+operation. Prefer explicit UTF-8 handling and deterministic command forms because
+PowerShell and version-specific shell behavior can introduce encoding, quoting,
+or decoding errors that increase development time and cost. Use PowerShell only
+when it is required by the task or when compatibility has been demonstrated.
+
 ## Start with the Task
 
 For a clear, reversible local edit: inspect the target and nearby convention,
