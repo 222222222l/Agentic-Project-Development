@@ -130,3 +130,7 @@ python3 scripts/validate_skill_graph.py --skill-dir .
 ```
 
 Use the repository's Python command on Windows or when `python3` is unavailable.
+
+## Dependency-aware organization (2026-11-26)
+
+For substantial work, freeze the intent, input revision, output contract, read/write ownership, dependency edges, independent acceptance criteria, permissions, budget and stopping conditions before dispatch. Select the simplest topology: single executor for tightly coupled or sequential tasks; parallel waves only for independently verifiable tasks with satisfied dependencies and no shared write conflict. Use task-specific verifiers rather than a universal role graph. A producer submits evidence; a separate review or deterministic gate accepts the exact artifact revision. Persist checkpoints, trace, failed attempts and bounded retry decisions; reconcile uncertain side effects before retry and escalate at budget exhaustion. Reuse validated semantic contracts and capabilities through adapters without replacing native deliverables or host authority. Optimize total cost per independently accepted outcome and time to validate new needs; compare orchestration variants against a single-agent baseline before defaulting to more roles. For small reversible edits, the existing lightweight route remains sufficient.
