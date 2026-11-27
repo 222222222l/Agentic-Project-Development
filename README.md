@@ -1,3 +1,5 @@
+> **2026-11-23 开发计划增补：** [Swarm 采用决策树](agentic-project-development/references/swarm-coordination-decision-2026-11-23.md)。明确单 Agent、固定 DAG、事件板的升级门槛，只有消融证明净收益时才增加复杂度。新增里程碑属于待开发项，原有签收状态不变。
+
 # Agentic Project Development
 
 [English](README.en.md)
